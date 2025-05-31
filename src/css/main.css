@@ -1,0 +1,51 @@
+.hamburger-container {
+  min-height: 100px;
+  display: flex;
+  align-items: center; 
+  min-width: 100px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    font-size: 1rem;
+    border: 1px solid black;
+    min-height: 60px;
+    border-radius: 5px;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 60px;
+    padding: 0.5rem;
+}
+
+.notification-list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.notification-list li img{
+    width: 50px;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #0E0E40;
+    height: 100%;
+}
+
+.logo-sidebar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-icon {
+    width: 50px;
+}
