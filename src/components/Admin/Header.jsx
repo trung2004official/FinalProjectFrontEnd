@@ -5,7 +5,7 @@ import Sidebar from './Sidebar'
 const Header = () => {
   return (
     <header className='flex'>
-      <Sidebar/>
+
       <Navbar/>
     </header>
   )

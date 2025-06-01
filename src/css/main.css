@@ -49,3 +49,50 @@
 .menu-icon {
     width: 50px;
 }
+
+
+/* quiz table style */
+.quiz-table-data {
+    /* max-width: 800px; */
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #1a1f3a;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+th {
+    background-color: #2a2f4a;
+    color: #b19cd9;
+}
+td {
+    color: #ccc;
+}
+.checkbox {
+    margin-right: 10px;
+}
+.status-in-stock {
+    color: #2ecc71;
+}
+.status-out-of-stock {
+    color: #e74c3c;
+}
+.company-logo {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.pagination {
+    text-align: right;
+    color: #b19cd9;
+    margin-top: 10px;
+}
