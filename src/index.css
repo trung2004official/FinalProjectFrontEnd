@@ -1,1 +1,32 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+@theme {
+    --color-CetaceanBlue: #0E0E40;
+    --color-CetaceanBlue-light: #2A2A66;
+    --color-CetaceanBlue-dark: #07072A;
+    --color-PurpleNavy: #565679;
+    --color-PurpleNavy-light: #7E7E9A;
+    --color-PurpleNavy-dark: #3E3E5A;
+    --color-Manatee: #9F9FB3;
+    --color-Manatee-light: #C7C7D4;
+    --color-Manatee-dark: #78788F;
+    --color-Emerald: #2E7D32;
+    --color-Emerald-light: #66BB6A;
+    --color-Emerald-dark: #1B5E20;
+    --color-Amber: #FFB300;
+    --color-Amber-light: #FFCA28;
+    --color-Amber-dark: #F57F17;
+    --color-Grey: #B0BEC5;
+    --color-Grey-light: #CFD8DC;
+    --color-Grey-dark: #455A64;
+    --color-white: #FFF;
+    --color-black: #000;
+    --color-CadetBlue: #AAB1C4;
+}
+
+@layer base {
+    body {
+        font-family: 'Roboto', sans-serif;
+    }
+}
