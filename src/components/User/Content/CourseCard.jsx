@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const CourseCard = ({ title, duration, difficulty, category }) => {
     return (
-        <div className="relative bg-Manatee-light p-6 rounded-lg shadow-md flex flex-col justify-between h-64 group">
+        <div className="relative bg-CadetBlue p-6 rounded-lg shadow-md flex flex-col justify-between h-64 group">
             <div className="flex-grow flex items-center justify-center">
                 <h3 className="text-xl text-CetaceanBlue text-center">{title}</h3>
             </div>

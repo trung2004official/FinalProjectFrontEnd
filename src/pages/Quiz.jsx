@@ -1,10 +1,9 @@
 import React from 'react';
-import Login from '../../pages/Login';
-import Header from '../../components/User/Header.jsx';
-import Footer from '../../components/User/Footer.jsx';
-import Courses from '../../components/User/Content/Courses.jsx';
+import Header from '../components/User/Header.jsx';
+import Footer from '../components/User/Footer.jsx';
+import Courses from '../components/User/Content/Courses.jsx';
 
-const HomeLayout = () => {
+const Quiz = () => {
     return (
         <div className="min-h-screen bg-CetaceanBlue text-white">
             <Header />
@@ -16,4 +15,4 @@ const HomeLayout = () => {
     );
 };
 
-export default HomeLayout;
+export default Quiz;
