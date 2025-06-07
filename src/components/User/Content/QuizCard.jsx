@@ -1,11 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link,} from 'react-router-dom';
 
-const CourseCard = ({ title, duration, difficulty, category }) => {
+const QuizCard = ({ title, duration, difficulty, category }) => {
     return (
-        <div className="relative bg-CadetBlue p-6 rounded-lg shadow-md flex flex-col justify-between h-64 group">
+        <div className="relative bg-PurpleNavy p-6 rounded-lg shadow-md flex flex-col justify-between h-64 group">
             <div className="flex-grow flex items-center justify-center">
-                <h3 className="text-xl text-CetaceanBlue text-center">{title}</h3>
+                <h3 className="text-xl text-Manatee-light text-center">{title}</h3>
             </div>
             <div className="text-Grey-dark text-sm mt-4">{category}</div>
             {/* Overlay khi hover */}
@@ -19,7 +19,7 @@ const CourseCard = ({ title, duration, difficulty, category }) => {
                             Làm bài thi
                         </button>
                     </Link>
-                    <Link to={`/course/${title.toLowerCase().replace(/\s/g, '-')}`}>
+                    <Link to={`/quizdetail/${title.toLowerCase().replace(/\s/g, '-')}`}>
                         <button className="bg-CetaceanBlue-light text-white py-2 px-4 rounded-lg hover:bg-CetaceanBlue-dark transition duration-200">
                             Xem chi tiết
                         </button>
@@ -30,4 +30,4 @@ const CourseCard = ({ title, duration, difficulty, category }) => {
     );
 };
 
-export default CourseCard;
+export default QuizCard;

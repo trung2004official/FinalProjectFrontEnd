@@ -2,7 +2,7 @@ import React from 'react';
 import Login from '../../pages/Login';
 import Header from '../../components/User/Header.jsx';
 import Footer from '../../components/User/Footer.jsx';
-import Courses from '../../components/User/Content/Courses.jsx';
+import Courses from '../../components/User/Content/Quizzes.jsx';
 
 const HomeLayout = () => {
     return (

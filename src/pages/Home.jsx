@@ -6,7 +6,7 @@ import Hero from '../components/User/Content/Hero.jsx';
 
 const Home = () => {
     return (
-        <div className="min-h-screen bg-CetaceanBlue text-white">
+        <div className="min-h-screen bg-CadetBlue text-white">
             <Header />
             <main className="container mx-auto p-6 ">
                 <Hero />

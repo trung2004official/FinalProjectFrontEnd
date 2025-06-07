@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CourseCard from "./CourseCard.jsx";
+import CourseCard from "./QuizCard.jsx";
 
 const Catalog = () => {
     const categories = [
@@ -32,7 +32,7 @@ const Catalog = () => {
 
     return (
         <div className="container mx-auto p-6 text-center">
-            <h2 className="text-2xl font-bold mb-2">Rèn luyện kiến thức của bạn</h2>
+            <h2 className="text-2xl text-CetaceanBlue font-bold mb-2">Rèn luyện kiến thức của bạn</h2>
             <p className="text-gray-600 mb-4">Hãy chọn đề thi và trao dồi thêm kiến thức</p>
             <Link to="/quiz">
                 <button className="bg-black text-white px-4 py-2 rounded">View All</button>

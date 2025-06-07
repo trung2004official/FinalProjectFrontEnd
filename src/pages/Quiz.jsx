@@ -1,14 +1,14 @@
 import React from 'react';
 import Header from '../components/User/Header.jsx';
 import Footer from '../components/User/Footer.jsx';
-import Courses from '../components/User/Content/Courses.jsx';
+import Quizzes from '../components/User/Content/Quizzes.jsx';
 
 const Quiz = () => {
     return (
-        <div className="min-h-screen bg-CetaceanBlue text-white">
+        <div className="min-h-screen bg-CadetBlue text-white">
             <Header />
             <main className="container mx-auto p-6">
-                <Courses />
+                <Quizzes/>
             </main>
             <Footer />
         </div>
