@@ -1,11 +1,9 @@
 import React from 'react';
 import QuizCard from './QuizCard.jsx';
-import { quizzes } from '../../../data.js';
 
-const Quizzes = () => {
-    // Nhóm các quiz theo category
+const Quizzes = ({ filteredQuizzes }) => {
     const categories = {};
-    quizzes.forEach(quiz => {
+    filteredQuizzes.forEach(quiz => {
         if (!categories[quiz.category]) {
             categories[quiz.category] = [];
         }
@@ -18,9 +16,9 @@ const Quizzes = () => {
                 <div key={index} className="mb-8">
                     <h2 className="text-2xl text-white font-bold mb-4">{category}</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {categories[category].map((quiz, idx) => (
+                        {categories[category].map((quiz) => (
                             <QuizCard
-                                key={idx}
+                                key={quiz.id}
                                 title={quiz.title}
                                 duration={quiz.duration}
                                 difficulty={quiz.difficulty}
@@ -35,3 +33,24 @@ const Quizzes = () => {
 };
 
 export default Quizzes;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

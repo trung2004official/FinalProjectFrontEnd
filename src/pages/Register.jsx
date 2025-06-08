@@ -11,7 +11,9 @@ const Register = () => {
                 <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
                     <div className="w-full max-w-md bg-CetaceanBlue p-8 rounded-lg shadow-lg border border-Manatee">
                         <img src={logo} alt="Logo" className="h-24 mx-auto mb-4" />
-                        <p className="text-4xl font-bold text-white text-center mb-6">Welcome to QuizTech</p>
+                        <p className="text-4xl font-bold text-white text-center mb-6">
+                            Welcome to QuizTech
+                        </p>
                         <form>
                             <div className="mb-4">
                                 <label htmlFor="username" className="block text-Grey-light mb-2">Tên người dùng</label>
@@ -60,9 +62,11 @@ const Register = () => {
                                 Đăng ký
                             </button>
                         </form>
-                        <p className="text-center text-Manatee mt-4">
-                            Đã có tài khoản? <Link to="/login" className="text-CadetBlue
-                             hover:underline">Đăng nhập</Link>
+                        <p className="text-Grey-light mt-6 text-center">
+                            Đã có tài khoản?{" "}
+                            <Link to="/login" className="text-CadetBlue hover:underline">
+                                Đăng nhập
+                            </Link>
                         </p>
                     </div>
                 </div>
