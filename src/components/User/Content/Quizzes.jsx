@@ -19,6 +19,7 @@ const Quizzes = ({ filteredQuizzes }) => {
                         {categories[category].map((quiz) => (
                             <QuizCard
                                 key={quiz.id}
+                                id={quiz.id} // Thêm id vào props
                                 title={quiz.title}
                                 duration={quiz.duration}
                                 difficulty={quiz.difficulty}
@@ -33,24 +34,3 @@ const Quizzes = ({ filteredQuizzes }) => {
 };
 
 export default Quizzes;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

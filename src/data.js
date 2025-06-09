@@ -1,9 +1,9 @@
 export const users = [
-    { id: 1, username: 'admin', password: 'admin123', role: 'admin' },
-    { id: 2, username: 'student1', password: 'pass123', role: 'student' },
-    { id: 3, username: 'student2', password: 'pass456', role: 'student' },
-    { id: 4, username: 'teacher1', password: 'teach789', role: 'teacher' },
-    { id: 5, username: 'guest', password: 'guest000', role: 'guest' },
+    { id: 1, username: 'admin', email: 'admin@quiztech.com', password: 'admin123', role: 'admin' },
+    { id: 2, username: 'student1', email: 'student1@quiztech.com', password: 'pass123', role: 'student' },
+    { id: 3, username: 'student2', email: 'student2@quiztech.com', password: 'pass456', role: 'student' },
+    { id: 4, username: 'teacher1', email: 'teacher1@quiztech.com', password: 'teach789', role: 'teacher' },
+    { id: 5, username: 'guest', email: 'guest@quiztech.com', password: 'guest000', role: 'guest' },
 ];
 
 export const quizzes = [

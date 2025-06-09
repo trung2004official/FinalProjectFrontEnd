@@ -25,6 +25,7 @@ const Catalog = () => {
                         {categories[category].map((quiz, idx) => (
                             <QuizCard
                                 key={idx}
+                                id={quiz.id} // Thêm id vào props
                                 title={quiz.title}
                                 duration={quiz.duration}
                                 difficulty={quiz.difficulty}
