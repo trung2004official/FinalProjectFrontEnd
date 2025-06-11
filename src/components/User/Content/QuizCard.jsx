@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const QuizCard = ({ id, title, duration, difficulty, category }) => {
+const QuizCard = ({ id, title, duration, difficulty, major }) => {
     return (
         <div className="relative bg-PurpleNavy p-6 rounded-lg shadow-md flex flex-col justify-between h-64 group">
             <div className="flex-grow flex items-center justify-center">
                 <h3 className="text-xl text-Manatee-light text-center">{title}</h3>
             </div>
-            <div className="text-Grey-dark text-sm mt-4">{category}</div>
+            <div className="text-Grey-dark text-sm mt-4">{major}</div>
             {/* Overlay khi hover */}
             <div className="absolute inset-0 bg-CetaceanBlue bg-opacity-90 p-6 rounded-lg flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <h3 className="text-lg text-white font-bold mb-2">{title}</h3>

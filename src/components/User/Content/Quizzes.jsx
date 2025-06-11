@@ -2,28 +2,28 @@ import React from 'react';
 import QuizCard from './QuizCard.jsx';
 
 const Quizzes = ({ filteredQuizzes }) => {
-    const categories = {};
+    const majors = {};
     filteredQuizzes.forEach(quiz => {
-        if (!categories[quiz.category]) {
-            categories[quiz.category] = [];
+        if (!majors[quiz.major]) {
+            majors[quiz.major] = [];
         }
-        categories[quiz.category].push(quiz);
+        majors[quiz.major].push(quiz);
     });
 
     return (
         <div className="container mx-auto p-6">
-            {Object.keys(categories).map((category, index) => (
+            {Object.keys(majors).map((major, index) => (
                 <div key={index} className="mb-8">
-                    <h2 className="text-2xl text-white font-bold mb-4">{category}</h2>
+                    <h2 className="text-2xl text-white font-bold mb-4">{major}</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {categories[category].map((quiz) => (
+                        {majors[major].map((quiz) => (
                             <QuizCard
                                 key={quiz.id}
                                 id={quiz.id} // Thêm id vào props
                                 title={quiz.title}
                                 duration={quiz.duration}
                                 difficulty={quiz.difficulty}
-                                category={quiz.category}
+                                major={quiz.major}
                             />
                         ))}
                     </div>
