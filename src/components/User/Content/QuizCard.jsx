@@ -19,7 +19,7 @@ const QuizCard = ({ id, title, duration, difficulty, major }) => {
                             Làm bài thi
                         </button>
                     </Link>
-                    <Link to={`/quizdetail/${title.toLowerCase().replace(/\s/g, '-')}`}>
+                    <Link to={`/quiz/${title.toLowerCase().replace(/\s/g, '-')}`}>
                         <button className="bg-CetaceanBlue-light text-white py-2 px-4 rounded-lg hover:bg-CetaceanBlue-dark transition duration-200">
                             Xem chi tiết
                         </button>
