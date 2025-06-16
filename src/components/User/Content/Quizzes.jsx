@@ -19,7 +19,7 @@ const Quizzes = ({ filteredQuizzes }) => {
                         {majors[major].map((quiz) => (
                             <QuizCard
                                 key={quiz.id}
-                                id={quiz.id} // Thêm id vào props
+                                id={quiz.id}
                                 title={quiz.title}
                                 duration={quiz.duration}
                                 difficulty={quiz.difficulty}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { quizzes } from '../data.js'; // Điều chỉnh đường dẫn
+import { quizzes } from '../data.js';
 
 const QuizTest = () => {
     const { id } = useParams(); // Được gọi ở top-level

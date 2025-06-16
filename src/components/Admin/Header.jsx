@@ -1,14 +1,10 @@
-import React from 'react'
-import Navbar from './Navbar'
-import Sidebar from './Sidebar'
+import React from 'react';
+import Navbar from './Navbar';
 
-const Header = () => {
-  return (
-    <header className='flex'>
-
-      <Navbar/>
+const Header = () => (
+    <header className="bg-gray-800 p-4 shadow-md">
+        <Navbar />
     </header>
-  )
-}
+);
 
-export default Header
+export default Header;
