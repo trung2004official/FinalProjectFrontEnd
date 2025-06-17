@@ -1,10 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { quizzes } from '../data.js';
+import axios from 'axios';
+import { BASE_URL } from '../../services/api.jsx';
 
 const QuizTest = () => {
     const { id } = useParams(); // Được gọi ở top-level
     const quizId = parseInt(id, 10);
+
+    const getQuizzesQuestionsData = async () => {
+        try {
+            const response = await axios.get(`${BASE_URL}/api/quizzes-questions/${id}`);
+            console.log('quizzes_questions_data: ', response.data);
+        } catch (error) {
+            console.error('Server error: ', error);
+        }
+    };
+
+    useEffect(() => {
+        getQuizzesQuestionsData();
+    }, []);
+
 
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState('');

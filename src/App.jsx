@@ -21,8 +21,8 @@ function App() {
                     <Route path="/" element={<AdminLayout />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/quiz" element={<Quiz />} />
-                    <Route path="/quiz/:title" element={<QuizDetails />} />
-                    <Route path="/quiz/:id" element={<QuizTest />} />
+                    <Route path="/quiz/:id" element={<QuizDetails />} />
+                    {/* <Route path="/quiz/:id" element={<QuizTest />} /> */}
                     <Route path="/quiz/result/:id" element={<QuizResult />} /> {/* Route cho kết quả */}
                     <Route path="/profile/:username" element={<Profile />} />
                 </Routes>
