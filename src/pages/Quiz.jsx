@@ -5,12 +5,14 @@ import Quizzes from '../components/User/Content/Quizzes.jsx';
 import SearchBar from '../components/User/Content/SearchBar.jsx';
 import { BASE_URL } from '../../services/api.jsx';
 import axios from 'axios';
+import LoadingSpinner from '../components/LoadingSpinner.jsx';
 
 const Quiz = () => {
     const [quizzes, setQuizzes] = useState([]);
     const [filteredQuizzes, setFilteredQuizzes] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-        const getQuizData = async () => {
+    const getQuizData = async () => {
         try {
             const response = await axios.get(`${BASE_URL}/api/quiz`);
             console.log(response.data);
@@ -21,9 +23,22 @@ const Quiz = () => {
         }
     };
 
+
+    useEffect(() => {
+        // Giả lập delay
+        setTimeout(() => {
+            setLoading(false);
+        }, 5000);
+    }, []);
+
     useEffect(() => {
         getQuizData();
     }, []);
+
+
+    if(loading) {
+        return <LoadingSpinner/>
+    }
 
     return (
         <div className="min-h-screen bg-CadetBlue text-white">

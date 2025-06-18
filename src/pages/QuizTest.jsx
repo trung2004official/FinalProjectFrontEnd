@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link, useSearchParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from '../../services/api.jsx';
+import LoadingSpinner from '../components/LoadingSpinner.jsx';
 
 const QuizTest = () => {
     const { quizId } = useParams(); // Được gọi ở top-level
@@ -138,9 +139,7 @@ const QuizTest = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-CetaceanBlue text-white flex items-center justify-center text-lg font-semibold">
-                Đang tải dữ liệu bài thi...
-            </div>
+            <LoadingSpinner/>
         );
     }
 
