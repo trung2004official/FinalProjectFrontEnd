@@ -20,7 +20,7 @@ const QuizTest = () => {
             const { questions, quiz } = response.data;
             setQuiz(quiz);
             setQuestions(questions);
-            setLoading(false)
+            setLoading(false);
         } catch (error) {
             console.error('Server error: ', error);
             setLoading(false);
@@ -88,17 +88,23 @@ const QuizTest = () => {
     };
 
     const handleSubmit = async () => {
-    try {
-        const response = await axios.post(`${BASE_URL}/api/answers-attempts/${attemptId}`, {
-        answers,
-        });
-        console.log('answer submitting: ', answers);
-        const { correct, wrong, skipped } = response.data;
-        alert(`🎉 Nộp bài thành công!\n✅ Đúng: ${correct}\n❌ Sai: ${wrong}\n⏭ Bỏ qua: ${skipped}`);
-    } catch (error) {
-        console.error('Lỗi khi nộp bài:', error);
-        alert('Nộp bài thất bại. Vui lòng thử lại!');
-    }
+        try {
+            const response = await axios.post(`${BASE_URL}/api/answers-attempts/${attemptId}`, {
+                answers,
+            });
+            console.log('answer submitting: ', answers);
+            console.log('response answer data: ',response.data);
+            const { correct, wrong, skipped } = response.data.data;
+            alert(`
+                🎉 Nộp bài thành công!\n✅ Đúng: ${correct}\n
+                ❌ Sai: ${wrong}\n
+                ⏭ Bỏ qua: ${skipped}
+            `);
+            
+        } catch (error) {
+            console.error('Lỗi khi nộp bài:', error);
+            alert('Nộp bài thất bại. Vui lòng thử lại!');
+        }
     };
         
     useEffect(() => {
