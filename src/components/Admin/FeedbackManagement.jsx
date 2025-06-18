@@ -15,9 +15,9 @@ const FeedbackManagement = () => {
     };
 
     return (
-        <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-            <h2 className="text-lg font-semibold mb-4">Quản lý phản hồi</h2>
-            <table className="w-full text-left">
+        <div className="bg-PurpleNavy-light p-6 rounded-lg shadow-lg">
+            <h2 className="text-2xl text-CetaceanBlue-dark font-semibold mb-4">Quản lý phản hồi</h2>
+            <table className="w-full text-left bg-CetaceanBlue">
                 <thead>
                 <tr className="border-b border-gray-600">
                     <th className="p-2">Người gửi</th>
@@ -27,7 +27,7 @@ const FeedbackManagement = () => {
                     <th className="p-2">Hành động</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody className='bg-CetaceanBlue-light'>
                 {feedbacks.map(fb => (
                     <tr key={fb.id} className="border-b border-gray-700">
                         <td className="p-2">{fb.user}</td>

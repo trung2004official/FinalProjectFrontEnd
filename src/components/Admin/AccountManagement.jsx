@@ -33,15 +33,17 @@ const AccountManagement = () => {
     };
 
     return (
-        <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-            <h2 className="text-lg font-semibold mb-4">Quản lý tài khoản</h2>
-            <button
-                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg mb-4"
-                onClick={addAccount}
-            >
-                Thêm tài khoản
-            </button>
-            <table className="w-full text-left">
+        <div className="bg-PurpleNavy-light p-6 rounded-lg shadow-lg">
+            <div className='flex justify-between mb-4'>
+                <h2 className="text-2xl text-CetaceanBlue-dark font-semibold mb-4">Quản lý tài khoản</h2>
+                <button
+                    className="bg-CetaceanBlue hover:bg-CetaceanBlue-light text-white px-4 py-2 rounded-lg mb-4"
+                    onClick={addAccount}
+                >
+                    Thêm tài khoản
+                </button>
+            </div>
+            <table className="w-full text-left bg-CetaceanBlue rounded-lg">
                 <thead>
                 <tr className="border-b border-gray-600">
                     <th className="p-2">Tên đăng nhập</th>
@@ -51,7 +53,7 @@ const AccountManagement = () => {
                     <th className="p-2">Hành động</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody className='bg-CetaceanBlue-light'>
                 {accounts.map(acc => (
                     <tr key={acc.id} className="border-b border-gray-700">
                         <td className="p-2">{acc.username}</td>

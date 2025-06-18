@@ -11,7 +11,7 @@ import FeedbackManagement from '../../components/Admin/FeedbackManagement';
 const AdminLayout = () => {
     const [activeTab, setActiveTab] = useState('stats');
     return (
-        <div className="flex min-h-screen bg-gray-900 text-white">
+        <div className="flex min-h-screen bg-PurpleNavy text-white">
             <Sidebar setActiveTab={setActiveTab} />
             <div className="flex-1 flex flex-col">
                 <Header />

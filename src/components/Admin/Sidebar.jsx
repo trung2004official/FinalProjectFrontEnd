@@ -15,7 +15,7 @@ const ItemContainer = ({ logo, title, setActiveTab, tab }) => (
 );
 
 const Sidebar = ({ setActiveTab }) => (
-    <aside className="w-64 bg-gray-800 p-4 flex flex-col gap-4">
+    <aside className="w-64 bg-CetaceanBlue p-4 flex flex-col gap-4">
         <div className="border-b-2 border-gray-600 pb-4">
             <img src={Logo} alt="QuizTech" className="w-20 h-20 mx-auto" />
         </div>

@@ -69,13 +69,6 @@ th, td {
     text-align: left;
     border-bottom: 1px solid #333;
 }
-th {
-    background-color: #2a2f4a;
-    color: #b19cd9;
-}
-td {
-    color: #ccc;
-}
 .checkbox {
     margin-right: 10px;
 }
@@ -93,6 +86,5 @@ td {
 }
 .pagination {
     text-align: right;
-    color: #b19cd9;
     margin-top: 10px;
 }

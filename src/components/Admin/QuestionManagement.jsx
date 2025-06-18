@@ -19,37 +19,44 @@ const QuestionManagement = () => {
     };
 
     return (
-        <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-            <h2 className="text-lg font-semibold mb-4">Quản lý câu hỏi</h2>
-            <button
-                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg mb-4"
-                onClick={addQuestion}
-            >
-                Thêm câu hỏi
-            </button>
-            <table className="w-full text-left">
+        <div className="bg-PurpleNavy-light p-6 rounded-lg shadow-lg">
+            <div className='flex justify-between'>
+                <h2 className="text-2xl text-CetaceanBlue-dark font-semibold mb-4">Quản lý câu hỏi</h2>
+                <button
+                    className="bg-CetaceanBlue hover:bg-CetaceanBlue-light text-white px-4 py-2 rounded-lg mb-4"
+                    onClick={addQuestion}
+                >
+                    Thêm câu hỏi
+                </button>
+            </div>
+            <table className="w-full text-left bg-CetaceanBlue rounded-lg">
                 <thead>
                 <tr className="border-b border-gray-600">
-                    <th className="p-2">Câu hỏi</th>
-                    <th className="p-2">Đáp án</th>
+                    <th className="p-2">Nội dung</th>
+                    <th className="p-2">Chuyên ngành</th>
+                    <th className="p-2">Số điểm</th>
                     <th className="p-2">Hành động</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody className='bg-CetaceanBlue-light'>
                 {questions.map(q => (
                     <tr key={q.id} className="border-b border-gray-700">
                         <td className="p-2">{q.text}</td>
+                        <td className="p-2">{q.text}</td>
                         <td className="p-2">{q.answer}</td>
                         <td className="p-2">
+                            <a href="" className="text-Emerald hover:underline mr-2">
+                                Xem chi tiết
+                            </a>
                             <button
-                                className="text-blue-400 hover:underline mr-2"
-                                onClick={() => editQuestion(q.id, prompt('Câu hỏi mới:', q.text), prompt('Đáp án mới:', q.answer))}
+                                className="text-Amber hover:underline mr-2"
+                                onClick={''}
                             >
                                 Sửa
                             </button>
                             <button
                                 className="text-red-400 hover:underline"
-                                onClick={() => deleteQuestion(q.id)}
+                                onClick={''}
                             >
                                 Xóa
                             </button>
