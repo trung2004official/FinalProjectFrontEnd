@@ -31,11 +31,10 @@ const Login = () => {
           "Bạn đã đăng nhập vào hệ thống",
           "success"
         );
-        console.log('user: ',loginUser);
-        if (loginUser.role === 'user'){
-          navigate('/quiz');
-        }
-        setLoginUser();
+        console.log('user: ',decodedToken);
+      }
+      if (decodedToken.role === 'user') {
+        navigate('/quiz');
       }
     } catch (error) {
       console.error('Server Error: ', error);
