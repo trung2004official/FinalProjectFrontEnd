@@ -16,7 +16,7 @@ const Header = () => {
 
     // Hàm đăng xuất
     const handleLogout = () => {
-        localStorage.removeItem('currentUser');
+        localStorage.removeItem('token');
         setUsername('guest');
     };
 

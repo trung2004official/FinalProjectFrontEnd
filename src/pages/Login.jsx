@@ -31,6 +31,10 @@ const Login = () => {
           "Bạn đã đăng nhập vào hệ thống",
           "success"
         );
+        console.log('user: ',loginUser);
+        if (loginUser.role === 'user'){
+          navigate('/quiz');
+        }
         setLoginUser();
       }
     } catch (error) {

@@ -1,51 +1,53 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from '../../services/api.jsx';
 
 const QuizTest = () => {
     const { quizId } = useParams(); // Được gọi ở top-level
+    const [searchParams] = useSearchParams();
+    const attemptId = searchParams.get('attemptId');
     const [quiz, setQuiz] = useState({});
     const [questions, setQuestions] = useState([]);
     const [answers, setAnswers] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [remainingTime, setRemainingTime] = useState(null);
+    const [attempt, setAttempt] = useState({});
 
     const getQuizzesQuestionsData = async () => {
         try {
             const response = await axios.get(`${BASE_URL}/api/quizzes-questions/${quizId}`);
-            const {questions, quiz} = response.data;
+            const { questions, quiz } = response.data;
             setQuiz(quiz);
             setQuestions(questions);
+            setLoading(false)
         } catch (error) {
             console.error('Server error: ', error);
+            setLoading(false);
         }
     };
 
+
+    const getQuizAttemptData = async () => {
+        try {
+            const response = await axios.get(`${BASE_URL}/api/attempts/${attemptId}`);
+            const { quiz_attempt } = response.data;
+            setAttempt(quiz_attempt);
+        } catch (error) {
+            console.error('Server error: ', error);
+        }
+    }
+
     useEffect(() => {
         getQuizzesQuestionsData();
+        getQuizAttemptData();
     }, [quizId]);
-    console.log('quiz: ',quiz);
-    console.log('questions: ',questions);
-
+    console.log('quiz: ', quiz);
+    console.log('questions: ', questions);
+    console.log('quiz_attempt: ', attempt);
 
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState('');
-
-
-    // useEffect(() => {
-    //     console.log('Debug - URL ID:', id);
-    //     console.log('Debug - Parsed Quiz ID:', quizId);
-    //     console.log('Debug - Available Quizzes:', quizzes.map(q => ({ id: q.id, title: q.title })));
-    //     const foundQuiz = quizzes.find(q => q.id === quizId) || (id === undefined ? null : quizzes[0]);
-    //     console.log('Debug - Found Quiz:', foundQuiz);
-    //     setQuiz(foundQuiz);
-    //     if (foundQuiz) {
-    //         setAnswers(Array(foundQuiz.questions.length).fill(''));
-    //     }
-    // }, [id, quizId]); // Dependencies
-
-    // if (!quiz) return <div>Không tìm thấy bài quiz! URL ID: {id} (Parsed ID: {quizId}) - Quizzes IDs: {JSON.stringify(quizzes.map(q => q.id))}</div>;
-
-    // const answeredCount = answers.filter(answer => answer !== '').length;
 
     const handleAnswerSelect = (answerId) => {
         const questionId = questions[currentQuestionIndex].id;
@@ -57,7 +59,7 @@ const QuizTest = () => {
             [questionId]: answerId,
         }));
 
-        if (currentQuestionIndex < quiz.questions.length - 1) {
+        if (currentQuestionIndex < questions.length - 1) {
             setTimeout(() => {
                 const nextIndex = currentQuestionIndex + 1;
                 const nextQuestionId = questions[nextIndex].id;
@@ -85,27 +87,70 @@ const QuizTest = () => {
         }
     };
 
-    // const handleSubmit = () => {
-    //     const userData = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    //     const resultData = {
-    //         quizId: quiz.id,
-    //         title: quiz.title,
-    //         questions: quiz.questions,
-    //         answers,
-    //         correctCount: answers.filter((ans, idx) => ans === quiz.questions[idx].correctAnswer).length,
-    //         totalQuestions: quiz.questions.length,
-    //         completedAt: new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', hour12: true }), // 04:46 PM +07
-    //     };
-    //     localStorage.setItem(`quizResult_${quizId}_${userData.username}`, JSON.stringify(resultData));
-    //     window.location.href = `/quiz/result/${quizId}`;
-    // };
+    const handleSubmit = async () => {
+    try {
+        const response = await axios.post(`${BASE_URL}/api/answers-attempts/${attemptId}`, {
+        answers,
+        });
+        console.log('answer submitting: ', answers);
+        const { correct, wrong, skipped } = response.data;
+        alert(`🎉 Nộp bài thành công!\n✅ Đúng: ${correct}\n❌ Sai: ${wrong}\n⏭ Bỏ qua: ${skipped}`);
+    } catch (error) {
+        console.error('Lỗi khi nộp bài:', error);
+        alert('Nộp bài thất bại. Vui lòng thử lại!');
+    }
+    };
+        
+    useEffect(() => {
+        if (!quiz.duration || !attempt.start_time) return;
+
+        const totalTime = quiz.duration * 60 * 1000;
+        const start = new Date(attempt.start_time).getTime();
+        const end = start + totalTime;
+
+        const interval = setInterval(() => {
+            const now = Date.now();
+            const diff = Math.max(0, end - now);
+            setRemainingTime(diff);
+
+            if (diff <= 0) {
+                clearInterval(interval);
+                // auto-submit nếu muốn
+            }
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [quiz, attempt]);
+
+    const formatTime = (ms) => {
+        const totalSec = Math.floor(ms / 1000);
+        const min = String(Math.floor(totalSec / 60)).padStart(2, '0');
+        const sec = String(totalSec % 60).padStart(2, '0');
+        return `${min}:${sec}`;
+    };
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-CetaceanBlue text-white flex items-center justify-center text-lg font-semibold">
+                Đang tải dữ liệu bài thi...
+            </div>
+        );
+    }
+
+
 
     return (
         <div className="min-h-screen bg-CetaceanBlue text-gray-300 p-6">
             <div className="max-w-5xl mx-auto space-y-6">
-                <div className="text-lg font-medium">
-                    Câu <span className="font-bold text-Emerald">{currentQuestionIndex + 1}</span>/{questions.length}
-                    <span className="ml-2 text-gray-500">(Đã trả lời: 0/{questions.length})</span>
+                <div className='flex justify-between'>
+
+                    <div className="text-lg font-medium">
+                        Câu <span className="font-bold text-Emerald">{currentQuestionIndex + 1}</span>/{questions.length}
+                        <span className="ml-2 text-gray-500">(Đã trả lời: 0/{questions.length})</span>
+                    </div>
+                    <div>
+                        <span className='text-red-500 font-bold'>Thời gian làm bài: {remainingTime !== null ? formatTime(remainingTime) : '...'}</span>
+                    </div>
                 </div>
 
                 <div className="flex flex-col md:flex-row gap-6">
@@ -152,9 +197,9 @@ const QuizTest = () => {
                                 Next
                             </button>
                             <button
-                                onClick=''
+                                onClick={handleSubmit}
                                 className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition disabled:opacity-50"
-                                // disabled={answeredCount === 0}
+                            // disabled={answeredCount === 0}
                             >
                                 Nộp bài
                             </button>
