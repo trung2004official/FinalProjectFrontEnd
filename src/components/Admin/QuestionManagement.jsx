@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 const QuestionManagement = () => {
     const [questions, setQuestions] = useState([
-        { id: 1, text: '2+2 bằng bao nhiêu?', answer: '4' },
-        { id: 2, text: 'H2O là gì?', answer: 'Nước' },
+        { id: 1, text: '...', answer: '...' },
+        { id: 2, text: '...', answer: '...' },
     ]);
 
     const addQuestion = () => {

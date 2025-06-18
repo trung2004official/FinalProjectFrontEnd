@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 const QuizManagement = () => {
     const [quizzes, setQuizzes] = useState([
-        { id: 1, title: 'Đề thi Toán', questions: 10 },
-        { id: 2, title: 'Đề thi Khoa học', questions: 15 },
+        { id: 1, title: '...', questions: 10 },
+        { id: 2, title: '...', questions: 10 },
     ]);
 
     const addQuiz = () => {

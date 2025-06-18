@@ -22,6 +22,9 @@ const Sidebar = ({ setActiveTab }) => (
         <ItemContainer logo={statsIcon} title="Thống kê" setActiveTab={setActiveTab} tab="stats" />
         <ItemContainer logo={quizIcon} title="Đề thi" setActiveTab={setActiveTab} tab="quizzes" />
         <ItemContainer logo={questionIcon} title="Câu hỏi" setActiveTab={setActiveTab} tab="questions" />
+        <ItemContainer logo={quizIcon} title="Tài khoản" setActiveTab={setActiveTab} tab="accounts" />
+        <ItemContainer logo={quizIcon} title="Danh mục" setActiveTab={setActiveTab} tab="categories" />
+        <ItemContainer logo={quizIcon} title="Phản hồi" setActiveTab={setActiveTab} tab="feedback" />
     </aside>
 );
 
