@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link, useSearchParams } from 'react-router-dom';
+import { useParams, Link, useSearchParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from '../../services/api.jsx';
 
@@ -13,6 +13,7 @@ const QuizTest = () => {
     const [loading, setLoading] = useState(true);
     const [remainingTime, setRemainingTime] = useState(null);
     const [attempt, setAttempt] = useState({});
+    const navigate = useNavigate();
 
     const getQuizzesQuestionsData = async () => {
         try {
@@ -100,7 +101,7 @@ const QuizTest = () => {
                 ❌ Sai: ${wrong}\n
                 ⏭ Bỏ qua: ${skipped}
             `);
-            
+            navigate('/home');
         } catch (error) {
             console.error('Lỗi khi nộp bài:', error);
             alert('Nộp bài thất bại. Vui lòng thử lại!');
