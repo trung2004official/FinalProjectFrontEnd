@@ -16,7 +16,7 @@ const QuestionManagement = () => {
             const response = await axios.get(`${BASE_URL}/api/questions`);
             console.log(response.data);
             const {questions} = response.data;
-            console.log('api response: ',questions)
+            console.log('api response: ',questions);
             setQuestions(questions);
         } catch (error) {
             console.error('Server error: ', error);

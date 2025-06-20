@@ -14,7 +14,7 @@ const Quiz = () => {
 
     const getQuizData = async () => {
         try {
-            const response = await axios.get(`${BASE_URL}/api/quiz`);
+            const response = await axios.get(`${BASE_URL}/api/quizzes`);
             console.log(response.data);
             setQuizzes(response.data);
             setFilteredQuizzes(response.data);

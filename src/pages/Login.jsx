@@ -47,9 +47,6 @@ const Login = () => {
       setSubmitting(false);
     }
   };
-
-
-  // const handleSubmit = (e) => {
   //   e.preventDefault();
   //   // Tìm user dựa trên username và password
   //   const foundUser = users.find(u => u.username === username && u.password === password);
