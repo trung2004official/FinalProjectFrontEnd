@@ -74,7 +74,7 @@ const Login = () => {
                         id="username"
                         type="text"
                         name="username"
-                        className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-700 text-white placeholder-gray-400"
+                        className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:outline-none focus:ring-3 focus:ring-CetaceanBlue-dark bg-gray-700 text-white placeholder-gray-400 mb-3"
                         placeholder="Nhập tên đăng nhập"
                     />
                     <ErrorMessage name="username" className="font-bold text-red-500" component="span" />
@@ -85,21 +85,21 @@ const Login = () => {
                         id="password"
                         type="password"
                         name="password"
-                        className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-700 text-white placeholder-gray-400"
+                        className="w-full px-4 py-2 border border-gray-600 rounded-lg focus:outline-none focus:ring-3 focus:ring-CetaceanBlue-dark bg-gray-700 text-white placeholder-gray-400 mb-3"
                         placeholder="Nhập mật khẩu"
                     />
                     <ErrorMessage name="password" className="font-bold text-red-500" component="span" />
                   </div>
                   <button
                       type="submit"
-                      className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+                      className="w-full bg-CetaceanBlue hover:bg-CetaceanBlue-dark text-white py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 hover:cursor-pointer"
                   >
                     Đăng nhập
                   </button>
                 </Form>
               </Formik>
               <p className="text-center text-gray-400 mt-4">
-                Chưa có tài khoản? <Link to="/register" className="text-blue-400 hover:underline">Đăng ký</Link>
+                Chưa có tài khoản? <Link to="/register" className="text-PurpleNavy hover:underline hover:text-white">Đăng ký</Link>
               </p>
             </div>
           </div>

@@ -1,15 +1,15 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { BASE_URL } from '../../../services/api';
+import ReactPaginate from 'react-paginate';
 
-const QuizManagement = () => {
-    const [quizzes, setQuizzes] = useState([]);
+const QuizManagement = (props) => {
 
     const getQuizData = async () => {
         try {
             const response = await axios.get(`${BASE_URL}/api/quizzes`);
             console.log(response.data);
-            setQuizzes(response.data);
+            props.setQuizzes(response.data);
         } catch (error) {
             console.error('Server error: ', error);
         }
@@ -19,17 +19,17 @@ const QuizManagement = () => {
         getQuizData();
     }, []);
 
-    const addQuiz = () => {
-        setQuizzes([...quizzes, { id: quizzes.length + 1, title: `Đề thi mới ${quizzes.length + 1}`, questions: 0 }]);
-    };
+    // const addQuiz = () => {
+    //     setQuizzes([...quizzes, { id: quizzes.length + 1, title: `Đề thi mới ${quizzes.length + 1}`, questions: 0 }]);
+    // };
 
-    const editQuiz = (id, newTitle) => {
-        setQuizzes(quizzes.map(quiz => quiz.id === id ? { ...quiz, title: newTitle } : quiz));
-    };
+    // const editQuiz = (id, newTitle) => {
+    //     setQuizzes(quizzes.map(quiz => quiz.id === id ? { ...quiz, title: newTitle } : quiz));
+    // };
 
-    const deleteQuiz = (id) => {
-        setQuizzes(quizzes.filter(quiz => quiz.id !== id));
-    };
+    // const deleteQuiz = (id) => {
+    //     setQuizzes(quizzes.filter(quiz => quiz.id !== id));
+    // };
 
     return (
         <div className="bg-PurpleNavy-light p-6 rounded-lg shadow-lg">
@@ -45,6 +45,7 @@ const QuizManagement = () => {
             <table className="w-full text-left bg-CetaceanBlue rounded-lg ">
                 <thead className=''>
                     <tr className="border-b border-gray-600">
+                        <th className='p-2'>STT</th>
                         <th className="p-2">Tiêu đề</th>
                         <th className='p-2'>Độ khó</th>
                         <th className='p-2'>Chuyên ngành</th>
@@ -56,8 +57,9 @@ const QuizManagement = () => {
                     </tr>
                 </thead>
                 <tbody className='bg-CetaceanBlue-light'>
-                    {quizzes.map((quiz, index) => (
+                    {props.currentQuizzes && props.currentQuizzes.map((quiz, index) => (
                         <tr key={index} className="border-b border-gray-700">
+                            <td className="p-2">{props.itemOffset + index + 1}</td>
                             <td className="p-2">{quiz.title}</td>
                             <td className="p-2">{quiz.difficulty}</td>
                             <td className="p-2">{quiz.major}</td>
@@ -83,6 +85,22 @@ const QuizManagement = () => {
                     ))}
                 </tbody>
             </table>
+            <ReactPaginate
+                breakLabel="..."
+                nextLabel="Next >"
+                onPageChange={props.onPageChange}
+                pageRangeDisplayed={5}
+                pageCount={props.pageCount}
+                previousLabel="< Prev"
+                renderOnZeroPageCount={null}
+                containerClassName="flex justify-center items-center space-x-2 mt-4"
+                pageClassName="border rounded-md px-3 py-1 hover:bg-CetaceanBlue-light "
+                pageLinkClassName="text-white cursor-pointer"
+                activeClassName="bg-CetaceanBlue text-white"
+                previousClassName="border rounded-md px-3 py-1 hover:bg-CetaceanBlue-light cursor-pointer"
+                nextClassName="border rounded-md px-3 py-1 hover:bg-CetaceanBlue-light cursor-pointer"
+                breakClassName="px-3 py-1"
+            />
         </div>
     );
 };

@@ -1,27 +1,22 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import ReactPaginate from 'react-paginate';
 import { BASE_URL } from '../../../services/api';
 
-const QuestionManagement = () => {
-    const [questions, setQuestions] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5;
-    const indexOfLastQuestion = currentPage * itemsPerPage;
-    const currentQuestions = questions.slice
-
-    // conse totalPages = Math.ceil(quesion)
+const QuestionManagement = (props) => {
 
     const getQuestionData = async () => {
         try {
             const response = await axios.get(`${BASE_URL}/api/questions`);
             console.log(response.data);
-            const {questions} = response.data;
-            console.log('api response: ',questions);
-            setQuestions(questions);
+            const { questions } = response.data;
+            console.log('api response: ', questions);
+            props.setQuestions(questions);
         } catch (error) {
             console.error('Server error: ', error);
         }
     }
+
 
     // const addQuestion = () => {
     //     setQuestions([...questions, { id: questions.length + 1, text: `Câu hỏi mới ${questions.length + 1}`, answer: '' }]);
@@ -51,40 +46,56 @@ const QuestionManagement = () => {
             </div>
             <table className="w-full text-left bg-CetaceanBlue rounded-lg">
                 <thead>
-                <tr className="border-b border-gray-600">
-                    <th className='p-2'>STT</th>
-                    <th className="p-2">Nội dung</th>
-                    <th className="p-2">Chuyên ngành</th>
-                    <th className="p-2">Số điểm</th>
-                    <th className="p-2">Hành động</th>
-                </tr>
+                    <tr className="border-b border-gray-600">
+                        <th className='p-2'>STT</th>
+                        <th className="p-2">Nội dung</th>
+                        <th className="p-2">Chuyên ngành</th>
+                        <th className="p-2">Số điểm</th>
+                        <th className="p-2">Hành động</th>
+                    </tr>
                 </thead>
                 <tbody className='bg-CetaceanBlue-light'>
-                {questions.map((q, index) => (
-                    <tr key={index} className="border-b border-gray-700">
-                        <td className='p-2'>{index+1}</td>
-                        <td className="p-2">{q.content}</td>
-                        <td className="p-2">{q.major}</td>
-                        <td className="p-2">{q.score}</td>
-                        <td className="p-2">
-                            <a href="" className="text-Emerald hover:underline mr-2">
-                                Xem chi tiết
-                            </a>
-                            <button
-                                className="text-Amber hover:underline mr-2"
-                            >
-                                Sửa
-                            </button>
-                            <button
-                                className="text-red-400 hover:underline"
-                            >
-                                Xóa
-                            </button>
-                        </td>
-                    </tr>
-                ))}
+                    {props.currentQuestions && props.currentQuestions.map((q, index) => (
+                        <tr key={index} className="border-b border-gray-700">
+                            <td className='p-2'>{props.itemOffset + index + 1}</td>
+                            <td className="p-2">{q.content}</td>
+                            <td className="p-2">{q.major}</td>
+                            <td className="p-2">{q.score}</td>
+                            <td className="p-2">
+                                <a href="" className="text-Emerald hover:underline mr-2">
+                                    Xem chi tiết
+                                </a>
+                                <button
+                                    className="text-Amber hover:underline mr-2"
+                                >
+                                    Sửa
+                                </button>
+                                <button
+                                    className="text-red-400 hover:underline"
+                                >
+                                    Xóa
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
+            <ReactPaginate
+                breakLabel="..."
+                nextLabel="Next >"
+                onPageChange={props.onPageChange}
+                pageRangeDisplayed={5}
+                pageCount={props.pageCount}
+                previousLabel="< Prev"
+                renderOnZeroPageCount={null}
+                containerClassName="flex justify-center items-center space-x-2 mt-4"
+                pageClassName="border rounded-md px-3 py-1 hover:bg-CetaceanBlue-light "
+                pageLinkClassName="text-white cursor-pointer"
+                activeClassName="bg-CetaceanBlue text-white"
+                previousClassName="border rounded-md px-3 py-1 hover:bg-CetaceanBlue-light cursor-pointer"
+                nextClassName="border rounded-md px-3 py-1 hover:bg-CetaceanBlue-light cursor-pointer"
+                breakClassName="px-3 py-1"
+            />
         </div>
     );
 };
