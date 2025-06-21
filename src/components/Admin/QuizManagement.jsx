@@ -2,8 +2,10 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { BASE_URL } from '../../../services/api';
 import ReactPaginate from 'react-paginate';
+import QuizSetting from './Quiz-Management/QuizSetting';
 
 const QuizManagement = (props) => {
+    const [showModal, setShowModal] = useState(false);
 
     const getQuizData = async () => {
         try {
@@ -19,6 +21,9 @@ const QuizManagement = (props) => {
         getQuizData();
     }, []);
 
+    const handleAddQuiz = () => {
+        
+    }
     // const addQuiz = () => {
     //     setQuizzes([...quizzes, { id: quizzes.length + 1, title: `Đề thi mới ${quizzes.length + 1}`, questions: 0 }]);
     // };
@@ -37,7 +42,7 @@ const QuizManagement = (props) => {
                 <h2 className="text-2xl text-CetaceanBlue-dark font-semibold mb-4">Quản lý đề thi</h2>
                 <button
                     className="bg-CetaceanBlue hover:bg-CetaceanBlue-dark text-white font-bold px-4 py-2 rounded-lg mb-4"
-                    // onClick={addQuiz}
+                    onClick={() => setShowModal(true)}
                 >
                     + Thêm đề thi
                 </button>
@@ -66,17 +71,17 @@ const QuizManagement = (props) => {
                             <td className="p-2">{quiz.duration}</td>
                             <td className="p-2">{quiz.status}</td>
                             <td className="p-2">{quiz.question_count}</td>
-                            <td className="p-2">{quiz.image? quiz.image : 'Chưa có ảnh'}</td>
+                            <td className="p-2">{quiz.image ? quiz.image : 'Chưa có ảnh'}</td>
                             <td className="p-2">
                                 <button
                                     className="text-Amber hover:underline mr-2"
-                                    // onClick={() => editQuiz(quiz.id, prompt('Tiêu đề mới:', quiz.title))}
+                                // onClick={() => editQuiz(quiz.id, prompt('Tiêu đề mới:', quiz.title))}
                                 >
                                     Sửa
                                 </button>
                                 <button
                                     className="text-red-500 hover:underline"
-                                    // onClick={() => deleteQuiz(quiz.id)}
+                                // onClick={() => deleteQuiz(quiz.id)}
                                 >
                                     Xóa
                                 </button>
@@ -101,6 +106,23 @@ const QuizManagement = (props) => {
                 nextClassName="border rounded-md px-3 py-1 hover:bg-CetaceanBlue-light cursor-pointer"
                 breakClassName="px-3 py-1"
             />
+
+            {showModal && (
+<div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
+
+<div className="bg-CetaceanBlue p-6 rounded-lg w-[700px] max-h-[90vh] overflow-y-auto relative z-50">
+
+                        <h3 className="text-xl font-bold mb-4 text-white">Thêm đề thi mới</h3>
+                        <QuizSetting onSubmit={handleAddQuiz} />
+                        <button
+                            className="absolute top-3 right-3 text-white hover:text-red-400 text-xl"
+                            onClick={() => setShowModal(false)}
+                        >
+                            &times;
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
