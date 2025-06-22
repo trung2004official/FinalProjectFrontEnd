@@ -108,9 +108,9 @@ const QuizManagement = (props) => {
             />
 
             {showModal && (
-<div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
+                <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
 
-<div className="bg-CetaceanBlue p-6 rounded-lg w-[700px] max-h-[90vh] overflow-y-auto relative z-50">
+                    <div className="bg-CetaceanBlue p-6 rounded-lg w-[700px] max-h-[90vh] overflow-y-auto relative z-50">
 
                         <h3 className="text-xl font-bold mb-4 text-white">Thêm đề thi mới</h3>
                         <QuizSetting onSubmit={handleAddQuiz} />

@@ -1,45 +1,80 @@
 import React from 'react'
-import { Formik, Form, Field, ErrorMessage } from 'formik'
-import * as Yup from 'yup';
+import { Formik, Field, Form, ErrorMessage } from 'formik'
+import * as Yup from 'yup'
+import axios from 'axios'
+import { BASE_URL } from '../../../../services/api'
+import Swal from 'sweetalert2'
 
-const QuizSetting = () => {
-    const handleSubmit = () => {
-
+const QuestionSetting = ({ questions }) => {
+    const handleAddNewQuestion = async (values) => {
+        try {
+            const response = await axios.post(`${BASE_URL}/api/questions/add-question`, {
+                content: values.content,
+                major: values.major,
+                explaination: values.explaination,
+                difficulty: values.difficulty,
+            });
+            console.log('Câu hỏi vừa thêm: ', response.data);
+            questions.push(response.data.question)
+            if (response.status === 200) {
+                Swal.fire(
+                    'Successful',
+                    'Thêm sản phẩm mới thành công',
+                    'success'
+                );
+            } else {
+                    Swal.fire(
+                        "Error",
+                        "Thêm sản phẩm thất bại",
+                        "error"
+                    );
+            }
+        } catch (error) {
+            console.error('Lỗi server khi thêm câu hỏi: ', error);
+            if (error.status === 409) {
+                Swal.fire(
+                    "Error",
+                    "Đã có câu hỏi này trong hệ thống",
+                    "error"
+                );
+            } else {
+                Swal.fire(
+                    "Error",
+                    "Lỗi Server",
+                    "error"
+                );
+            }
+        }
     }
 
     return (
         <div className="bg-CetaceanBlue-light p-6 rounded-lg text-white z-60">
+
             <Formik
                 initialValues={{
-                    title: '',
+                    content: '',
+                    major: '',
                     explaination: '',
                     difficulty: '',
-                    major: '',
-                    duration: '',
-                    status: '',
-                    question_count: '',
-                    image: '',
                 }}
                 validationSchema={Yup.object({
-                    title: Yup.string().required('Yêu cầu nhập tiêu đề'),
+                    content: Yup.string().required('Yêu cầu nhập nội dung'),
                     difficulty: Yup.string()
                         .required('Yêu cầu chọn độ khó')
                         .oneOf(['Gà mờ', 'Cứng tay', 'Đỉnh kout', 'Trùm cuối'], 'Độ khó không hợp lệ'),
                     major: Yup.string()
                         .required('Yêu cầu chọn chuyên ngành')
                         .oneOf(['Thiết Kế Web', 'Mobile', 'Mạng Máy Tính'], 'Chuyên ngành không hợp lệ'),
-                    explaination: Yup.string(),
-                    duration: Yup.string().required('Nhập thời gian làm bài'),
-                    image: Yup.mixed(),
+                    explaination: Yup.string()
                 })}
-                onSubmit={() => { }}
+                onSubmit={handleAddNewQuestion}
             >
                 <Form className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                         <div className='col-span-2'>
-                            <label htmlFor="title" className="block mb-1">Tiêu đề</label>
-                            <Field name="title" type="text" id="title" className="w-full p-2 rounded bg-PurpleNavy-light text-white cursor-pointer" />
-                            <ErrorMessage name="title" component="div" className="text-red-500 text-sm mt-1" />
+                            <label htmlFor="content" className="block mb-1">Nội dung câu hỏi</label>
+                            <Field name="content" type="text" id="title" className="w-full p-2 rounded bg-PurpleNavy-light text-white cursor-pointer" />
+                            <ErrorMessage name="content" component="div" className="text-red-500 text-sm mt-1" />
                         </div>
 
                         <div className='col-span-2'>
@@ -70,18 +105,6 @@ const QuizSetting = () => {
                             </Field>
                             <ErrorMessage name="major" component="div" className="text-red-500 text-sm mt-1" />
                         </div>
-
-                        <div>
-                            <label htmlFor="duration" className="block mb-1">Thời gian làm bài</label>
-                            <Field name="duration" type="number" id="duration" className="w-full p-2 rounded bg-PurpleNavy-light text-white cursor-pointer" />
-                            <ErrorMessage name="duration" component="div" className="text-red-500 text-sm mt-1" />
-                        </div>
-
-                        <div>
-                            <label htmlFor="image" className="block mb-1">Link ảnh (tùy chọn)</label>
-                            <Field name="image" type="file" id="image" className="w-full p-2 rounded bg-PurpleNavy-light text-white cursor-pointer" />
-                            <ErrorMessage name="image" component="div" className="text-red-500 text-sm mt-1" />
-                        </div>
                     </div>
                     <div className="flex justify-end">
                         <button
@@ -97,4 +120,4 @@ const QuizSetting = () => {
     )
 }
 
-export default QuizSetting;
+export default QuestionSetting
