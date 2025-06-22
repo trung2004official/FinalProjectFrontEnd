@@ -5,7 +5,7 @@ import axios from 'axios'
 import { BASE_URL } from '../../../../services/api'
 import Swal from 'sweetalert2'
 
-const QuestionSetting = ({ questions }) => {
+const QuestionSetting = ({ questions, setQuestions, setShowModal }) => {
     const handleAddNewQuestion = async (values) => {
         try {
             const response = await axios.post(`${BASE_URL}/api/questions/add-question`, {
@@ -15,13 +15,13 @@ const QuestionSetting = ({ questions }) => {
                 difficulty: values.difficulty,
             });
             console.log('Câu hỏi vừa thêm: ', response.data);
-            questions.push(response.data.question)
             if (response.status === 200) {
                 Swal.fire(
                     'Successful',
                     'Thêm sản phẩm mới thành công',
                     'success'
                 );
+                setQuestions([...questions,response.data.question]);
             } else {
                     Swal.fire(
                         "Error",
@@ -44,6 +44,8 @@ const QuestionSetting = ({ questions }) => {
                     "error"
                 );
             }
+        } finally {
+            setShowModal(false);
         }
     }
 

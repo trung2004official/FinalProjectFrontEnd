@@ -102,7 +102,7 @@ const QuestionManagement = (props) => {
                     <div className="bg-CetaceanBlue p-6 rounded-lg w-[700px] max-h-[90vh] overflow-y-auto relative z-50">
 
                         <h3 className="text-xl font-bold mb-4 text-white">Thêm câu hỏi mới</h3>
-                        <QuestionSetting questions={props.questions}/>
+                        <QuestionSetting questions={props.questions} setQuestions={props.setQuestions} setShowModal={setShowModal}/>
                         <button
                             className="absolute top-3 right-3 text-white hover:text-red-400 text-xl"
                             onClick={() => setShowModal(false)}

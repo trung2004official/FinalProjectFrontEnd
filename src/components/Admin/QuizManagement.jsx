@@ -47,7 +47,7 @@ const QuizManagement = (props) => {
                     + Thêm đề thi
                 </button>
             </div>
-            <table className="w-full text-left bg-CetaceanBlue rounded-lg ">
+            <table className="w-full text-center bg-CetaceanBlue rounded-lg ">
                 <thead className=''>
                     <tr className="border-b border-gray-600">
                         <th className='p-2'>STT</th>
@@ -68,7 +68,7 @@ const QuizManagement = (props) => {
                             <td className="p-2">{quiz.title}</td>
                             <td className="p-2">{quiz.difficulty}</td>
                             <td className="p-2">{quiz.major}</td>
-                            <td className="p-2">{quiz.duration}</td>
+                            <td className="p-2">{quiz.duration} phút</td>
                             <td className="p-2">{quiz.status}</td>
                             <td className="p-2">{quiz.question_count}</td>
                             <td className="p-2">{quiz.image ? quiz.image : 'Chưa có ảnh'}</td>
