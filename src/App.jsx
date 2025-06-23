@@ -10,6 +10,11 @@ import QuizDetails from './pages/QuizDetail.jsx';
 import QuizTest from './pages/QuizTest.jsx';
 import QuizResult from './pages/QuizResult.jsx'; // Import component mới
 import Profile from './pages/Profile.jsx';
+import QuizManagement from './components/Admin/QuizManagement';
+import QuestionManagement from './components/Admin/QuestionManagement';
+import Statistics from './components/Admin/Statistics.jsx';
+import AccountManagement from './components/Admin/AccountManagement';
+import CategoryManagement from './components/Admin/CategoryManagement'; import FeedbackManagement from './components/Admin/FeedbackManagement';
 
 function App() {
     return (
@@ -18,7 +23,14 @@ function App() {
                 <Routes>
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
-                    <Route path="/admin" element={<AdminLayout />} />
+                    <Route path="/admin" element={<AdminLayout />}>
+                        <Route index element={<Statistics />} />
+                        <Route path="quizzes" element={<QuizManagement />} />
+                        <Route path="questions" element={<QuestionManagement />} />
+                        <Route path="accounts" element={<AccountManagement />} />
+                        <Route path="categories" element={<CategoryManagement />} />
+                        <Route path="feedback" element={<FeedbackManagement />} />
+                    </Route>
                     <Route path="/" element={<Home />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/quiz" element={<Quiz />} />

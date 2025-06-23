@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 import Header from '../../components/Admin/Header';
 import Sidebar from '../../components/Admin/Sidebar';
-import QuizManagement from '../../components/Admin/QuizManagement';
-import QuestionManagement from '../../components/Admin/QuestionManagement';
-import Statistics from '../../components/Admin/Statistics.jsx';
-import AccountManagement from '../../components/Admin/AccountManagement';
-import CategoryManagement from '../../components/Admin/CategoryManagement';
-import FeedbackManagement from '../../components/Admin/FeedbackManagement';
+
+import { Outlet } from 'react-router-dom';
 
 const AdminLayout = () => {
     const [activeTab, setActiveTab] = useState('stats');
@@ -23,11 +19,12 @@ const AdminLayout = () => {
 
     return (
         <div className="flex min-h-screen bg-PurpleNavy text-white">
-            <Sidebar setActiveTab={setActiveTab} />
+            <Sidebar/>
             <div className="flex-1 flex flex-col">
                 <Header />
                 <main className="container mx-auto p-6">
-                    {activeTab === 'stats' && <Statistics />}
+                    <Outlet/>
+                    {/* {activeTab === 'stats' && <Statistics />}
                     {activeTab === 'quizzes' && <QuizManagement
                         quizzes={data}
                         setQuizzes={setData}
@@ -68,7 +65,7 @@ const AdminLayout = () => {
                         setItemOffset={setItemOffset}
                         currentFeedbacks={currentData}
                         pageCount={pageCount}
-                        onPageChange={handlePageClick} />}
+                        onPageChange={handlePageClick} />} */}
                 </main>
             </div>
         </div>

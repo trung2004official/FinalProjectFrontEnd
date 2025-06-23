@@ -3,28 +3,37 @@ import Logo from '../../assets/quiztech_logo.svg';
 import quizIcon from '../../assets/quiz-icon.svg';
 import questionIcon from '../../assets/message.svg';
 import statsIcon from '../../assets/search.svg';
+import { NavLink } from 'react-router-dom';
 
-const ItemContainer = ({ logo, title, setActiveTab, tab }) => (
-    <div
-        className="flex items-center gap-3 p-3 hover:bg-gray-700 rounded-lg cursor-pointer transition-colors"
-        onClick={() => setActiveTab(tab)}
-    >
-        <img src={logo} alt="" className="w-6 h-6" />
-        <span className="font-semibold">{title}</span>
-    </div>
-);
+const navItems = [
+    { to: '/admin', icon: statsIcon, label: 'Thống kê', end: true },
+    { to: '/admin/quizzes', icon: quizIcon, label: 'Đề thi' },
+    { to: '/admin/questions', icon: questionIcon, label: 'Câu hỏi' },
+    { to: '/admin/accounts', icon: quizIcon, label: 'Tài khoản' },
+    { to: '/admin/categories', icon: quizIcon, label: 'Danh mục' },
+    { to: '/admin/feedback', icon: quizIcon, label: 'Phản hồi' },
+];
 
-const Sidebar = ({ setActiveTab }) => (
+const Sidebar = () => (
     <aside className="w-64 bg-CetaceanBlue p-4 flex flex-col gap-4">
         <div className="border-b-2 border-gray-600 pb-4">
             <img src={Logo} alt="QuizTech" className="w-20 h-20 mx-auto" />
         </div>
-        <ItemContainer logo={statsIcon} title="Thống kê" setActiveTab={setActiveTab} tab="stats" />
-        <ItemContainer logo={quizIcon} title="Đề thi" setActiveTab={setActiveTab} tab="quizzes" />
-        <ItemContainer logo={questionIcon} title="Câu hỏi" setActiveTab={setActiveTab} tab="questions" />
-        <ItemContainer logo={quizIcon} title="Tài khoản" setActiveTab={setActiveTab} tab="accounts" />
-        <ItemContainer logo={quizIcon} title="Danh mục" setActiveTab={setActiveTab} tab="categories" />
-        <ItemContainer logo={quizIcon} title="Phản hồi" setActiveTab={setActiveTab} tab="feedback" />
+        {navItems.map(({ to, icon, label, end }) => (
+            <NavLink
+                key={to}
+                to={to}
+                end={end}
+                className={({ isActive }) =>
+                    `flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-colors font-semibold ${
+                        isActive ? 'bg-gray-700 text-white' : 'hover:bg-gray-700 text-white'
+                    }`
+                }
+            >
+                <img src={icon} alt="" className="w-6 h-6" />
+                <span>{label}</span>
+            </NavLink>
+        ))}
     </aside>
 );
 

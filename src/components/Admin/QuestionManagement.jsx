@@ -6,6 +6,16 @@ import QuestionSetting from './Question-Management/QuestionSetting';
 
 const QuestionManagement = (props) => {
     const [showModal, setShowModal] = useState(false);
+    const [questions, setQuestions] = useState([]);
+    const [itemOffset, setItemOffset] = useState(0);
+    const endOffset = itemOffset + 10;
+    const currentQuestions = questions.slice(itemOffset, endOffset);
+    const pageCount = Math.ceil(questions.length / 10);
+
+    const handlePageClick = (e) => {
+        const newOffset = (e.selected * 10) % questions.length;
+        setItemOffset(newOffset);
+    }
 
     const getQuestionData = async () => {
         try {
@@ -13,7 +23,7 @@ const QuestionManagement = (props) => {
             console.log(response.data);
             const { questions } = response.data;
             console.log('api response: ', questions);
-            props.setQuestions(questions);
+            setQuestions(questions);
         } catch (error) {
             console.error('Server error: ', error);
         }
@@ -54,9 +64,9 @@ const QuestionManagement = (props) => {
                     </tr>
                 </thead>
                 <tbody className='bg-CetaceanBlue-light'>
-                    {props.currentQuestions && props.currentQuestions.map((q, index) => (
+                    {currentQuestions && currentQuestions.map((q, index) => (
                         <tr key={index} className="border-b border-gray-700">
-                            <td className='p-2 text-center'>{props.itemOffset + index + 1}</td>
+                            <td className='p-2 text-center'>{itemOffset + index + 1}</td>
                             <td className="p-2 text-center">{q.content}</td>
                             <td className="p-2 text-center">{q.major}</td>
                             <td className="p-2 text-center">{q.difficulty}</td>
@@ -82,9 +92,9 @@ const QuestionManagement = (props) => {
             <ReactPaginate
                 breakLabel="..."
                 nextLabel="Next >"
-                onPageChange={props.onPageChange}
+                onPageChange={handlePageClick}
                 pageRangeDisplayed={5}
-                pageCount={props.pageCount}
+                pageCount={pageCount}
                 previousLabel="< Prev"
                 renderOnZeroPageCount={null}
                 containerClassName="flex justify-center items-center space-x-2 mt-4"
@@ -102,7 +112,7 @@ const QuestionManagement = (props) => {
                     <div className="bg-CetaceanBlue p-6 rounded-lg w-[700px] max-h-[90vh] overflow-y-auto relative z-50">
 
                         <h3 className="text-xl font-bold mb-4 text-white">Thêm câu hỏi mới</h3>
-                        <QuestionSetting questions={props.questions} setQuestions={props.setQuestions} setShowModal={setShowModal}/>
+                        <QuestionSetting questions={questions} setQuestions={setQuestions} setShowModal={setShowModal}/>
                         <button
                             className="absolute top-3 right-3 text-white hover:text-red-400 text-xl"
                             onClick={() => setShowModal(false)}

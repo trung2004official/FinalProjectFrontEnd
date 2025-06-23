@@ -6,12 +6,22 @@ import QuizSetting from './Quiz-Management/QuizSetting';
 
 const QuizManagement = (props) => {
     const [showModal, setShowModal] = useState(false);
+    const [quizzes, setQuizzes] = useState([]);
+    const [itemOffset, setItemOffset] = useState(0);
+    const endOffset = itemOffset + 10;
+    const currentQuizzes = quizzes.slice(itemOffset, endOffset);
+    const pageCount = Math.ceil(quizzes.length / 10);
 
+    const handlePageClick = (e) => {
+        const newOffset = (e.selected * 10) % quizzes.length;
+        setItemOffset(newOffset);
+    }
+    
     const getQuizData = async () => {
         try {
             const response = await axios.get(`${BASE_URL}/api/quizzes`);
             console.log(response.data);
-            props.setQuizzes(response.data);
+            setQuizzes(response.data);
         } catch (error) {
             console.error('Server error: ', error);
         }
@@ -59,9 +69,9 @@ const QuizManagement = (props) => {
                     </tr>
                 </thead>
                 <tbody className='bg-CetaceanBlue-light'>
-                    {props.currentQuizzes && props.currentQuizzes.map((quiz, index) => (
+                    {currentQuizzes && currentQuizzes.map((quiz, index) => (
                         <tr key={index} className="border-b border-gray-700">
-                            <td className="p-2">{props.itemOffset + index + 1}</td>
+                            <td className="p-2">{itemOffset + index + 1}</td>
                             <td className="p-2">{quiz.title}</td>
                             <td className="p-2">{quiz.difficulty}</td>
                             <td className="p-2">{quiz.major}</td>
@@ -90,9 +100,9 @@ const QuizManagement = (props) => {
             <ReactPaginate
                 breakLabel="..."
                 nextLabel="Next >"
-                onPageChange={props.onPageChange}
+                onPageChange={handlePageClick}
                 pageRangeDisplayed={5}
-                pageCount={props.pageCount}
+                pageCount={pageCount}
                 previousLabel="< Prev"
                 renderOnZeroPageCount={null}
                 containerClassName="flex justify-center items-center space-x-2 mt-4"
@@ -110,7 +120,7 @@ const QuizManagement = (props) => {
                     <div className="bg-CetaceanBlue p-6 rounded-lg w-[700px] max-h-[90vh] overflow-y-auto relative z-50">
 
                         <h3 className="text-xl font-bold mb-4 text-white">Thêm đề thi mới</h3>
-                        <QuizSetting setShowModal={setShowModal} quizzes={props.quizzes} setQuizzes={props.setQuizzes}/>
+                        <QuizSetting setShowModal={setShowModal} quizzes={quizzes} setQuizzes={setQuizzes}/>
                         <button
                             className="absolute top-3 right-3 text-white hover:text-red-400 text-xl"
                             onClick={() => setShowModal(false)}
