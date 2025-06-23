@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { BASE_URL } from '../../../services/api';
-import QuestionSetting from './Question-Management/QuestionSetting';
+import QuestionSetting from '../../components/Admin/Question-Management/QuestionSetting';
 
 const QuestionManagement = (props) => {
     const [showModal, setShowModal] = useState(false);
@@ -112,7 +112,7 @@ const QuestionManagement = (props) => {
                     <div className="bg-CetaceanBlue p-6 rounded-lg w-[700px] max-h-[90vh] overflow-y-auto relative z-50">
 
                         <h3 className="text-xl font-bold mb-4 text-white">Thêm câu hỏi mới</h3>
-                        <QuestionSetting questions={questions} setQuestions={setQuestions} setShowModal={setShowModal}/>
+                        <QuestionSetting questions={questions} setQuestions={setQuestions} setShowModal={setShowModal} />
                         <button
                             className="absolute top-3 right-3 text-white hover:text-red-400 text-xl"
                             onClick={() => setShowModal(false)}

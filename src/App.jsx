@@ -10,11 +10,11 @@ import QuizDetails from './pages/QuizDetail.jsx';
 import QuizTest from './pages/QuizTest.jsx';
 import QuizResult from './pages/QuizResult.jsx'; // Import component mới
 import Profile from './pages/Profile.jsx';
-import QuizManagement from './components/Admin/QuizManagement';
-import QuestionManagement from './components/Admin/QuestionManagement';
-import Statistics from './components/Admin/Statistics.jsx';
-import AccountManagement from './components/Admin/AccountManagement';
-import CategoryManagement from './components/Admin/CategoryManagement'; import FeedbackManagement from './components/Admin/FeedbackManagement';
+import QuizManagement from './pages/Admin/QuizManagement.jsx';
+import QuestionManagement from './pages/Admin/QuestionManagement.jsx';
+import Statistics from './pages/Admin/Statistics.jsx';
+import AccountManagement from './pages/Admin/AccountManagement.jsx';
+import CategoryManagement from './pages/Admin/CategoryManagement.jsx'; import FeedbackManagement from './pages/Admin/FeedbackManagement.jsx';
 
 function App() {
     return (

@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { BASE_URL } from '../../../services/api';
 import ReactPaginate from 'react-paginate';
-import QuizSetting from './Quiz-Management/QuizSetting';
+import QuizSetting from '../../components/Admin/Quiz-Management/QuizSetting';
 
 const QuizManagement = (props) => {
     const [showModal, setShowModal] = useState(false);
@@ -16,7 +16,7 @@ const QuizManagement = (props) => {
         const newOffset = (e.selected * 10) % quizzes.length;
         setItemOffset(newOffset);
     }
-    
+
     const getQuizData = async () => {
         try {
             const response = await axios.get(`${BASE_URL}/api/quizzes`);
@@ -120,7 +120,7 @@ const QuizManagement = (props) => {
                     <div className="bg-CetaceanBlue p-6 rounded-lg w-[700px] max-h-[90vh] overflow-y-auto relative z-50">
 
                         <h3 className="text-xl font-bold mb-4 text-white">Thêm đề thi mới</h3>
-                        <QuizSetting setShowModal={setShowModal} quizzes={quizzes} setQuizzes={setQuizzes}/>
+                        <QuizSetting setShowModal={setShowModal} quizzes={quizzes} setQuizzes={setQuizzes} />
                         <button
                             className="absolute top-3 right-3 text-white hover:text-red-400 text-xl"
                             onClick={() => setShowModal(false)}
