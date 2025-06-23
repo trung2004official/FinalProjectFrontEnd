@@ -21,9 +21,6 @@ const QuizManagement = (props) => {
         getQuizData();
     }, []);
 
-    const handleAddQuiz = () => {
-        
-    }
     // const addQuiz = () => {
     //     setQuizzes([...quizzes, { id: quizzes.length + 1, title: `Đề thi mới ${quizzes.length + 1}`, questions: 0 }]);
     // };
@@ -113,7 +110,7 @@ const QuizManagement = (props) => {
                     <div className="bg-CetaceanBlue p-6 rounded-lg w-[700px] max-h-[90vh] overflow-y-auto relative z-50">
 
                         <h3 className="text-xl font-bold mb-4 text-white">Thêm đề thi mới</h3>
-                        <QuizSetting onSubmit={handleAddQuiz} />
+                        <QuizSetting setShowModal={setShowModal} quizzes={props.quizzes} setQuizzes={props.setQuizzes}/>
                         <button
                             className="absolute top-3 right-3 text-white hover:text-red-400 text-xl"
                             onClick={() => setShowModal(false)}

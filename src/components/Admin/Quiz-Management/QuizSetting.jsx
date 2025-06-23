@@ -1,10 +1,38 @@
 import React from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
+import axios from 'axios';
+import { BASE_URL } from '../../../../services/api';
+import Swal from 'sweetalert2';
 
-const QuizSetting = () => {
-    const handleSubmit = () => {
-
+const QuizSetting = ({setShowModal, quizzes, setQuizzes}) => {
+    const handleAddQuiz = async (values) => {
+        try {
+            const response = await axios.post(`${BASE_URL}/api/quizzes/create-quiz`, {
+                title: values.title,
+                duration: values.duration,
+                difficulty: values.difficulty,
+                major: values.major,
+            });
+            console.log(response.data);
+            if (response.status === 201) {
+                Swal.fire(
+                    'Successful',
+                    'Thêm Quiz mới thành công',
+                    'success',
+                );
+                setQuizzes([...quizzes, response.data.quiz]);
+            }
+        } catch(error) {
+            console.error('Lỗi khi thêm quiz mới: ', error);
+            Swal.fire(
+                'Lỗi Server',
+                'Không thể thêm quiz mới',
+                'error',
+            );
+        } finally {
+            setShowModal(false);
+        }
     }
 
     return (
@@ -12,12 +40,10 @@ const QuizSetting = () => {
             <Formik
                 initialValues={{
                     title: '',
-                    explaination: '',
+                    description: '',
                     difficulty: '',
                     major: '',
                     duration: '',
-                    status: '',
-                    question_count: '',
                     image: '',
                 }}
                 validationSchema={Yup.object({
@@ -28,11 +54,11 @@ const QuizSetting = () => {
                     major: Yup.string()
                         .required('Yêu cầu chọn chuyên ngành')
                         .oneOf(['Thiết Kế Web', 'Mobile', 'Mạng Máy Tính'], 'Chuyên ngành không hợp lệ'),
-                    explaination: Yup.string(),
+                    description: Yup.string(),
                     duration: Yup.string().required('Nhập thời gian làm bài'),
                     image: Yup.mixed(),
                 })}
-                onSubmit={() => { }}
+                onSubmit={handleAddQuiz}
             >
                 <Form className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
@@ -43,9 +69,9 @@ const QuizSetting = () => {
                         </div>
 
                         <div className='col-span-2'>
-                            <label htmlFor="explaination" className="block mb-1">Mô tả</label>
-                            <Field name="explaination" type="text" id="explaination" className="w-full h-14 p-2 rounded bg-PurpleNavy-light text-white cursor-pointer" />
-                            <ErrorMessage name="explaination" component="div" className="text-red-500 text-sm mt-1" />
+                            <label htmlFor="description" className="block mb-1">Mô tả</label>
+                            <Field name="description" type="text" id="description" className="w-full h-14 p-2 rounded bg-PurpleNavy-light text-white cursor-pointer" />
+                            <ErrorMessage name="description" component="div" className="text-red-500 text-sm mt-1" />
                         </div>
 
                         <div>
