@@ -1,8 +1,10 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { BASE_URL } from '../../../services/api';
 import ReactPaginate from 'react-paginate';
 import QuizSetting from '../../components/Admin/Quiz-Management/QuizSetting';
+import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const QuizManagement = (props) => {
     const [showModal, setShowModal] = useState(false);
@@ -11,6 +13,7 @@ const QuizManagement = (props) => {
     const endOffset = itemOffset + 10;
     const currentQuizzes = quizzes.slice(itemOffset, endOffset);
     const pageCount = Math.ceil(quizzes.length / 10);
+    const navigate = useNavigate();
 
     const handlePageClick = (e) => {
         const newOffset = (e.selected * 10) % quizzes.length;
@@ -30,18 +33,6 @@ const QuizManagement = (props) => {
     useEffect(() => {
         getQuizData();
     }, []);
-
-    // const addQuiz = () => {
-    //     setQuizzes([...quizzes, { id: quizzes.length + 1, title: `Đề thi mới ${quizzes.length + 1}`, questions: 0 }]);
-    // };
-
-    // const editQuiz = (id, newTitle) => {
-    //     setQuizzes(quizzes.map(quiz => quiz.id === id ? { ...quiz, title: newTitle } : quiz));
-    // };
-
-    // const deleteQuiz = (id) => {
-    //     setQuizzes(quizzes.filter(quiz => quiz.id !== id));
-    // };
 
     return (
         <div className="bg-PurpleNavy-light p-6 rounded-lg shadow-lg">
@@ -80,18 +71,9 @@ const QuizManagement = (props) => {
                             <td className="p-2">{quiz.question_count}</td>
                             <td className="p-2">{quiz.image ? quiz.image : 'Chưa có ảnh'}</td>
                             <td className="p-2">
-                                <button
-                                    className="text-Amber hover:underline mr-2"
-                                // onClick={() => editQuiz(quiz.id, prompt('Tiêu đề mới:', quiz.title))}
-                                >
-                                    Sửa
-                                </button>
-                                <button
-                                    className="text-red-500 hover:underline"
-                                // onClick={() => deleteQuiz(quiz.id)}
-                                >
-                                    Xóa
-                                </button>
+                                <FaEye className='inline text-lg m-2 cursor-pointer' onClick={() => navigate(`/admin/quizzes/${quiz.id}`)}/>
+                                <FaEdit className='inline text-lg m-2 text-Amber cursor-pointer' />
+                                <FaTrash className='inline text-lg m-2 text-red-500 cursor-pointer' />
                             </td>
                         </tr>
                     ))}

@@ -15,6 +15,7 @@ import QuestionManagement from './pages/Admin/QuestionManagement.jsx';
 import Statistics from './pages/Admin/Statistics.jsx';
 import AccountManagement from './pages/Admin/AccountManagement.jsx';
 import CategoryManagement from './pages/Admin/CategoryManagement.jsx'; import FeedbackManagement from './pages/Admin/FeedbackManagement.jsx';
+import QuizManagementDetails from './pages/Admin/Quiz/QuizManagementDetails.jsx';
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
                     <Route path="/admin" element={<AdminLayout />}>
                         <Route index element={<Statistics />} />
                         <Route path="quizzes" element={<QuizManagement />} />
+                        <Route path='quizzes/:id' element={<QuizManagementDetails/>}/>
                         <Route path="questions" element={<QuestionManagement />} />
                         <Route path="accounts" element={<AccountManagement />} />
                         <Route path="categories" element={<CategoryManagement />} />
