@@ -93,9 +93,14 @@ const QuizTest = () => {
     const handleSubmit = async () => {
         try {
             const token = localStorage.getItem('token');
+            const allAnswers = {};
+            questions.forEach((question) => {
+                const questionId = question.id;
+                allAnswers[questionId] = answers[questionId] || null; // Ensure all questions are included
+            });
             const response = await axios.post(
                 `${BASE_URL}/api/answers-attempts/${attemptId}`,
-                { answers },
+                { answers: allAnswers },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             const { correct, wrong, skipped } = response.data.data;
@@ -106,7 +111,7 @@ const QuizTest = () => {
             //     confirmButtonColor: '#2E7D32', // Emerald
             // }).then(() => {
                 navigate('/quiz/result', {
-                    state: { correct, wrong, skipped,questions, quizId, attemptId },
+                    state: { correct, wrong, skipped, questions, quizId, attemptId },
                 })
             // });
         } catch (error) {
