@@ -1,68 +1,70 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
+import { BASE_URL } from '../../services/api';
 
 const QuizResult = () => {
-    const { id } = useParams();
-    const quizId = parseInt(id, 10);
-    const [result, setResult] = useState(null);
+  const location = useLocation();
+  const { correct, wrong, skipped, questions, attemptId } = location.state || {};
+  const [resultDetails, setResultDetails] = useState(null);
 
-    useEffect(() => {
-        const userData = JSON.parse(localStorage.getItem('currentUser') || '{}');
-        const storedResult = localStorage.getItem(`quizResult_${quizId}_${userData.username}`);
-        if (storedResult) {
-            setResult(JSON.parse(storedResult));
-        }
-    }, [quizId]);
+  const getResultDetails = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/api/answers-attempts/${attemptId}`);
+      setResultDetails(response.data);
+    } catch (error) {
+      console.error('Error fetching result details:', error);
+    }
+  };
 
-    if (!result) return <div>Không tìm thấy kết quả!</div>;
+  useEffect(() => {
+    if (attemptId) {
+      getResultDetails();
+    }
+  }, [attemptId]);
 
-    return (
-        <div className="min-h-screen bg-gradient-to-b from-CetaceanBlue to-CetaceanBlue-dark text-white p-6">
-            <div className="max-w-4xl mx-auto space-y-6">
+  // Calculate percentage
+  const totalQuestions = questions?.length || 0;
+  const correctPercentage = totalQuestions > 0 ? ((correct / totalQuestions) * 100).toFixed(1) : 0;
 
-                <h2 className="text-3xl font-bold">{result.title}</h2>
-                <div className="text-lg">
-                    <span className="font-semibold">Số câu đúng:</span> {result.correctCount}/{result.totalQuestions}
-                    <div className="text-center mt-6">
-                        <Link to="/quiz">
-                            <button className="bg-CetaceanBlue-dark text-white px-6 py-2 rounded-lg hover:bg-CetaceanBlue transition duration-200">
-                                Back
-                            </button>
-                        </Link>
-                    </div>
-                </div>
-                <div className="text-Manatee text-sm">Hoàn thành lúc: {result.completedAt} (+07)</div>
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-CetaceanBlue to-CetaceanBlue-dark text-white flex items-center justify-center p-4 sm:p-6">
+      <div className="max-w-2xl w-full bg-PurpleNavy/30 backdrop-blur-lg rounded-2xl shadow-xl p-6 sm:p-8 space-y-6">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center text-white">
+          Kết quả làm bài
+        </h2>
 
-                <div className="space-y-5">
-                    {result.questions.map((question, index) => {
-                        const isCorrect = result.answers[index] === question.correctAnswer;
-                        return (
-                            <div
-                                key={index}
-                                className={`p-4 rounded-xl shadow-lg ${
-                                    isCorrect
-                                        ? 'bg-Emerald-light/20 text-Emerald-light border border-Emerald'
-                                        : 'bg-Amber-dark/10 text-Amber-light border border-Amber'
-                                }`}
-                            >
-                                <h3 className="font-semibold mb-2">Câu {index + 1}: {question.text}</h3>
-                                <div className="text-sm mb-1">
-                                    <span className="font-medium">Đáp án của bạn:</span>{' '}
-                                    {result.answers[index] || <span className="italic text-Manatee-light">Chưa chọn</span>}
-                                </div>
-                                <div className="text-sm mb-2">
-                                    <span className="font-medium">Đáp án đúng:</span> {question.correctAnswer}
-                                </div>
-                                <div className={`font-bold ${isCorrect ? 'text-Emerald-light' : 'text-Amber-light'}`}>
-                                    {isCorrect ? '✔ ĐÚNG' : '✘ SAI'}
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
-            </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+          <div className="bg-CetaceanBlue-light/50 rounded-lg p-4">
+            <p className="text-lg font-medium text-Manatee-light">Số câu đúng</p>
+            <p className="text-2xl font-bold text-Emerald">{correct}/{totalQuestions}</p>
+            <p className="text-sm text-Manatee">{correctPercentage}%</p>
+          </div>
+          <div className="bg-CetaceanBlue-light/50 rounded-lg p-4">
+            <p className="text-lg font-medium text-Manatee-light">Số câu sai</p>
+            <p className="text-2xl font-bold text-Amber-dark">{wrong}</p>
+          </div>
+          <div className="bg-CetaceanBlue-light/50 rounded-lg p-4">
+            <p className="text-lg font-medium text-Manatee-light">Số câu bỏ qua</p>
+            <p className="text-2xl font-bold text-Manatee">{skipped}</p>
+          </div>
         </div>
-    );
+
+        <div className="text-center space-y-4">
+          <Link to="/quiz">
+            <button className="bg-CetaceanBlue text-white px-6 py-3 rounded-lg font-medium hover:bg-CetaceanBlue-dark transition duration-300 shadow-md mb-4">
+              Quay lại
+            </button>
+          </Link>
+          <p className="text-sm text-Manatee">
+            Hoàn thành lúc: {resultDetails?.completedAt
+              ? new Date(resultDetails.completedAt).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })
+              : 'Chưa cập nhật'} (+07)
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default QuizResult;

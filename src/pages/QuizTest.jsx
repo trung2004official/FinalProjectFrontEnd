@@ -99,13 +99,16 @@ const QuizTest = () => {
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             const { correct, wrong, skipped } = response.data.data;
-            Swal.fire({
-                title: 'Nộp bài thành công!',
-                html: `✅ Đúng: ${correct}<br>❌ Sai: ${wrong}<br>⏭ Bỏ qua: ${skipped}`,
-                icon: 'success',
-                confirmButtonColor: '#2E7D32', // Emerald
-            });
-            navigate('/home');
+            // Swal.fire({
+            //     title: 'Nộp bài thành công!',
+            //     html: `✅ Đúng: ${correct}<br>❌ Sai: ${wrong}<br>⏭ Bỏ qua: ${skipped}`,
+            //     icon: 'success',
+            //     confirmButtonColor: '#2E7D32', // Emerald
+            // }).then(() => {
+                navigate('/quiz/result', {
+                    state: { correct, wrong, skipped,questions, quizId, attemptId },
+                })
+            // });
         } catch (error) {
             console.error('Lỗi khi nộp bài:', error);
             Swal.fire({

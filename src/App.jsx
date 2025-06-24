@@ -38,7 +38,7 @@ function App() {
                     <Route path="/quiz" element={<Quiz />} />
                     <Route path="/quiz/:id" element={<QuizDetails />} />
                     <Route path="/quizzes-questions/:quizId" element={<QuizTest />} />
-                    <Route path="/quiz/result/:id" element={<QuizResult />} /> {/* Route cho kết quả */}
+                    <Route path="/quiz/result" element={<QuizResult />} /> {/* Route cho kết quả */}
                     <Route path="/profile/:username" element={<Profile />} />
                 </Routes>
             </div>
