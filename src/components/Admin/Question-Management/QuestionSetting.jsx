@@ -160,7 +160,7 @@ const QuestionSetting = ({ questions, setQuestions, setShowModal, setNewQuestion
                                 <label className="block mb-1">Đáp án</label>
                                 <FieldArray name="answers">
                                     {() => (<>
-                                        {values.answers.map((index) => (<>
+                                        {values.answers.map((answer, index) => (<>
                                             <div key={index} className="flex items-center space-x-2">
                                                 <input
                                                     type="radio"

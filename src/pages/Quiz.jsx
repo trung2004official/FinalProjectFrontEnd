@@ -11,6 +11,12 @@ const Quiz = () => {
     const [quizzes, setQuizzes] = useState([]);
     const [filteredQuizzes, setFilteredQuizzes] = useState([]);
     const [loading, setLoading] = useState(true);
+    const majors = [
+        'Thiết Kế Web',
+        'Mobile',
+        'Mạng Máy Tính',
+    ]
+
 
     const getQuizData = async () => {
         try {
@@ -28,7 +34,7 @@ const Quiz = () => {
         // Giả lập delay
         setTimeout(() => {
             setLoading(false);
-        }, 5000);
+        }, 3000);
     }, []);
 
     useEffect(() => {
@@ -45,7 +51,15 @@ const Quiz = () => {
             <Header />
             <main className="container mx-auto p-6">
                 <SearchBar onFilter={setFilteredQuizzes} quizzes={quizzes}/>
-                <Quizzes filteredQuizzes={filteredQuizzes} />
+                { majors.map((major) => (
+                    <div key={major} className="">
+                        <Quizzes filteredQuizzes={filteredQuizzes} major={major}/>
+                    </div>
+                ))}
+                {/* <div>
+                    <h2 className="text-2xl text-white font-bold mb-4">Thiết Kế Web</h2>
+                </div>
+                <Quizzes filteredQuizzes={filteredQuizzes} /> */}
             </main>
             <Footer />
         </div>
