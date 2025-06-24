@@ -5,8 +5,8 @@ import ReactPaginate from 'react-paginate';
 const Quizzes = ({ filteredQuizzes, major }) => {
     // Lọc quiz theo major nếu có, nếu không thì lấy tất cả
     const quizzesByMajor = major
-        ? filteredQuizzes.filter(quiz => quiz.major === major)
-        : filteredQuizzes;
+        ? filteredQuizzes.filter(quiz => quiz.major === major && quiz.status === 'public')
+        : filteredQuizzes.filter(quiz => quiz.status === 'public');
 
     const [itemOffset, setItemOffset] = useState(0);
     const itemsPerPage = 3;

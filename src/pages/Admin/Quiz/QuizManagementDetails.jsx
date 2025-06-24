@@ -17,9 +17,10 @@ const QuizManagementDetails = () => {
   const endOffset = itemOffset + 10;
   const currentQuestions = questions.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(questions.length / 10);
-  const [isPublic, setIsPublic] = useState(false);
+  const [isPublic, setIsPublic] = useState();
   const [showModal, setShowModal] = useState(false);
   const [newData, setNewData] = useState();
+  const [toggleLoading, setToggleLoading] = useState(false);
 
   const handlePageClick = (e) => {
     const newOffset = (e.selected * 10) % questions.length;
@@ -53,8 +54,33 @@ const QuizManagementDetails = () => {
     }
   }
 
+  const handleTogglePublic = async () => {
+    if (questions.length < 10) return;
+    setToggleLoading(true);
+    try {
+      const response = await axios.patch(`${BASE_URL}/api/quizzes/update-status/${id}`, {
+        status: isPublic ? 'public' : 'private',
+      });
+      console.log('Trạng thái cập nhật thành công: ', response.data);
+      setIsPublic((prev) => !prev);
+    } catch (error) {
+      console.error('Không thể cập nhật trạng thái: ', error);
+    }
+  }
+
+  const getQuizStatus = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/api/quizzes/${id}`);
+      console.log('Trạng thái quiz: ', response.data.status);
+      setIsPublic(response.data.status === 'public');
+    } catch (error) {
+      console.error('Không thể lấy trạng thái quiz: ', error);
+    }
+  }
+
   useEffect(() => {
     getQuestionData();
+    getQuizStatus();
   }, [id]);
 
   if (loading) { return <LoadingSpinner />; }
@@ -148,8 +174,12 @@ const QuizManagementDetails = () => {
         <div className="flex items-center ml-4">
           <span className="mr-2 text-white">{isPublic ? 'Công khai' : 'Riêng tư'}</span>
           <button
-            onClick={() => setIsPublic((prev) => !prev)}
-            className={`w-12 h-6 flex items-center rounded-full p-1 transition-colors duration-300 ${isPublic ? 'bg-CetaceanBlue-light' : 'bg-gray-300'} cursor-pointer`}
+            onClick={handleTogglePublic}
+            disabled={questions.length < 10 || toggleLoading}
+            title={questions.length < 10 ? "Cần ít nhất 10 câu hỏi để công khai" : ""}
+            className={`w-12 h-6 flex items-center rounded-full p-1 transition-colors duration-300 
+              ${isPublic ? 'bg-CetaceanBlue-light' : 'bg-gray-300'} 
+              ${questions.length < 10 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
           >
             <div
               className={`bg-white w-5 h-5 rounded-full shadow-md transform transition-transform duration-300 ${isPublic ? 'translate-x-6' : ''}`}
