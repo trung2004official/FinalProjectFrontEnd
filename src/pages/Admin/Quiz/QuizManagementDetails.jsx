@@ -7,6 +7,8 @@ import LoadingSpinner from '../../../components/LoadingSpinner';
 import ReactPaginate from 'react-paginate';
 import { useNavigate } from 'react-router-dom';
 import QuestionSetting from '../../../components/Admin/Question-Management/QuestionSetting';
+import QuestionsSelection from '../../../components/Admin/Quiz-Management/QuestionsSelection';
+import {FaEye, FaMinus} from 'react-icons/fa';
 
 const QuizManagementDetails = () => {
   const { id } = useParams();
@@ -19,6 +21,7 @@ const QuizManagementDetails = () => {
   const pageCount = Math.ceil(questions.length / 10);
   const [isPublic, setIsPublic] = useState();
   const [showModal, setShowModal] = useState(false);
+  const [showQuestions, setShowQuestions] = useState(false);
   const [newData, setNewData] = useState();
   const [toggleLoading, setToggleLoading] = useState(false);
 
@@ -90,7 +93,12 @@ const QuizManagementDetails = () => {
         <h2 className="text-2xl text-CetaceanBlue-dark font-semibold mb-4">Danh sách câu hỏi</h2>
         <div className='flex justify-between items-center'>
           <button className='bg-CetaceanBlue hover:bg-CetaceanBlue-dark text-white font-bold px-4 py-2 rounded-lg mb-4 mr-2'>Import excel</button>
-          {/* <button className='bg-CetaceanBlue hover:bg-CetaceanBlue-dark text-white font-bold px-4 py-2 rounded-lg mb-4 mr-2'>Gán câu hỏi</button> */}
+          <button 
+            className='bg-CetaceanBlue hover:bg-CetaceanBlue-dark text-white font-bold px-4 py-2 rounded-lg mb-4 mr-2'
+            onClick={() => setShowQuestions(!showQuestions)}
+          >
+            Gán câu hỏi
+          </button>
           <button
             className="bg-CetaceanBlue hover:bg-CetaceanBlue-dark text-white font-bold px-4 py-2 rounded-lg mb-4"
             onClick={() => setShowModal(true)}
@@ -99,7 +107,7 @@ const QuizManagementDetails = () => {
           </button>
         </div>
       </div>
-      <table className="w-full text-center bg-CetaceanBlue rounded-lg">
+      <table className="w-full text-center bg-CetaceanBlue rounded-lg mb-2">
         <thead>
           <tr className="border-b border-gray-600">
             <th className='p-2 text-center w-5'>STT</th>
@@ -117,19 +125,15 @@ const QuizManagementDetails = () => {
               <td className="p-2 text-center">{q.major}</td>
               <td className="p-2 text-center">{q.difficulty}</td>
               <td className="p-2 text-center">
-                <a href="" className="text-Emerald hover:underline mr-2">
-                  Xem chi tiết
+                <a href="" className="text-white hover:underline mr-2">
+                  <FaEye className='inline text-lg'/>
                 </a>
-                <button
-                  className="text-Amber hover:underline mr-2"
-                >
-                  Sửa
-                </button>
-                <button
+                <a
+                  href=""
                   className="text-red-400 hover:underline"
                 >
-                  Xóa
-                </button>
+                  <FaMinus className='inline text-lg'/>
+                </a>
               </td>
             </tr>
           ))}
@@ -139,7 +143,7 @@ const QuizManagementDetails = () => {
                 <button
                   className="w-full flex items-center justify-center text-3xl text-green-400 hover:text-green-600 py-4"
                   title="Thêm câu hỏi mới"
-                  onClick={() => setShowModal(true)}
+                  onClick={() => setShowQuestions(!showQuestions)}
                 >
                   +
                 </button>
@@ -148,6 +152,7 @@ const QuizManagementDetails = () => {
           )}
         </tbody>
       </table>
+
       <div className='flex justify-between items-center mt-4'>
         <button
           className="bg-gray-400 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-semibold transition"
@@ -187,6 +192,13 @@ const QuizManagementDetails = () => {
           </button>
         </div>
       </div>
+            {showQuestions && (
+        <QuestionsSelection 
+          setShowQuestions={setShowQuestions}
+          quizId={id}
+          handleAddQuestionToQuiz={handleAddQuestion}
+        />
+      )}
       {showModal && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
 
