@@ -146,7 +146,32 @@ const Statistics = () => {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <Line data={newUserLineData} />
+                        <Line
+                            data={newUserLineData}
+                            options={{
+                                plugins: {
+                                    legend: {
+                                        labels: {
+                                            color: '#fff', // màu chữ của legend
+                                        }
+                                    },
+                                    tooltip: {
+                                        bodyColor: '#fff', // màu chữ tooltip
+                                        titleColor: '#fff'
+                                    }
+                                },
+                                scales: {
+                                    x: {
+                                        ticks: { color: '#fff' }, // màu chữ trục X
+                                        grid: { color: '#444' }
+                                    },
+                                    y: {
+                                        ticks: { color: '#fff' }, // màu chữ trục Y
+                                        grid: { color: '#444' }
+                                    }
+                                }
+                            }}
+                        />
                         <div className="text-center mt-2">Người dùng mới theo ngày</div>
                     </div>
                 </div>
@@ -168,7 +193,32 @@ const Statistics = () => {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <Bar data={quizBarData} />
+                        <Bar
+                            data={quizBarData}
+                            options={{
+                                plugins: {
+                                    legend: {
+                                        labels: {
+                                            color: '#fff', // màu chữ của legend
+                                        }
+                                    },
+                                    tooltip: {
+                                        bodyColor: '#fff', // màu chữ tooltip
+                                        titleColor: '#fff'
+                                    }
+                                },
+                                scales: {
+                                    x: {
+                                        ticks: { color: '#fff' }, // màu chữ trục X
+                                        grid: { color: '#444' }
+                                    },
+                                    y: {
+                                        ticks: { color: '#fff' }, // màu chữ trục Y
+                                        grid: { color: '#444' }
+                                    }
+                                }
+                            }}
+                        />
                         <div className="text-center mt-2">Số bài thi theo chuyên ngành</div>
                     </div>
                 </div>
@@ -196,7 +246,32 @@ const Statistics = () => {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <Bar data={questionBarData} />
+                        <Bar
+                            data={questionBarData}
+                            options={{
+                                plugins: {
+                                    legend: {
+                                        labels: {
+                                            color: '#fff', // màu chữ của legend
+                                        }
+                                    },
+                                    tooltip: {
+                                        bodyColor: '#fff', // màu chữ tooltip
+                                        titleColor: '#fff'
+                                    }
+                                },
+                                scales: {
+                                    x: {
+                                        ticks: { color: '#fff' }, // màu chữ trục X
+                                        grid: { color: '#444' }
+                                    },
+                                    y: {
+                                        ticks: { color: '#fff' }, // màu chữ trục Y
+                                        grid: { color: '#444' }
+                                    }
+                                }
+                            }}
+                        />
                         <div className="text-center mt-2">Số câu hỏi theo chuyên ngành</div>
                     </div>
                 </div>

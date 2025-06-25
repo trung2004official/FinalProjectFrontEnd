@@ -59,7 +59,7 @@ const QuizManagementDetails = () => {
     setToggleLoading(true);
     try {
       const response = await axios.patch(`${BASE_URL}/api/quizzes/update-status/${id}`, {
-        status: isPublic ? 'public' : 'private',
+        status: isPublic ? 'private' : 'public',
       });
       console.log('Trạng thái cập nhật thành công: ', response.data);
       setIsPublic((prev) => !prev);
