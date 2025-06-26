@@ -10,6 +10,7 @@ const QuizManagement = (props) => {
     const [showModal, setShowModal] = useState(false);
     const [quizzes, setQuizzes] = useState([]);
     const [itemOffset, setItemOffset] = useState(0);
+    const [editingQuiz, setEditingQuiz] = useState(null);
     const endOffset = itemOffset + 10;
     const currentQuizzes = quizzes.slice(itemOffset, endOffset);
     const pageCount = Math.ceil(quizzes.length / 10);
@@ -72,7 +73,10 @@ const QuizManagement = (props) => {
                             <td className="p-2">{quiz.image ? quiz.image : 'Chưa có ảnh'}</td>
                             <td className="p-2">
                                 <FaEye className='inline text-lg m-2 cursor-pointer' onClick={() => navigate(`/admin/quizzes/${quiz.id}`)}/>
-                                <FaEdit className='inline text-lg m-2 text-Amber cursor-pointer' />
+                                <FaEdit className='inline text-lg m-2 text-Amber cursor-pointer' onClick={() => {
+                                    setShowModal(true);
+                                    setEditingQuiz(quiz);
+                                }}/>
                                 <FaTrash className='inline text-lg m-2 text-red-500 cursor-pointer' />
                             </td>
                         </tr>
@@ -101,11 +105,19 @@ const QuizManagement = (props) => {
 
                     <div className="bg-CetaceanBlue p-6 rounded-lg w-[700px] max-h-[90vh] overflow-y-auto relative z-50">
 
-                        <h3 className="text-xl font-bold mb-4 text-white">Thêm đề thi mới</h3>
-                        <QuizSetting setShowModal={setShowModal} quizzes={quizzes} setQuizzes={setQuizzes} />
+                        <h3 className="text-xl font-bold mb-4 text-white">{editingQuiz? `${editingQuiz.title}` : 'Thêm đề thi mới'}</h3>
+                        <QuizSetting 
+                            setShowModal={setShowModal} 
+                            quizzes={quizzes} 
+                            setQuizzes={setQuizzes}
+                            editingQuiz={editingQuiz}
+                        />
                         <button
                             className="absolute top-3 right-3 text-white hover:text-red-400 text-xl"
-                            onClick={() => setShowModal(false)}
+                            onClick={() => {
+                                setEditingQuiz(null);
+                                setShowModal(false)
+                            }}
                         >
                             &times;
                         </button>

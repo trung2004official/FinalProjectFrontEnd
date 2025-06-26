@@ -5,7 +5,7 @@ import axios from 'axios';
 import { BASE_URL } from '../../../../services/api';
 import Swal from 'sweetalert2';
 
-const QuizSetting = ({setShowModal, quizzes, setQuizzes}) => {
+const QuizSetting = ({setShowModal, quizzes, setQuizzes, editingQuiz}) => {
     const handleAddQuiz = async (values) => {
         try {
             const response = await axios.post(`${BASE_URL}/api/quizzes/create-quiz`, {
@@ -35,16 +35,47 @@ const QuizSetting = ({setShowModal, quizzes, setQuizzes}) => {
         }
     }
 
+    const handleUpdateQuiz = async (values) => {
+        try {
+            const response = await axios.put(`${BASE_URL}/api/quizzes/update-quiz/${editingQuiz.id}`, {
+                title: values.title,
+                duration: values.duration,
+                difficulty: values.difficulty,
+                major: values.major,
+                description: values.description,
+                image: values.image,
+            });
+            console.log('quiz updated: ',response.data);
+            if (response.status === 200) {
+                Swal.fire(  
+                    'Successful',
+                    'Cập nhật Quiz thành công',
+                    'success',
+                );
+                setQuizzes(quizzes.map(quiz => quiz.id === editingQuiz.id ? response.data.quiz : quiz));
+            }
+        } catch(error) {
+            console.error('Lỗi khi cập nhật quiz: ', error);
+            Swal.fire(
+                'Lỗi Server',
+                'Không thể cập nhật quiz',
+                'error',
+            );
+        } finally {
+            setShowModal(false);
+        }
+    }
+
     return (
         <div className="bg-CetaceanBlue-light p-6 rounded-lg text-white z-60">
             <Formik
                 initialValues={{
-                    title: '',
-                    description: '',
-                    difficulty: '',
-                    major: '',
-                    duration: '',
-                    image: '',
+                    title: editingQuiz?.title || '',
+                    description: editingQuiz?.description || '',
+                    difficulty: editingQuiz?.difficulty || '',
+                    major: editingQuiz?.major || '',
+                    duration: editingQuiz?.duration || '',
+                    image: editingQuiz?.image || '',
                 }}
                 validationSchema={Yup.object({
                     title: Yup.string().required('Yêu cầu nhập tiêu đề'),
@@ -58,7 +89,13 @@ const QuizSetting = ({setShowModal, quizzes, setQuizzes}) => {
                     duration: Yup.string().required('Nhập thời gian làm bài'),
                     image: Yup.mixed(),
                 })}
-                onSubmit={handleAddQuiz}
+                onSubmit={values => {
+                    if (editingQuiz) {
+                        handleUpdateQuiz(values);
+                    } else {
+                        handleAddQuiz(values);
+                    }
+                }}
             >
                 <Form className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
