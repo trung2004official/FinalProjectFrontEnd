@@ -50,9 +50,9 @@ const Quizzes = ({ filteredQuizzes, major }) => {
                     previousLabel="< Prev"
                     renderOnZeroPageCount={null}
                     containerClassName="flex justify-center items-center space-x-2 mt-4"
-                    pageClassName="border rounded-md px-3 py-1 hover:bg-gray-700"
-                    pageLinkClassName="text-white cursor-pointer"
-                    activeClassName="bg-CetaceanBlue text-white"
+                    pageClassName="border rounded-md py-1 hover:bg-gray-700"
+                    pageLinkClassName="text-white cursor-pointer px-3 py-2"
+                    activeClassName="bg-CetaceanBlue text-white"    
                     previousClassName="border rounded-md px-3 py-1 hover:bg-gray-700 cursor-pointer"
                     nextClassName="border rounded-md px-3 py-1 hover:bg-gray-700 cursor-pointer"
                     breakClassName="px-3 py-1"

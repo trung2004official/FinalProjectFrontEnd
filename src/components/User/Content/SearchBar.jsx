@@ -38,7 +38,7 @@ const SearchBar = ({ onFilter, quizzes }) => {
                     className="p-2 rounded-lg border-CetaceanBlue border-solid border-2 text-CetaceanBlue"
                     aria-label="Lọc theo danh mục"
                 >
-                    <option value="all">Chuyên ngành</option>
+                    <option value="all">--- Chuyên ngành ---</option>
                     <option value="Thiết Kế Web">Thiết Kế Web</option>
                     <option value="Mobile">Mobile</option>
                     <option value="Mạng Máy Tính">Mạng Máy Tính</option>
@@ -49,7 +49,7 @@ const SearchBar = ({ onFilter, quizzes }) => {
                     className="p-2 rounded-lg border-CetaceanBlue border-solid border-2 text-CetaceanBlue"
                     aria-label="Lọc theo độ khó"
                 >
-                    <option value="all">Độ khó</option>
+                    <option value="all">--- Độ khó ---</option>
                     <option value="Gà mờ">Gà mờ</option>
                     <option value="Cứng tay">Cứng tay</option>
                     <option value="Đỉnh kout">Đỉnh kout</option>
