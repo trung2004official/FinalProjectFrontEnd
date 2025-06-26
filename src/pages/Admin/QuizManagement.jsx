@@ -5,11 +5,13 @@ import ReactPaginate from 'react-paginate';
 import QuizSetting from '../../components/Admin/Quiz-Management/QuizSetting';
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const QuizManagement = (props) => {
     const [showModal, setShowModal] = useState(false);
     const [quizzes, setQuizzes] = useState([]);
     const [itemOffset, setItemOffset] = useState(0);
+    const [editingQuiz, setEditingQuiz] = useState(null);
     const endOffset = itemOffset + 10;
     const currentQuizzes = quizzes.slice(itemOffset, endOffset);
     const pageCount = Math.ceil(quizzes.length / 10);
@@ -33,6 +35,52 @@ const QuizManagement = (props) => {
     useEffect(() => {
         getQuizData();
     }, []);
+
+    const handleDeleteButton = (quiz) => {
+        if (quiz.question_count > 0) {
+            Swal.fire(
+                'Không thể xóa Quiz',
+                'Quiz này đã có câu hỏi, không thể xóa.',
+                'warning'
+            );
+            return;
+        } else {
+            Swal.fire({
+                title: `Chắc chắn muốn xóa ${quiz.title}?`,
+                showDenyButton: true,
+                confirmButtonText: "Xóa",
+                denyButtonText: `Không xóa`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    handleDeleteQuiz(quiz.id);
+                } else if (result.isDenied) {
+                    Swal.fire("Thay đổi chưa lưu", "", "info");
+                }
+            });
+        }
+    }
+    const handleDeleteQuiz = async (id) => {
+
+        try {
+            const response = await axios.delete(`${BASE_URL}/api/quizzes/delete-quiz/${id}`);
+            console.log('quiz deleted: ', response.data);
+            if (response.status === 200) {
+                Swal.fire(
+                    'Successful',
+                    'Xóa Quiz thành công',
+                    'success',
+                );
+                setQuizzes(quizzes.filter(q => q.id !== id));
+            }
+        } catch (error) {
+            console.error('Lỗi khi xóa quiz: ', error);
+            Swal.fire(
+                'Lỗi Server',
+                'Không thể xóa quiz',
+                'error',
+            );
+        }   
+    }
 
     return (
         <div className="bg-PurpleNavy-light p-6 rounded-lg shadow-lg">
@@ -72,8 +120,14 @@ const QuizManagement = (props) => {
                             <td className="p-2">{quiz.image ? quiz.image : 'Chưa có ảnh'}</td>
                             <td className="p-2">
                                 <FaEye className='inline text-lg m-2 cursor-pointer' onClick={() => navigate(`/admin/quizzes/${quiz.id}`)}/>
-                                <FaEdit className='inline text-lg m-2 text-Amber cursor-pointer' />
-                                <FaTrash className='inline text-lg m-2 text-red-500 cursor-pointer' />
+                                <FaEdit className='inline text-lg m-2 text-Amber cursor-pointer' onClick={() => {
+                                    setShowModal(true);
+                                    setEditingQuiz(quiz);
+                                }}/>
+                                <FaTrash 
+                                    className='inline text-lg m-2 text-red-500 cursor-pointer' 
+                                    onClick={() => handleDeleteButton(quiz)}
+                                />
                             </td>
                         </tr>
                     ))}
@@ -101,11 +155,19 @@ const QuizManagement = (props) => {
 
                     <div className="bg-CetaceanBlue p-6 rounded-lg w-[700px] max-h-[90vh] overflow-y-auto relative z-50">
 
-                        <h3 className="text-xl font-bold mb-4 text-white">Thêm đề thi mới</h3>
-                        <QuizSetting setShowModal={setShowModal} quizzes={quizzes} setQuizzes={setQuizzes} />
+                        <h3 className="text-xl font-bold mb-4 text-white">{editingQuiz? `${editingQuiz.title}` : 'Thêm đề thi mới'}</h3>
+                        <QuizSetting 
+                            setShowModal={setShowModal} 
+                            quizzes={quizzes} 
+                            setQuizzes={setQuizzes}
+                            editingQuiz={editingQuiz}
+                        />
                         <button
                             className="absolute top-3 right-3 text-white hover:text-red-400 text-xl"
-                            onClick={() => setShowModal(false)}
+                            onClick={() => {
+                                setEditingQuiz(null);
+                                setShowModal(false)
+                            }}
                         >
                             &times;
                         </button>
