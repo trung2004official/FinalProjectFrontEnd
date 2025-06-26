@@ -5,6 +5,7 @@ import ReactPaginate from 'react-paginate';
 import QuizSetting from '../../components/Admin/Quiz-Management/QuizSetting';
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const QuizManagement = (props) => {
     const [showModal, setShowModal] = useState(false);
@@ -34,6 +35,52 @@ const QuizManagement = (props) => {
     useEffect(() => {
         getQuizData();
     }, []);
+
+    const handleDeleteButton = (quiz) => {
+        if (quiz.question_count > 0) {
+            Swal.fire(
+                'Không thể xóa Quiz',
+                'Quiz này đã có câu hỏi, không thể xóa.',
+                'warning'
+            );
+            return;
+        } else {
+            Swal.fire({
+                title: `Chắc chắn muốn xóa ${quiz.title}?`,
+                showDenyButton: true,
+                confirmButtonText: "Xóa",
+                denyButtonText: `Không xóa`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    handleDeleteQuiz(quiz.id);
+                } else if (result.isDenied) {
+                    Swal.fire("Thay đổi chưa lưu", "", "info");
+                }
+            });
+        }
+    }
+    const handleDeleteQuiz = async (id) => {
+
+        try {
+            const response = await axios.delete(`${BASE_URL}/api/quizzes/delete-quiz/${id}`);
+            console.log('quiz deleted: ', response.data);
+            if (response.status === 200) {
+                Swal.fire(
+                    'Successful',
+                    'Xóa Quiz thành công',
+                    'success',
+                );
+                setQuizzes(quizzes.filter(q => q.id !== id));
+            }
+        } catch (error) {
+            console.error('Lỗi khi xóa quiz: ', error);
+            Swal.fire(
+                'Lỗi Server',
+                'Không thể xóa quiz',
+                'error',
+            );
+        }   
+    }
 
     return (
         <div className="bg-PurpleNavy-light p-6 rounded-lg shadow-lg">
@@ -77,7 +124,10 @@ const QuizManagement = (props) => {
                                     setShowModal(true);
                                     setEditingQuiz(quiz);
                                 }}/>
-                                <FaTrash className='inline text-lg m-2 text-red-500 cursor-pointer' />
+                                <FaTrash 
+                                    className='inline text-lg m-2 text-red-500 cursor-pointer' 
+                                    onClick={() => handleDeleteButton(quiz)}
+                                />
                             </td>
                         </tr>
                     ))}
