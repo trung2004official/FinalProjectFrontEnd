@@ -8,7 +8,7 @@ import ReactPaginate from 'react-paginate';
 import { useNavigate } from 'react-router-dom';
 import QuestionSetting from '../../../components/Admin/Question-Management/QuestionSetting';
 import QuestionsSelection from '../../../components/Admin/Quiz-Management/QuestionsSelection';
-import {FaEye, FaMinus} from 'react-icons/fa';
+import { FaEye, FaMinus } from 'react-icons/fa';
 
 const QuizManagementDetails = () => {
   const { id } = useParams();
@@ -42,6 +42,21 @@ const QuizManagementDetails = () => {
       console.error('Không thể thêm câu hỏi: ', error);
     } finally {
       setNewData();
+    }
+  }
+
+  const handleDeleteQuestion = async (questionId) => {
+    console.log('Xóa câu hỏi với ID: ', questionId);
+    try {
+      await axios.delete(`${BASE_URL}/api/quizzes-questions/remove-quiz-question/${id}`, {
+        data: { question_id: questionId },
+      });
+      console.log('Câu hỏi đã được xóa thành công');
+      const response = await axios.get(`${BASE_URL}/api/questions/${questionId}`);
+      const deletedQuestion = response.data.question;
+      setQuestions(questions.filter((q) => q.id !== deletedQuestion.id));
+    } catch (error) {
+      console.error('Không thể xóa câu hỏi: ', error);
     }
   }
 
@@ -86,6 +101,27 @@ const QuizManagementDetails = () => {
     getQuizStatus();
   }, [id]);
 
+  useEffect(() => {
+    if (
+      !loading &&
+      typeof isPublic === 'boolean' &&
+      questions.length < 10 && 
+      isPublic
+    ) {
+      const autoSetPrivate = async () => {
+        try {
+          await axios.patch(`${BASE_URL}/api/quizzes/update-status/${id}`, {
+            status: 'private',
+          });
+          setIsPublic(false);
+        } catch (error) {
+          console.error('Không thể tự động chuyển về private:', error);
+        }
+      };
+      autoSetPrivate();
+    }
+  }, [questions.length, isPublic, id]);
+
   if (loading) { return <LoadingSpinner />; }
   return (
     <div className="bg-PurpleNavy-light p-6 rounded-lg shadow-lg">
@@ -93,7 +129,7 @@ const QuizManagementDetails = () => {
         <h2 className="text-2xl text-CetaceanBlue-dark font-semibold mb-4">Danh sách câu hỏi</h2>
         <div className='flex justify-between items-center'>
           <button className='bg-CetaceanBlue hover:bg-CetaceanBlue-dark text-white font-bold px-4 py-2 rounded-lg mb-4 mr-2'>Import excel</button>
-          <button 
+          <button
             className='bg-CetaceanBlue hover:bg-CetaceanBlue-dark text-white font-bold px-4 py-2 rounded-lg mb-4 mr-2'
             onClick={() => setShowQuestions(!showQuestions)}
           >
@@ -125,15 +161,15 @@ const QuizManagementDetails = () => {
               <td className="p-2 text-center">{q.major}</td>
               <td className="p-2 text-center">{q.difficulty}</td>
               <td className="p-2 text-center">
-                <a href="" className="text-white hover:underline mr-2">
-                  <FaEye className='inline text-lg'/>
-                </a>
-                <a
-                  href=""
+                <button className="text-white hover:underline mr-2">
+                  <FaEye className='inline text-lg' />
+                </button>
+                <button
                   className="text-red-400 hover:underline"
+                  onClick={() => handleDeleteQuestion(q.id)}
                 >
-                  <FaMinus className='inline text-lg'/>
-                </a>
+                  <FaMinus className='inline text-lg' />
+                </button>
               </td>
             </tr>
           ))}
@@ -192,8 +228,8 @@ const QuizManagementDetails = () => {
           </button>
         </div>
       </div>
-            {showQuestions && (
-        <QuestionsSelection 
+      {showQuestions && (
+        <QuestionsSelection
           setShowQuestions={setShowQuestions}
           quizId={id}
           handleAddQuestionToQuiz={handleAddQuestion}
