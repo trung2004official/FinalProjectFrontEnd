@@ -8,7 +8,7 @@ import { BiFile } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-const QuizManagement = (props) => {
+const QuizManagement = () => {
     const [showModal, setShowModal] = useState(false);
     const [quizzes, setQuizzes] = useState([]);
     const [itemOffset, setItemOffset] = useState(0);
@@ -91,7 +91,7 @@ const QuizManagement = (props) => {
         formData.append('file', file);
 
         try {
-            const response = await axios.post(`${BASE_URL}/api/quizzes/import-quizzes`, formData, {
+            await axios.post(`${BASE_URL}/api/quizzes/import-quizzes`, formData, {
                 headers: {'Content-Type' : 'multipart/form-data'}
             });
             Swal.fire('Successful', 'Import Excel thành công', 'success');
