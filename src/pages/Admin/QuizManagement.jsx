@@ -1,9 +1,10 @@
 import axios from 'axios';
-import React, { use, useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { BASE_URL } from '../../../services/api';
 import ReactPaginate from 'react-paginate';
 import QuizSetting from '../../components/Admin/Quiz-Management/QuizSetting';
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
+import { BiFile } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -16,6 +17,7 @@ const QuizManagement = (props) => {
     const currentQuizzes = quizzes.slice(itemOffset, endOffset);
     const pageCount = Math.ceil(quizzes.length / 10);
     const navigate = useNavigate();
+    const fileInputRef = useRef(null);
 
     const handlePageClick = (e) => {
         const newOffset = (e.selected * 10) % quizzes.length;
@@ -82,16 +84,47 @@ const QuizManagement = (props) => {
         }   
     }
 
+    const handleImportExcel = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const response = await axios.post(`${BASE_URL}/api/quizzes/import-quizzes`, formData, {
+                headers: {'Content-Type' : 'multipart/form-data'}
+            });
+            Swal.fire('Successful', 'Import Excel thành công', 'success');
+            getQuizData();
+        } catch (error) {
+            Swal.fire('Error', 'Import Excel thất bại', 'error');
+        }
+    }
     return (
         <div className="bg-PurpleNavy-light p-6 rounded-lg shadow-lg">
             <div className='flex justify-between mb-4'>
                 <h2 className="text-2xl text-CetaceanBlue-dark font-semibold mb-4">Quản lý đề thi</h2>
-                <button
-                    className="bg-CetaceanBlue hover:bg-CetaceanBlue-dark text-white font-bold px-4 py-2 rounded-lg mb-4"
-                    onClick={() => setShowModal(true)}
-                >
-                    + Thêm đề thi
-                </button>
+                <div className='flex justify-between gap-2'>
+                    <input 
+                        type="file"
+                        accept='.xlsx,.xls'
+                        ref={fileInputRef}
+                        style={{display: 'none'}}
+                        onChange={handleImportExcel}
+                    />
+                    <button
+                        className='bg-CetaceanBlue hover:bg-CetaceanBlue-dark text-white font-bold px-4 py-2 rounded-lg mb-4 flex items-center gap-2'
+                        onClick={() => fileInputRef.current && fileInputRef.current.click()}
+                    >
+                        <BiFile className='text-white text-2xl cursor-pointer'></BiFile>Import Excel
+                    </button>
+                    <button
+                        className="bg-CetaceanBlue hover:bg-CetaceanBlue-dark text-white font-bold px-4 py-2 rounded-lg mb-4"
+                        onClick={() => setShowModal(true)}
+                    >
+                        + Thêm đề thi
+                    </button>
+                </div>
             </div>
             <table className="w-full text-center bg-CetaceanBlue rounded-lg ">
                 <thead className=''>
