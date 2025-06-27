@@ -62,24 +62,26 @@ const handleGetAnswersData = async (id) => {
         try {
             const response = await axios.delete(`${BASE_URL}/api/questions/delete-question/${id}`);
             if (response.status === 200) {
-                Swal.fire(
-                    'Successful',
-                    'Xóa câu hỏi thành công',
-                    'success'
-                );
-                setQuestions(questions.filter(q => q.id !== id));
-            } else {
-                Swal.fire(
-                    "Error",
-                    "Câu hỏi này không thể bị xóa",
-                    "error"
-                );
+                if (response.data.message === 'Đã xóa câu hỏi thành công.') {
+                    Swal.fire(
+                        'Successful',
+                        'Xóa câu hỏi thành công',
+                        'success'
+                    );
+                    setQuestions(questions.filter(q => q.id !== id));
+                } else {
+                    Swal.fire(
+                        "Error",
+                        response.data.message || "Không thể xóa câu hỏi",
+                        "error"
+                    );
+                }
             }
         } catch (error) {
             console.error('Lỗi server khi xóa câu hỏi: ', error);
             Swal.fire(
                 "Error",
-                "Câu hỏi này không thể bị xóa",
+                "Lỗi Server, không thể xóa câu hỏi",
                 "error"
             );
         }
