@@ -247,7 +247,7 @@ const QuestionSetting = ({ questions, setQuestions, setShowModal, setNewQuestion
                                 <FieldArray name="answers">
                                     {() => (<>
                                         {values.answers.map((answer, index) => (<>
-                                            <div key={index} className="flex items-center space-x-2">
+                                            <div key={index+1} className="flex items-center space-x-2">
                                                 <input
                                                     type="radio"
                                                     name="correctAnswer"
