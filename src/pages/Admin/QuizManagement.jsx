@@ -49,7 +49,7 @@ const QuizManagement = (props) => {
                 title: `Chắc chắn muốn xóa ${quiz.title}?`,
                 showDenyButton: true,
                 confirmButtonText: "Xóa",
-                denyButtonText: `Không xóa`
+                denyButtonText: `Hủy`
             }).then((result) => {
                 if (result.isConfirmed) {
                     handleDeleteQuiz(quiz.id);

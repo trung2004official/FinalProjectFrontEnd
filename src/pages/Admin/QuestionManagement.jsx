@@ -3,11 +3,14 @@ import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { BASE_URL } from '../../../services/api';
 import QuestionSetting from '../../components/Admin/Question-Management/QuestionSetting';
+import { FaEdit, FaEye, FaTrash } from 'react-icons/fa';
 
 const QuestionManagement = (props) => {
     const [showModal, setShowModal] = useState(false);
     const [questions, setQuestions] = useState([]);
     const [itemOffset, setItemOffset] = useState(0);
+    const [editingQuestion, setEditingQuestion] = useState(null);
+    const [answers, setAnswers] = useState([])
     const endOffset = itemOffset + 10;
     const currentQuestions = questions.slice(itemOffset, endOffset);
     const pageCount = Math.ceil(questions.length / 10);
@@ -16,6 +19,17 @@ const QuestionManagement = (props) => {
         const newOffset = (e.selected * 10) % questions.length;
         setItemOffset(newOffset);
     }
+
+const handleGetAnswersData = async (id) => {
+    try {
+        const res = await axios.get(`${BASE_URL}/api/answers/${id}`);
+        console.log('API trả về:', res.data.answers);
+        return res.data.answers;
+    } catch (error) {
+        console.error('Error fetching answers: ', error);   
+        return [];
+    }
+}
 
     const getQuestionData = async () => {
         try {
@@ -71,18 +85,25 @@ const QuestionManagement = (props) => {
                             <td className="p-2 text-center">{q.major}</td>
                             <td className="p-2 text-center">{q.difficulty}</td>
                             <td className="p-2 text-center">
-                                <a href="" className="text-Emerald hover:underline mr-2">
-                                    Xem chi tiết
-                                </a>
-                                <button
-                                    className="text-Amber hover:underline mr-2"
-                                >
-                                    Sửa
+                                <button className="text-white hover:scale-110 mr-2 cursor-pointer">
+                                    <FaEye className="inline-block mr-1" />
                                 </button>
                                 <button
-                                    className="text-red-400 hover:underline"
+                                    className="text-Amber hover:scale-110 mr-2 cursor-pointer"
+                                    onClick={async () => {
+                                        setEditingQuestion(q);
+                                        const response = await handleGetAnswersData(q.id);
+                                        console.log('answers: ',response);
+                                        setAnswers(response);
+                                        setShowModal(true);
+                                    }}
                                 >
-                                    Xóa
+                                    <FaEdit className="inline-block mr-1" />
+                                </button>
+                                <button
+                                    className="text-red-400 hover:scale-110 cursor-pointer"
+                                >
+                                    <FaTrash className="inline-block mr-1" />
                                 </button>
                             </td>
                         </tr>
@@ -112,10 +133,14 @@ const QuestionManagement = (props) => {
                     <div className="bg-CetaceanBlue p-6 rounded-lg w-[700px] max-h-[90vh] overflow-y-auto relative z-50">
 
                         <h3 className="text-xl font-bold mb-4 text-white">Thêm câu hỏi mới</h3>
-                        <QuestionSetting questions={questions} setQuestions={setQuestions} setShowModal={setShowModal} />
+                        <QuestionSetting questions={questions} setQuestions={setQuestions} setShowModal={setShowModal} editingQuestion={editingQuestion} answersData={answers} />
                         <button
                             className="absolute top-3 right-3 text-white hover:text-red-400 text-xl"
-                            onClick={() => setShowModal(false)}
+                            onClick={() => {
+                                setEditingQuestion(null);
+                                setAnswers([]);
+                                setShowModal(false);
+                            }}
                         >
                             &times;
                         </button>
