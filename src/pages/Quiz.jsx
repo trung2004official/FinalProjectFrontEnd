@@ -50,16 +50,14 @@ const Quiz = () => {
         <div className="min-h-screen bg-CadetBlue text-white">
             <Header />
             <main className="container mx-auto p-6">
-                <SearchBar onFilter={setFilteredQuizzes} quizzes={quizzes}/>
-                { majors.map((major) => (
-                    <div key={major} className="">
-                        <Quizzes filteredQuizzes={filteredQuizzes} major={major}/>
-                    </div>
-                ))}
-                {/* <div>
-                    <h2 className="text-2xl text-white font-bold mb-4">Thiết Kế Web</h2>
-                </div>
-                <Quizzes filteredQuizzes={filteredQuizzes} /> */}
+                <SearchBar onFilter={setFilteredQuizzes} quizzes={quizzes} />
+                {majors
+                    .filter(major => filteredQuizzes.some(q => q.major === major))
+                    .map(major => (
+                        <div key={major}>
+                            <Quizzes filteredQuizzes={filteredQuizzes} major={major} />
+                        </div>
+                    ))}
             </main>
             <Footer />
         </div>

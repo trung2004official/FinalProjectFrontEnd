@@ -43,11 +43,11 @@ const QuizCard = ({ id, title, duration, difficulty, major }) => {
                 <p className="text-white text-sm mb-2">Thời gian quy định: {duration} phút</p>
                 <p className="text-Manatee text-sm mb-4">Độ khó: {difficulty}</p>
                 <div className="flex space-x-4">
-                    <button className="bg-Emerald text-white py-2 px-4 rounded-lg hover:bg-Emerald-dark transition duration-200" onClick={handleStartQuiz}>
+                    <button className="bg-Emerald cursor-pointer text-white py-2 px-4 rounded-lg hover:bg-Emerald-dark transition duration-200" onClick={handleStartQuiz}>
                         Làm bài thi
                     </button>
                     <Link to={`/quiz/${id}`}>
-                        <button className="bg-CetaceanBlue-light text-white py-2 px-4 rounded-lg hover:bg-CetaceanBlue-dark transition duration-200">
+                        <button className="bg-CetaceanBlue-light cursor-pointer text-white py-2 px-4 rounded-lg hover:bg-CetaceanBlue-dark transition duration-200">
                             Xem chi tiết
                         </button>
                     </Link>

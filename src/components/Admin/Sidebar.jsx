@@ -1,17 +1,13 @@
 import React from 'react';
-import Logo from '../../assets/quiztech_logo.svg';
-import quizIcon from '../../assets/quiz-icon.svg';
-import questionIcon from '../../assets/message.svg';
-import statsIcon from '../../assets/search.svg';
 import { NavLink } from 'react-router-dom';
+import Logo from '../../assets/quiztech_logo.svg';
 
 const navItems = [
-    { to: '/admin', icon: statsIcon, label: 'Thống kê', end: true },
-    { to: '/admin/quizzes', icon: quizIcon, label: 'Đề thi' },
-    { to: '/admin/questions', icon: questionIcon, label: 'Câu hỏi' },
-    { to: '/admin/accounts', icon: quizIcon, label: 'Tài khoản' },
-    { to: '/admin/categories', icon: quizIcon, label: 'Danh mục' },
-    { to: '/admin/feedback', icon: quizIcon, label: 'Phản hồi' },
+    { to: '/admin', icon: <i className="fa-solid fa-chart-simple"></i>, label: 'Thống kê', end: true },
+    { to: '/admin/quizzes', icon: <i className="fa-regular fa-file-lines"></i>, label: 'Đề thi' },
+    { to: '/admin/questions', icon: <i className="fa-regular fa-rectangle-list"></i>, label: 'Câu hỏi' },
+    { to: '/admin/accounts', icon: <i className="fa-regular fa-address-card"></i>, label: 'Tài khoản' },
+    { to: '/admin/feedback', icon: <i className="fa-regular fa-comment-dots"></i>, label: 'Phản hồi' },
 ];
 
 const Sidebar = () => (
@@ -30,7 +26,7 @@ const Sidebar = () => (
                     }`
                 }
             >
-                <img src={icon} alt="" className="w-6 h-6" />
+                <span className="text-xl">{icon}</span>
                 <span>{label}</span>
             </NavLink>
         ))}
