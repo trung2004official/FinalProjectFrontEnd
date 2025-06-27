@@ -4,6 +4,7 @@ import ReactPaginate from 'react-paginate';
 import { BASE_URL } from '../../../services/api';
 import QuestionSetting from '../../components/Admin/Question-Management/QuestionSetting';
 import { FaEdit, FaEye, FaTrash } from 'react-icons/fa';
+import Swal from 'sweetalert2';;
 
 const QuestionManagement = (props) => {
     const [showModal, setShowModal] = useState(false);
@@ -43,6 +44,46 @@ const handleGetAnswersData = async (id) => {
         }
     }
 
+    const handleDeleteButton = (question) => {
+        Swal.fire({
+            title: `Chắc chắn muốn xóa câu hỏi "${question.content}"?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Xóa",
+            cancelButtonText: "Hủy"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                handleDeleteQuestion(question.id);
+            }
+        });
+    }
+
+    const handleDeleteQuestion = async (id) => {
+        try {
+            const response = await axios.delete(`${BASE_URL}/api/questions/delete-question/${id}`);
+            if (response.status === 200) {
+                Swal.fire(
+                    'Successful',
+                    'Xóa câu hỏi thành công',
+                    'success'
+                );
+                setQuestions(questions.filter(q => q.id !== id));
+            } else {
+                Swal.fire(
+                    "Error",
+                    "Câu hỏi này không thể bị xóa",
+                    "error"
+                );
+            }
+        } catch (error) {
+            console.error('Lỗi server khi xóa câu hỏi: ', error);
+            Swal.fire(
+                "Error",
+                "Câu hỏi này không thể bị xóa",
+                "error"
+            );
+        }
+    }
 
     // const editQuestion = (id, newText, newAnswer) => {
     //     setQuestions(questions.map(q => q.id === id ? { ...q, text: newText, answer: newAnswer } : q));
@@ -103,7 +144,10 @@ const handleGetAnswersData = async (id) => {
                                 <button
                                     className="text-red-400 hover:scale-110 cursor-pointer"
                                 >
-                                    <FaTrash className="inline-block mr-1" />
+                                    <FaTrash 
+                                        className="inline-block mr-1" 
+                                        onClick={() => handleDeleteButton(q)}
+                                    />
                                 </button>
                             </td>
                         </tr>

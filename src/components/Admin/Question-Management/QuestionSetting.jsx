@@ -13,7 +13,6 @@ const QuestionSetting = ({ questions, setQuestions, setShowModal, setNewQuestion
                 isCorrect: index === correctAnswer,
             }));
 
-            // Gửi từng đáp án một (nếu API không hỗ trợ batch)
             for (const answer of answerList) {
                 await axios.post(`${BASE_URL}/api/answers/add-answer/${questionId}`, {
                     question_id: questionId,
