@@ -40,41 +40,41 @@ const options = {
 }
 
 const Profile = () => {
-    const { username } = useParams();
-    const navigate = useNavigate();
+    // const { username } = useParams();
+    // const navigate = useNavigate();
 
-    // Khởi tạo state trước khi kiểm tra
-    const [currentTime, setCurrentTime] = useState('');
-    const [user, setUser] = useState(null);
+    // // Khởi tạo state trước khi kiểm tra
+    // const [currentTime, setCurrentTime] = useState('');
+    // const [user, setUser] = useState(null);
 
-    useEffect(() => {
-        // Tìm user từ params
-        const foundUser = users.find(u => u.username === username);
-        setUser(foundUser || null);
+    // useEffect(() => {
+    //     // Tìm user từ params
+    //     const foundUser = users.find(u => u.username === username);
+    //     setUser(foundUser || null);
 
-        // Lấy thời gian hiện tại
-        const getCurrentTime = () => {
-            const now = new Date();
-            return now.toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', hour12: true });
-        };
-        setCurrentTime(getCurrentTime());
+    //     // Lấy thời gian hiện tại
+    //     const getCurrentTime = () => {
+    //         const now = new Date();
+    //         return now.toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', hour12: true });
+    //     };
+    //     setCurrentTime(getCurrentTime());
 
-        const timer = setInterval(() => {
-            setCurrentTime(getCurrentTime());
-        }, 1000);
-        return () => clearInterval(timer); // Dọn dẹp khi unmount
-    }, [username]);
+    //     const timer = setInterval(() => {
+    //         setCurrentTime(getCurrentTime());
+    //     }, 1000);
+    //     return () => clearInterval(timer); // Dọn dẹp khi unmount
+    // }, [username]);
 
-    // Hàm đăng xuất
-    const handleLogout = () => {
-        localStorage.removeItem('currentUser');
-        navigate('/login');
-    };
+    // // Hàm đăng xuất
+    // const handleLogout = () => {
+    //     localStorage.removeItem('currentUser');
+    //     navigate('/login');
+    // };
 
-    // Kiểm tra nếu không có user
-    if (!user) {
-        return <div className="min-h-screen bg-CadetBlue text-white p-6 text-center">Không tìm thấy người dùng!</div>;
-    }
+    // // Kiểm tra nếu không có user
+    // if (!user) {
+    //     return <div className="min-h-screen bg-CadetBlue text-white p-6 text-center">Không tìm thấy người dùng!</div>;
+    // }
 
     return (
         <div className="bg-CadetBlue">
