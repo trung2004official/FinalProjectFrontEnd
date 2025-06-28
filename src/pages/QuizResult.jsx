@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { BASE_URL } from '../../services/api';
+import FeedBack from '../components/User/Content/FeedBack.jsx';
 
 const QuizResult = () => {
   const location = useLocation();
@@ -61,6 +62,51 @@ const QuizResult = () => {
               ? new Date(resultDetails.completedAt).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })
               : 'Chưa cập nhật'} (+07)
           </p>
+        </div>
+
+        {/* Đánh giá và phản hồi */}
+        <div className="mt-8">
+          <h3 className="text-xl font-bold mb-4 text-center text-Emerald">Đánh giá & Phản hồi</h3>
+          {/* Form đánh giá */}
+          <form
+            className="flex flex-col items-center gap-4 mb-6"
+            onSubmit={e => {
+              e.preventDefault();
+              // Xử lý gửi đánh giá ở đây (gửi lên server hoặc cập nhật local)
+            }}
+          >
+            <div className="flex items-center gap-2">
+              <span className="font-medium">Đánh giá:</span>
+              {[1, 2, 3, 4, 5].map(star => (
+                <i
+                  key={star}
+                  className={`fa-star ${star <= (resultDetails?.userRating || 0) ? 'fa-solid text-Amber-light' : 'fa-regular text-Grey'} text-xl cursor-pointer transition`}
+                  // onClick={() => ...} // Thêm xử lý chọn rating nếu muốn
+                ></i>
+              ))}
+            </div>
+            <textarea
+              className="w-full border border-CadetBlue bg-Grey-dark text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-Emerald transition"
+              rows={3}
+              placeholder="Nhập phản hồi của bạn..."
+              // value={...} // Thêm state nếu muốn
+              // onChange={...}
+            />
+            <button
+              type="submit"
+              className="bg-Emerald text-white px-5 py-2 rounded-lg shadow-md hover:bg-Emerald-dark transition"
+            >
+              Gửi phản hồi
+            </button>
+          </form>
+          {/* Hiển thị phản hồi mẫu */}
+          <FeedBack
+            username="Nguyễn Văn A"
+            avatar="https://i.pravatar.cc/100"
+            date="2025-06-28 14:00"
+            rating={5}
+            text="Bài quiz rất hay, giúp tôi ôn tập hiệu quả!"
+          />
         </div>
       </div>
     </div>
