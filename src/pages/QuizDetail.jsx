@@ -13,7 +13,7 @@ const QuizDetail = () => {
 
     const getQuizDataById = async () => {
         try {
-            const response = await axios.get(`${BASE_URL}/api/quiz/${id}`);
+            const response = await axios.get(`${BASE_URL}/api/quizzes/${id}`);
             setQuiz(response.data);
         } catch (error) {
             console.error('Không thể lấy data trong trang chi tiết: ', error);
@@ -22,7 +22,7 @@ const QuizDetail = () => {
 
     useEffect(() => {
         getQuizDataById();
-    }, []);
+    }, [id]);
 
     if (!quiz) return <div className="text-center text-Grey text-xl mt-20">Quiz not found</div>;
 

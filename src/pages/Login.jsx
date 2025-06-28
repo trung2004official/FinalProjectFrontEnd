@@ -30,6 +30,7 @@ const Login = () => {
             "Bạn đã đăng nhập vào hệ thống",
             "success"
         );
+        console.log('Người dùng: ',response.data);
         if (decodedToken.role === 'user') {
           navigate('/home');
         } else if (decodedToken.role === 'admin') {

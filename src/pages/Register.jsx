@@ -18,6 +18,10 @@ const Register = () => {
                 password: values.password,
                 email: values.email,
                 rePassword: values.rePassword,
+                fullname: values.fullname,
+                phone: values.phone,
+                address: values.address,
+                avatar: values.avatar,
             });
             console.log(response.data);
             if (response.status === 200) {
@@ -45,6 +49,10 @@ const Register = () => {
                                 password: '',
                                 email: '',
                                 rePassword: '',
+                                fullname: '',
+                                address: '',
+                                phone: '',
+                                avatar: '',
                             }}
                             validationSchema={Yup.object({
                                 username: Yup.string().required('Yêu cầu nhập tài khoản'),
@@ -57,12 +65,12 @@ const Register = () => {
                             <Form>
                                 <div className="mb-4 grid grid-cols-2 gap-2">
                                     <div>
-                                        <label htmlFor="username" className="block text-Grey-light mb-2">Tên người dùng</label>
+                                        <label htmlFor="username" className="block text-Grey-light mb-2">Tên tài khoản</label>
                                         <Field
                                             id="username"
                                             type="text"
                                             className="w-full px-4 py-2 border border-Manatee rounded-lg focus:outline-none focus:ring-2 focus:ring-PurpleNavy bg-white text-black placeholder-Manatee"
-                                            placeholder="Nhập tên người dùng"
+                                            placeholder="Nhập tên tài khoản"
                                             name='username'
                                         />
                                         <ErrorMessage name='username' className='text-red-500 font-bold' component={'span'} />
@@ -90,10 +98,10 @@ const Register = () => {
                                             placeholder="Nhập tên của bạn"
                                             name='fullname'
                                         />
-                                        <ErrorMessage name='fullanme' className='text-red-500 font-bold' component={'span'} />
+                                        <ErrorMessage name='fullname' className='text-red-500 font-bold' component={'span'} />
                                     </div>
                                     <div>
-                                        <label htmlFor="address" className="block text-Grey-light mb-2">Tên người dùng</label>
+                                        <label htmlFor="address" className="block text-Grey-light mb-2">Địa chỉ</label>
                                         <Field
                                             id="address"
                                             type="text"

@@ -34,7 +34,6 @@ const QuizCard = ({ id, title, duration, difficulty, major, rating }) => {
 
     const handleFavorite = () => {
         setFavorite(prev => !prev);
-        // Có thể thêm xử lý lưu trạng thái yêu thích vào backend hoặc localStorage ở đây
     };
 
     return (
