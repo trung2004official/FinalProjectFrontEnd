@@ -34,7 +34,7 @@ const Register = () => {
             <div className="flex w-full h-screen">
                 <SideImage />
                 <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
-                    <div className="w-full max-w-md bg-CetaceanBlue p-8 rounded-lg shadow-lg border border-Manatee">
+                    <div className="w-full bg-CetaceanBlue p-8 rounded-lg shadow-lg border border-Manatee">
                         <img src={logo} alt="Logo" className="h-24 mx-auto mb-4" />
                         <p className="text-4xl font-bold text-white text-center mb-6">
                             Welcome to QuizTech
@@ -55,27 +55,79 @@ const Register = () => {
                             onSubmit={handleRegister}
                         >
                             <Form>
-                                <div className="mb-4">
-                                    <label htmlFor="username" className="block text-Grey-light mb-2">Tên người dùng</label>
-                                    <Field
-                                        id="username"
-                                        type="text"
-                                        className="w-full px-4 py-2 border border-Manatee rounded-lg focus:outline-none focus:ring-2 focus:ring-PurpleNavy bg-white text-black placeholder-Manatee"
-                                        placeholder="Nhập tên người dùng"
-                                        name = 'username'
-                                    />
-                                    <ErrorMessage name='username' className='text-red-500 font-bold' component={'span'}/>
+                                <div className="mb-4 grid grid-cols-2 gap-2">
+                                    <div>
+                                        <label htmlFor="username" className="block text-Grey-light mb-2">Tên người dùng</label>
+                                        <Field
+                                            id="username"
+                                            type="text"
+                                            className="w-full px-4 py-2 border border-Manatee rounded-lg focus:outline-none focus:ring-2 focus:ring-PurpleNavy bg-white text-black placeholder-Manatee"
+                                            placeholder="Nhập tên người dùng"
+                                            name='username'
+                                        />
+                                        <ErrorMessage name='username' className='text-red-500 font-bold' component={'span'} />
+                                    </div>
+                                    <div>
+
+                                        <label htmlFor="email" className="block text-Grey-light mb-2">Email</label>
+                                        <Field
+                                            id="email"
+                                            name='email'
+                                            type="email"
+                                            className="w-full px-4 py-2 border border-Manatee rounded-lg focus:outline-none focus:ring-2 focus:ring-PurpleNavy bg-white text-black placeholder-Manatee"
+                                            placeholder="Nhập email"
+                                        />
+                                        <ErrorMessage name='email' className='text-red-500 font-bold' component={'span'} />
+                                    </div>
                                 </div>
-                                <div className="mb-4">
-                                    <label htmlFor="email" className="block text-Grey-light mb-2">Email</label>
+                                <div className="mb-4 grid grid-cols-2 gap-2">
+                                    <div>
+                                        <label htmlFor="fullname" className="block text-Grey-light mb-2">Họ và Tên</label>
+                                        <Field
+                                            id="fullname"
+                                            type="text"
+                                            className="w-full px-4 py-2 border border-Manatee rounded-lg focus:outline-none focus:ring-2 focus:ring-PurpleNavy bg-white text-black placeholder-Manatee"
+                                            placeholder="Nhập tên của bạn"
+                                            name='fullname'
+                                        />
+                                        <ErrorMessage name='fullanme' className='text-red-500 font-bold' component={'span'} />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="address" className="block text-Grey-light mb-2">Tên người dùng</label>
+                                        <Field
+                                            id="address"
+                                            type="text"
+                                            className="w-full px-4 py-2 border border-Manatee rounded-lg focus:outline-none focus:ring-2 focus:ring-PurpleNavy bg-white text-black placeholder-Manatee"
+                                            placeholder="Nhập địa chỉ"
+                                            name='address'
+                                        />
+                                        <ErrorMessage name='address' className='text-red-500 font-bold' component={'span'} />
+                                    </div>
+                                </div>
+                                <div className='mb-4 grid grid-cols-2 gap-2'>
+                                    <div>
+
+                                    <label htmlFor="phone" className="block text-Grey-light mb-2">Số điện thoại:</label>
                                     <Field
-                                        id="email"
-                                        name='email'
-                                        type="email"
-                                        className="w-full px-4 py-2 border border-Manatee rounded-lg focus:outline-none focus:ring-2 focus:ring-PurpleNavy bg-white text-black placeholder-Manatee"
-                                        placeholder="Nhập email"
-                                    />
-                                    <ErrorMessage name='email' className='text-red-500 font-bold' component={'span'}/>
+                                            id="phone"
+                                            type="text"
+                                            className="w-full px-4 py-2 border border-Manatee rounded-lg focus:outline-none focus:ring-2 focus:ring-PurpleNavy bg-white text-black placeholder-Manatee"
+                                            placeholder="Nhập số điện thoại"
+                                            name='phone'
+                                        />
+                                        <ErrorMessage name='phone' className='text-red-500 font-bold' component={'span'} />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="avatar" className="block text-Grey-light mb-2">Ảnh đại diện:</label>
+                                    <Field
+                                            id="avatar"
+                                            type="file"
+                                            className="w-full px-4 py-2 border border-Manatee rounded-lg focus:outline-none focus:ring-2 focus:ring-PurpleNavy bg-white text-black placeholder-Manatee"
+                                            placeholder="Chọn file ảnh"
+                                            name='avatar'
+                                        />
+                                        <ErrorMessage name='avatar' className='text-red-500 font-bold' component={'span'} />
+                                    </div>
                                 </div>
                                 <div className="mb-4">
                                     <label htmlFor="password" className="block text-Grey-light mb-2">Mật khẩu</label>
