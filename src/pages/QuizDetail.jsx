@@ -7,6 +7,7 @@ import { BASE_URL } from '../../services/api.jsx';
 
 const QuizDetail = () => {
     const [quiz, setQuiz] = useState({});
+    const [favorite, setFavorite] = useState(false); // Thêm state cho favorite
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -39,7 +40,7 @@ const QuizDetail = () => {
             <main className="flex-grow flex items-center justify-center py-12 px-4">
                 <div className="bg-CetaceanBlue-light p-8 rounded-2xl shadow-xl max-w-2xl w-full mx-auto relative transform transition duration-300 hover:shadow-2xl">
                     {/* Rating badge */}
-                    <div className="absolute top-4 right-4 flex items-center gap-1 bg-CadetBlue/80 px-3 py-1 rounded-full shadow-md text-sm z-10">
+                    <div className="absolute top-4 right-4 flex items-center gap-2 bg-CadetBlue/80 px-3 py-1 rounded-full shadow-md text-sm z-10">
                         <i className="fa-solid fa-star text-yellow-400"></i>
                         <span className="font-bold">
                             {quiz.comments && quiz.comments.length > 0
@@ -50,6 +51,14 @@ const QuizDetail = () => {
                                 : '0.0'}
                         </span>
                         <span className="text-Grey-light">/ 5</span>
+                        {/* Nút tim yêu thích giống QuizCard */}
+                        <button
+                            className="ml-2 bg-white/10 rounded-full p-2 hover:bg-white/80 transition"
+                            title="Yêu thích"
+                            onClick={() => setFavorite(prev => !prev)}
+                        >
+                            <i className={`fa-solid fa-heart text-base transition ${favorite ? 'text-red-500' : 'text-white'}`}></i>
+                        </button>
                     </div>
 
                     {/* Quiz Title */}
