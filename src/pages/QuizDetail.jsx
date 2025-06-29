@@ -4,6 +4,7 @@ import Header from '../components/User/Header.jsx';
 import Footer from '../components/User/Footer.jsx';
 import axios from 'axios';
 import { BASE_URL } from '../../services/api.jsx';
+import FeedBack from '../components/User/Content/FeedBack.jsx';
 
 const QuizDetail = () => {
     const [quiz, setQuiz] = useState({});
@@ -51,14 +52,6 @@ const QuizDetail = () => {
                                 : '0.0'}
                         </span>
                         <span className="text-Grey-light">/ 5</span>
-                        {/* Nút tim yêu thích giống QuizCard */}
-                        <button
-                            className="ml-2 bg-white/10 rounded-full p-2 hover:bg-white/80 transition"
-                            title="Yêu thích"
-                            onClick={() => setFavorite(prev => !prev)}
-                        >
-                            <i className={`fa-solid fa-heart text-base transition ${favorite ? 'text-red-500' : 'text-white'}`}></i>
-                        </button>
                     </div>
 
                     {/* Quiz Title */}
@@ -110,65 +103,24 @@ const QuizDetail = () => {
                         </button>
                     </div>
 
-                    {/* Comments & Rating Section */}
+                    {/* Feedback Section */}
                     <div className="mt-10 border-t border-CadetBlue pt-6">
                         <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                            <i className="fa-regular fa-star text-Emerald-light"></i> Đánh giá & Bình luận
+                            <i className="fa-regular fa-star text-Emerald-light"></i> Phản hồi người dùng
                         </h2>
-                        {/* Rating */}
-                        <div className="flex items-center gap-2 mb-4">
-                            <span className="font-medium text-white">Đánh giá của bạn:</span>
-                            {[1, 2, 3, 4, 5].map(star => (
-                                <i
-                                    key={star}
-                                    className={`fa-star ${star <= (quiz.userRating || 0) ? 'fa-solid text-Emerald-light' : 'fa-regular text-Grey'} text-lg cursor-pointer transition transform hover:scale-125`}
-                                    onClick={() => setQuiz(prev => ({ ...prev, userRating: star }))}
-                                ></i>
-                            ))}
-                            {quiz.userRating && (
-                                <span className="ml-2 text-Emerald font-medium">{quiz.userRating}/5</span>
-                            )}
-                        </div>
-                        {/* Comment Form */}
-                        <form
-                            className="mb-4"
-                            onSubmit={e => {
-                                e.preventDefault();
-                                if (!quiz.newComment) return;
-                                setQuiz(prev => ({
-                                    ...prev,
-                                    comments: [...(prev.comments || []), { text: quiz.newComment, date: new Date().toLocaleString('vi-VN') }],
-                                    newComment: ''
-                                }));
-                            }}
-                        >
-                            <textarea
-                                className="w-full border border-CadetBlue bg-Grey-dark text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-Emerald transition"
-                                rows={3}
-                                placeholder="Nhập bình luận của bạn..."
-                                value={quiz.newComment || ''}
-                                onChange={e => setQuiz(prev => ({ ...prev, newComment: e.target.value }))}
-                            />
-                            <button
-                                type="submit"
-                                className="bg-Emerald text-white px-5 py-2 rounded-lg shadow-md hover:bg-Emerald-dark transition transform hover:scale-105 mt-2"
-                            >
-                                Gửi bình luận
-                            </button>
-                        </form>
-                        {/* Comments List */}
                         <div className="space-y-3 max-h-60 overflow-y-auto pr-2">
                             {(quiz.comments || []).length === 0 ? (
-                                <div className="text-Grey italic text-center">Chưa có bình luận nào.</div>
+                                <div className="text-Grey italic text-center">Chưa có phản hồi nào.</div>
                             ) : (
                                 quiz.comments.map((cmt, idx) => (
-                                    <div key={idx} className="bg-CadetBlue/50 rounded-lg px-4 py-3 text-sm shadow-sm">
-                                        <div className="flex items-center gap-2 mb-1">
-                                            <span className="font-medium text-Emerald">Ẩn danh</span>
-                                            <span className="text-xs text-Grey">{cmt.date}</span>
-                                        </div>
-                                        <div className="text-Grey-light">{cmt.text}</div>
-                                    </div>
+                                    <FeedBack
+                                        key={idx}
+                                        username={cmt.username || "Ẩn danh"}
+                                        avatar={cmt.avatar}
+                                        date={cmt.date}
+                                        rating={cmt.rating}
+                                        text={cmt.text}
+                                    />
                                 ))
                             )}
                         </div>

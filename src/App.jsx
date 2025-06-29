@@ -17,6 +17,8 @@ import AccountManagement from './pages/Admin/AccountManagement.jsx';
 import CategoryManagement from './pages/Admin/CategoryManagement.jsx'; import FeedbackManagement from './pages/Admin/FeedbackManagement.jsx';
 import QuizManagementDetails from './pages/Admin/Quiz/QuizManagementDetails.jsx';
 import { UserProvider } from './contexts/UserContext.jsx';
+import History from './pages/History.jsx'; // Import History component
+import HistoryDetail from './pages/HistoryDetail.jsx';
 
 function App() {
     return (
@@ -40,8 +42,10 @@ function App() {
                         <Route path="/quiz" element={<Quiz />} />
                         <Route path="/quiz/:id" element={<QuizDetails />} />
                         <Route path="/quizzes-questions/:quizId" element={<QuizTest />} />
-                        <Route path="/quiz/result" element={<QuizResult />} /> {/* Route cho kết quả */}
+                        <Route path="/quiz/result" element={<QuizResult />} /> 
                         <Route path="/profile" element={<Profile />} />
+                        <Route path="/history" element={<History />} /> {/* Route cho lịch sử làm bài */}
+                        <Route path="/history/:id" element={<HistoryDetail />} />
                     </Routes>
                 </div>
             </Router>

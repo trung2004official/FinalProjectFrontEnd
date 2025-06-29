@@ -80,12 +80,12 @@ const Profile = () => {
         <div className="bg-CadetBlue">
             <div className='flex h-screen'>
                 <ProfileSidebar/>
-                <div className='flex-1'>
+                <div className='flex-1 h-screen overflow-y-auto'>
                     <ProfileHeader/>
                     <div className='shadow-lg m-2 border border-black'>
                         <Bar data={activityData} options={options} height={90} />
                     </div>
-                    <div className='shadow-lg m-2 border border-black'>
+                    <div className='shadow-lg m-2 border border-black '>
                         <ProfileMain />
                     </div>
                 </div>
