@@ -1,12 +1,31 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { FaUser, FaHistory, FaBell, FaHeart, FaSignOutAlt, FaEdit, FaArrowLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../../contexts/UserContext';
 import { BASE_URL } from '../../../../services/api';
+import axios from 'axios';
 
 const ProfileSidebar = () => {
   const navigate = useNavigate();
-  const { user } = useUser();
+  const { user, setUser } = useUser();
+  const fileInputRef = useRef();
+
+  const handleAvatarChange = async (e) => {
+    const file = e.target.files[0];
+    if(!file) return;
+    const formData = new FormData();
+    formData.append('avatar', file);
+
+    try {
+      const response = await axios.put(`${BASE_URL}/api/auth/${user.id}`, formData);
+      if(response.status === 200) {
+        setUser((prev) => ({...prev, avatar: response.data.user.avatar}));
+      }
+    } catch (error) {
+      console.log('Server error: ', error);
+    }
+  }
+
   return (
     <div className='w-[250px] min-h-screen flex flex-col justify-between bg-CetaceanBlue'>
       <div>
@@ -22,9 +41,16 @@ const ProfileSidebar = () => {
               type="button"
               className="absolute bottom-2 right-2 rounded-full p-2 shadow hover:bg-gray-200 transition"
               title="Đổi ảnh đại diện"
+              onClick={() => fileInputRef.current.click()}
             >
               <FaEdit className="text-white" />
             </button>
+            <input 
+              type="file"
+              ref={fileInputRef}
+              style={{ display: 'none' }}
+              onChange={handleAvatarChange}
+            />
           </div>
           <span className='text-white font-bold text-2xl mt-3'>{user? user.fullname : 'Tên người dùng'}</span>
         </div>
