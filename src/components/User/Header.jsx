@@ -5,13 +5,14 @@ import { FaChevronDown } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import { jwtDecode } from 'jwt-decode';
 import { useUser } from '../../contexts/UserContext';
+import { BASE_URL } from '../../../services/api';
 
 const Header = () => {
     // const [username, setUsername] = useState('guest'); // Giá trị mặc định
     const [showDropdown, setShowDropdown] = useState(false);
     const dropdownRef = useRef(null);
     const navigate = useNavigate();
-    const {setUser} = useUser();
+    const {user, setUser} = useUser();
     const token = localStorage.getItem('token');
     const decodedToken =  token? jwtDecode(token) : null;
 
@@ -23,17 +24,18 @@ const Header = () => {
         };
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
+    }, [user]);
 
     const handleLogout = () => {
         localStorage.removeItem('token');
-        setUser({});
+        setUser(null);
         Swal.fire(
             "Đã đăng xuất",
             "Bạn đã đăng xuất thành công",
             'success',
         )
         navigate('/');
+        console.log(user);
     };
 
     const handleClickLogOut = () => {
@@ -67,17 +69,24 @@ const Header = () => {
                         </Link>
                     </li>
                 </ul>
-                {decodedToken ? (
+                {user ? (
                     <div className="relative" ref={dropdownRef}>
                         <button
                             className="flex items-center gap-2 focus:outline-none"
                             onClick={() => setShowDropdown((prev) => !prev)}
-                        >
-                            <img
-                                className="w-12 h-12 rounded-full border-2 border-white"
-                                src="https://scontent.fsgn8-4.fna.fbcdn.net/v/t39.30808-6/506060153_2526619104351592_4052337228407427246_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeELRC_MLNJsOgR8-KY9wi0bEESlSnzrVuoQRKVKfOtW6oNuYorF16SWtiZpT2z_tYNaWC3-HqbEOuxzzSHIjtZd&_nc_ohc=PqBbrv-qrdUQ7kNvwF3bNpL&_nc_oc=Adla-YJoWubWOJ03UCIa14MjOGjAnlLiA5tegbI7TaGm82FvIG2yheUQ-uKBkom6T7kToz6pFfioAF-a1_gds4u8&_nc_zt=23&_nc_ht=scontent.fsgn8-4.fna&_nc_gid=2hjPd25YM-jRDTUxzHsRUw&oh=00_AfOmtFsThAqL751XGjIvZBX8bbCw1XMiC-KgDvdIS9St6Q&oe=6864ADA0"
+                        >   
+                            {user.avatar?(
+                                <img
+                                className="w-12 h-12 rounded-full border-2 border-white object-cover"
+                                src={`${BASE_URL}/uploads/${user.avatar}`}
                                 alt=""
-                            />
+                                />
+                            ) : (
+                                <img src='https://scontent.fsgn2-4.fna.fbcdn.net/v/t39.30808-6/506934082_2095528184291474_2158101689822179965_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeG_NK8LCxvnLDBkx2jEV3n-hL9gnEA1UaqEv2CcQDVRql0zFlyR6vScDmIGH_E1LhhYv1t0SgetYcDhlKmDpdIf&_nc_ohc=9fRXLynk1vIQ7kNvwGkR3rN&_nc_oc=AdnbCljaYmk6_VwYamUzq32l-p4q22k2DT9Nb3A8cGYZNhRT5yQfD610BsPMuiG78mI&_nc_zt=23&_nc_ht=scontent.fsgn2-4.fna&_nc_gid=Mfbvo2a5XFI74CMzeQJQ3w&oh=00_AfMhv6b-m-qKHPk5mX2ZbA2WnOkKQk5LmxAULMOsCHartg&oe=68673505'
+                                className='w-12 h-12 rounded-full border-2 border-white object-cover'>
+                                </img>
+                            )}
+                            
                         </button>
                         {showDropdown && (
                             <div className="absolute right-0 mt-2 w-48 bg-PurpleNavy rounded shadow-lg z-50">

@@ -32,7 +32,7 @@ const Navbar = () => {
     // Hàm xử lý đăng xuất (giả lập)
     const handleLogout = () => {
         localStorage.removeItem('token');
-        setUser({});
+        setUser(null);
         Swal.fire(
             'Successful',
             'Bạn đã đăng xuất khỏi hệ thống',
