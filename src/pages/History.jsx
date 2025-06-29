@@ -32,42 +32,58 @@ const History = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen bg-CadetBlue text-white flex flex-col">
+        <div className="min-h-screen bg-gradient-to-br from-CetaceanBlue to-CadetBlue text-white flex flex-col font-roboto">
             <Header />
-            <main className="flex-1 container mx-auto p-6">
-                <h1 className="text-3xl font-bold mb-8 text-center text-Emerald">Lịch sử làm bài</h1>
-                <div className="space-y-4 max-w-xl mx-auto">
-                    {mockAttempts.map((attempt, idx) => {
-                        const quiz = quizzes.find(q => q.id === attempt.quizId);
-                        return (
-                            <div
-                                key={attempt.id}
-                                className="bg-CetaceanBlue-light rounded-xl shadow p-4 flex flex-col gap-2"
-                            >
-                                <div className="flex justify-between items-center">
-                                    <span className="font-semibold text-lg">{quiz ? quiz.title : '---'}</span>
-                                    <span className="text-sm text-Manatee-light">
-                                        {attempt.completedAt
-                                            ? new Date(attempt.completedAt).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })
-                                            : '---'}
+            <main className="flex-1 container mx-auto px-6 py-12">
+                <h1 className="text-4xl font-extrabold mb-10 text-center text-Emerald tracking-tight">
+                    Lịch Sử Làm Bài
+                </h1>
+                <div className="max-w-3xl mx-auto space-y-6">
+                    {mockAttempts.length === 0 ? (
+                        <div className="text-center text-Grey-light text-lg italic">
+                            Chưa có lịch sử làm bài.
+                        </div>
+                    ) : (
+                        mockAttempts.map((attempt, idx) => {
+                            const quiz = quizzes.find(q => q.id === attempt.quizId);
+                            return (
+                                <div
+                                    key={attempt.id}
+                                    className="bg-CetaceanBlue/90 rounded-2xl shadow-lg p-6 flex flex-col gap-3 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:bg-CetaceanBlue animate-fade-in"
+                                >
+                                    <div className="flex justify-between items-center">
+                                        <span className="font-bold text-xl text-white">
+                                            {quiz ? quiz.title : '---'}
+                                        </span>
+                                        <span className="text-sm text-Manatee-light">
+                                            {attempt.completedAt
+                                                ? new Date(attempt.completedAt).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })
+                                                : '---'}
+                                        </span>
+                                    </div>
+                                    <div className="flex gap-8">
+                                        <span className="text-Grey-light">
+                                            Điểm: <span className="font-bold text-Emerald">{attempt.score ?? '--'}</span>
+                                        </span>
+                                        <span className="text-Grey-light">
+                                            Kết quả:{' '}
+                                            {attempt.passed ? (
+                                                <span className="text-Emerald-light font-semibold">Đạt</span>
+                                            ) : (
+                                                <span className="text-red-400 font-semibold">Chưa đạt</span>
+                                            )}
+                                        </span>
+                                    </div>
+                                    <span
+                                        className="text-Emerald hover:text-Emerald-light font-medium cursor-pointer transition duration-200 hover:underline"
+                                        onClick={() => navigate(`/history/${attempt.id}`)}
+                                    >
+                                        Xem chi tiết
                                     </span>
                                 </div>
-                                <div className="flex gap-6 mt-1">
-                                    <span>Điểm: <span className="font-bold">{attempt.score ?? '--'}</span></span>
-                                    <span>Kết quả: {attempt.passed
-                                        ? <span className="text-Emerald font-semibold">Đạt</span>
-                                        : <span className="text-red-400 font-semibold">Chưa đạt</span>
-                                    }</span>
-                                </div>
-                                <span
-                                    className="text-Emerald hover:underline cursor-pointer"
-                                    onClick={() => navigate(`/history/${attempt.id}`)}
-                                >
-                                    Xem chi tiết
-                                </span>
-                            </div>
-                        );
-                    })}
+                            );
+                        })
+                    )}
                 </div>
             </main>
             <Footer />
