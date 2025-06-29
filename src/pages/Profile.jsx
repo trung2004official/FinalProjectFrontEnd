@@ -83,7 +83,7 @@ const Profile = () => {
                 <div className='flex-1'>
                     <ProfileHeader/>
                     <div className='shadow-lg m-2 border border-black'>
-                        <Bar data={activityData} options={options} height={90} />
+                        <Bar data={activityData} options={options} height={80} />
                     </div>
                     <div className='shadow-lg m-2 border border-black'>
                         <ProfileMain />

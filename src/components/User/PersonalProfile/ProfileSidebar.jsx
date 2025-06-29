@@ -1,9 +1,12 @@
 import React from 'react'
 import { FaUser, FaHistory, FaBell, FaHeart, FaSignOutAlt, FaEdit, FaArrowLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../../../contexts/UserContext';
+import { BASE_URL } from '../../../../services/api';
 
 const ProfileSidebar = () => {
   const navigate = useNavigate();
+  const { user } = useUser();
   return (
     <div className='w-[250px] min-h-screen flex flex-col justify-between bg-CetaceanBlue'>
       <div>
@@ -11,7 +14,7 @@ const ProfileSidebar = () => {
         <div className='flex flex-col items-center py-8'>
           <div className='w-32 h-32 rounded-full overflow-hidden border-4 border-CetaceanBlue relative'>
             <img
-              src="https://scontent.fsgn8-4.fna.fbcdn.net/v/t39.30808-6/506060153_2526619104351592_4052337228407427246_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeELRC_MLNJsOgR8-KY9wi0bEESlSnzrVuoQRKVKfOtW6oNuYorF16SWtiZpT2z_tYNaWC3-HqbEOuxzzSHIjtZd&_nc_ohc=PqBbrv-qrdUQ7kNvwF3bNpL&_nc_oc=Adla-YJoWubWOJ03UCIa14MjOGjAnlLiA5tegbI7TaGm82FvIG2yheUQ-uKBkom6T7kToz6pFfioAF-a1_gds4u8&_nc_zt=23&_nc_ht=scontent.fsgn8-4.fna&_nc_gid=2hjPd25YM-jRDTUxzHsRUw&oh=00_AfOmtFsThAqL751XGjIvZBX8bbCw1XMiC-KgDvdIS9St6Q&oe=6864ADA0"
+              src={user && user.avatar ? `${BASE_URL}/uploads/${user.avatar}` : '/default-avatar.png'}
               alt=""
               className="w-full h-full object-cover"
             />
@@ -23,7 +26,7 @@ const ProfileSidebar = () => {
               <FaEdit className="text-white" />
             </button>
           </div>
-          <span className='text-white font-bold text-2xl mt-3'>Nguyễn Ngọc Long</span>
+          <span className='text-white font-bold text-2xl mt-3'>{user? user.fullname : 'Tên người dùng'}</span>
         </div>
         {/* Menu */}
         <nav className="flex flex-col gap-4 text-xl px-4">

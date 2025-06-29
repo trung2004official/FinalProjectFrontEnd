@@ -1,6 +1,8 @@
 import React from 'react'
+import { useUser } from '../../../contexts/UserContext'
 
-const ProfileMain = ({ user }) => {
+const ProfileMain = () => {
+    const {user} = useUser();
     return (
         <div className="text-CetaceanBlue-dark grid grid-cols-2 p-6 gap-4">
             <div>
@@ -8,7 +10,7 @@ const ProfileMain = ({ user }) => {
                 <input
                     id="fullname"
                     className='w-full h-15 p-2 rounded bg-PurpleNavy-light  cursor-pointer'
-                    value={user?.fullname || ''}
+                    value={user? user.fullname : ''}
                     readOnly
                 />
             </div>
@@ -17,7 +19,7 @@ const ProfileMain = ({ user }) => {
                 <input
                     id="email"
                     className='w-full h-15 p-2 rounded bg-PurpleNavy-light  cursor-pointer'
-                    value={user?.email || ''}
+                    value={user? user.email : ''}
                     readOnly
                 />
             </div>
@@ -26,7 +28,7 @@ const ProfileMain = ({ user }) => {
                 <input
                     id="address"
                     className='w-full h-15 p-2 rounded bg-PurpleNavy-light  cursor-pointer'
-                    value={user?.address || ''}
+                    value={user? user.address : ''}
                     readOnly
                 />
             </div>
@@ -35,11 +37,11 @@ const ProfileMain = ({ user }) => {
                 <input
                     id="phone"
                     className='w-full h-15 p-2 rounded bg-PurpleNavy-light  cursor-pointer'
-                    value={user?.phone || ''}
+                    value={user? user.phone : ''}
                     readOnly
                 />
             </div>
-            <button className='bg-CetaceanBlue hover:bg-CetaceanBlue-dark px-4 py-2 h-15 rounded text-white font-semibold cursor-pointer col-span-2 mt-20'>Chỉnh sửa tài khoản</button>
+            <button className='bg-CetaceanBlue hover:bg-CetaceanBlue-dark px-4 py-2 h-15 rounded text-white font-semibold cursor-pointer col-span-2'>Chỉnh sửa tài khoản</button>
         </div>
     )
 }
