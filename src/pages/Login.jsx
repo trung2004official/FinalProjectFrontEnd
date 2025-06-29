@@ -8,10 +8,11 @@ import axios from 'axios';
 import { Formik, ErrorMessage, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import Swal from 'sweetalert2';
+import { useUser } from '../contexts/UserContext.jsx';
 
 const Login = () => {
-  const [loginUser, setLoginUser] = useState();
   const navigate = useNavigate();
+  const {setUser} = useUser();
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
@@ -19,18 +20,18 @@ const Login = () => {
         username: values.username,
         password: values.password,
       });
-      console.log('Đăng nhập thành công: ', response.status);
+      console.log('Đăng nhập thành công: ', response.data);
       const token = response.data.token;
       localStorage.setItem('token', token);
+      setUser(response.data.user);
       const decodedToken = jwtDecode(token);
-      setLoginUser(decodedToken);
       if (response.status === 200) {
         Swal.fire(
             "Đăng nhập thành công",
             "Bạn đã đăng nhập vào hệ thống",
             "success"
         );
-        console.log('Người dùng: ',response.data);
+        console.log('Người dùng: ',response.data.user.fullname);
         if (decodedToken.role === 'user') {
           navigate('/home');
         } else if (decodedToken.role === 'admin') {

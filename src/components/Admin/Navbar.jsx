@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import hamburgerIcon from '../../assets/7504229_hamburger_menu_list_options_icon.svg';
+import { useUser } from '../../contexts/UserContext';
+import Swal from 'sweetalert2';
 
 const majors = ['Tất cả', 'Thiết Kế Web', 'Mobile', 'Mạng Máy Tính'];
 const levels = ['Tất cả', 'Gà mờ', 'Cứng tay', 'Đỉnh kout', 'Trùm cuối'];
@@ -17,6 +19,8 @@ const Navbar = () => {
     const [searchAccount, setSearchAccount] = useState('');
     const [searchFeedback, setSearchFeedback] = useState('');
     const [filterFeedback, setFilterFeedback] = useState('');
+    const {setUser} = useUser();
+    const navigate = useNavigate();
 
     // Xác định trang hiện tại
     const isStats = location.pathname === '/admin';
@@ -28,8 +32,28 @@ const Navbar = () => {
     // Hàm xử lý đăng xuất (giả lập)
     const handleLogout = () => {
         localStorage.removeItem('token');
-        window.location.href = '/login';
+        setUser({});
+        Swal.fire(
+            'Successful',
+            'Bạn đã đăng xuất khỏi hệ thống',
+            'success'
+        )
+        navigate('/login');
     };
+
+    const handleLogOutClick = () => {
+        Swal.fire({
+            title: 'Bạn muốn đăng xuất?',
+            showCancelButton:true,
+            showConfirmButton: true,
+            confirmButtonText: 'Đăng xuất',
+            cancelButtonText: 'Hủy',
+        }).then((result) => {
+            if(result.isConfirmed) {
+                handleLogout();
+            }
+        })
+    }
 
     return (
         <nav className="flex items-center justify-between w-full">
@@ -159,7 +183,7 @@ const Navbar = () => {
             <ul className="flex gap-4 items-center">
                 <li>
                     <button
-                        onClick={handleLogout}
+                        onClick={handleLogOutClick}
                         className="bg-Emerald hover:bg-Emerald-600 text-white px-3 py-1 rounded transition"
                         title="Đăng xuất"
                     >

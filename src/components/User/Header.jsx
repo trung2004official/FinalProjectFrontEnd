@@ -4,13 +4,14 @@ import logo from '../../assets/quiztech_logo.svg';
 import { FaChevronDown } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import { jwtDecode } from 'jwt-decode';
+import { useUser } from '../../contexts/UserContext';
 
 const Header = () => {
     // const [username, setUsername] = useState('guest'); // Giá trị mặc định
     const [showDropdown, setShowDropdown] = useState(false);
     const dropdownRef = useRef(null);
     const navigate = useNavigate();
-    const [user, setUser] = useState();
+    const {setUser} = useUser();
     const token = localStorage.getItem('token');
     const decodedToken =  token? jwtDecode(token) : null;
 
@@ -26,6 +27,7 @@ const Header = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('token');
+        setUser({});
         Swal.fire(
             "Đã đăng xuất",
             "Bạn đã đăng xuất thành công",
