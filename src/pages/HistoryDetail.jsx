@@ -49,10 +49,12 @@ const HistoryDetail = () => {
 
     if (!attempt) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-CetaceanBlue to-CadetBlue text-white flex flex-col font-roboto">
+            <div className="min-h-screen bg-gradient-to-br from-CetaceanBlue-dark to-CadetBlue text-white flex flex-col font-roboto">
                 <Header />
                 <main className="flex-1 flex items-center justify-center">
-                    <div className="text-2xl text-center text-Grey-light">Không tìm thấy lịch sử làm bài!</div>
+                    <div className="text-3xl text-center text-Grey-light bg-CetaceanBlue/50 rounded-xl p-6 shadow-md">
+                        Không tìm thấy lịch sử làm bài!
+                    </div>
                 </main>
                 <Footer />
             </div>
@@ -71,70 +73,85 @@ const HistoryDetail = () => {
     ].filter(item => item.value > 0);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-CetaceanBlue to-CadetBlue text-white flex flex-col font-roboto">
+        <div className="min-h-screen bg-gradient-to-br from-CetaceanBlue-dark to-CadetBlue text-white flex flex-col font-roboto">
             <Header />
-            <main className="flex-1 container mx-auto px-6 py-12">
-                <div className="max-w-3xl mx-auto bg-CetaceanBlue/90 rounded-2xl shadow-lg p-8 mt-8 transition-all duration-300 hover:shadow-xl animate-fade-in">
-                    <h1 className="text-4xl font-extrabold mb-6 text-center text-Emerald tracking-tight">
-                        Chi Tiết Lịch Sử Làm Bài
+            <main className="flex-1 container mx-auto px-6 py-16">
+                <div className="max-w-4xl mx-auto bg-CetaceanBlue/95 rounded-3xl shadow-xl p-10 mt-10 transition-all duration-300 hover:shadow-2xl animate-fade-in">
+                    <h1 className="text-5xl font-extrabold mb-8 text-center text-Emerald tracking-tight drop-shadow-md">
+                        Chi Tiết Lịch Sử
                     </h1>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                         {/* Thông tin chi tiết */}
-                        <div className="flex flex-col gap-4">
-                            <div className="font-bold text-xl text-white">{quiz ? quiz.title : '---'}</div>
-                            <div className="text-sm text-Manatee-light mb-2">
+                        <div className="flex flex-col gap-5">
+                            <div className="flex items-center gap-3">
+                                <i className="fa-solid fa-file-lines text-Emerald text-2xl"></i>
+                                <span className="font-bold text-2xl text-white">{quiz ? quiz.title : '---'}</span>
+                            </div>
+                            <div className="text-base text-Manatee-light bg-Grey-dark/50 px-3 py-1 rounded-full inline-block">
                                 Ngày làm: {formattedDate}
                             </div>
-                            <div className="flex flex-col gap-3">
-                                <div className="flex gap-6">
-                                    <span className="text-Grey-light">
+                            <div className="flex flex-col gap-4 bg-CetaceanBlue-light/50 p-6 rounded-xl shadow-sm">
+                                <div className="flex gap-8">
+                                    <span className="text-Grey-light text-lg">
                                         Điểm: <span className="font-bold text-Emerald">{attempt.score ?? '--'}</span>
                                     </span>
-                                    <span className="text-Grey-light">
+                                    <span className="text-Grey-light text-lg">
                                         Kết quả:{' '}
-                                        {attempt.passed ? (
-                                            <span className="text-Emerald-light font-semibold">Đạt</span>
-                                        ) : (
-                                            <span className="text-red-400 font-semibold">Chưa đạt</span>
-                                        )}
+                                        <span
+                                            className={`font-semibold px-3 py-1 rounded-full ${
+                                                attempt.passed
+                                                    ? 'bg-Emerald/20 text-Emerald-light'
+                                                    : 'bg-red-400/20 text-red-400'
+                                            }`}
+                                        >
+                                            {attempt.passed ? 'Đạt' : 'Chưa đạt'}
+                                        </span>
                                     </span>
                                 </div>
-                                <div className="flex gap-6">
-                                    <span className="text-Grey-light">
-                                        Số câu đúng: <span className="font-bold text-Emerald">{attempt.correct}</span>
+                                <div className="flex gap-8">
+                                    <span className="text-Grey-light text-lg">
+                                        Số câu đúng:{' '}
+                                        <span className="font-bold text-Emerald">{attempt.correct}</span>
                                     </span>
-                                    <span className="text-Grey-light">
-                                        Số câu sai: <span className="font-bold text-red-400">{attempt.wrong}</span>
+                                    <span className="text-Grey-light text-lg">
+                                        Số câu sai:{' '}
+                                        <span className="font-bold text-red-400">{attempt.wrong}</span>
                                     </span>
-                                    <span className="text-Grey-light">
+                                    <span className="text-Grey-light text-lg">
                                         Bỏ qua: <span className="font-bold text-Grey">{attempt.skipped}</span>
                                     </span>
                                 </div>
-                                <div className="text-Grey-light">
+                                <div className="text-Grey-light text-lg">
                                     Tổng số câu hỏi: <span className="font-bold">{attempt.total}</span>
                                 </div>
                             </div>
                             <button
-                                className="bg-Grey-dark hover:bg-Grey text-white font-medium px-6 py-2 rounded-lg shadow-md transition transform hover:scale-105 mt-4"
+                                className="bg-Grey-dark hover:bg-Grey text-white font-medium px-8 py-3 rounded-lg shadow-md transition transform hover:scale-105 mt-4"
                                 onClick={() => navigate(-1)}
                             >
                                 <i className="fa-solid fa-arrow-left mr-2"></i>Quay lại
                             </button>
                         </div>
                         {/* Biểu đồ tròn */}
-                        <div className="flex justify-center">
-                            <PieChart width={300} height={200}>
+                        <div className="flex flex-col items-center justify-center p-6 bg-CetaceanBlue/50 rounded-xl shadow-sm transition-all duration-300 hover:shadow-md">
+                            <PieChart width={360} height={280}>
                                 <Pie
                                     data={pieData}
                                     dataKey="value"
                                     nameKey="name"
                                     cx="50%"
                                     cy="50%"
-                                    outerRadius={80}
-                                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                                    outerRadius={110}
+                                    paddingAngle={0}
+                                    labelLine={false}
+                                    label={({ name, value }) => `${name}: ${value} (${((value / attempt.total) * 100).toFixed(0)}%)`}
                                 >
                                     {pieData.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={entry.color} />
+                                        <Cell
+                                            key={`cell-${index}`}
+                                            fill={entry.color}
+                                            className="transition-all duration-300 hover:opacity-80"
+                                        />
                                     ))}
                                 </Pie>
                                 <Tooltip
@@ -142,9 +159,17 @@ const HistoryDetail = () => {
                                         backgroundColor: 'var(--color-CetaceanBlue)',
                                         color: 'var(--color-white)',
                                         borderRadius: '8px',
+                                        border: 'none',
+                                        padding: '8px',
                                     }}
                                 />
-                                <Legend />
+                                <Legend
+                                    iconType="circle"
+                                    align="center"
+                                    verticalAlign="bottom"
+                                    iconSize={12}
+                                    wrapperStyle={{ color: 'var(--color-Grey-light)', paddingTop: '10px' }}
+                                />
                             </PieChart>
                         </div>
                     </div>

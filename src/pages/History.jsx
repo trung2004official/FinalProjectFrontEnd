@@ -32,15 +32,15 @@ const History = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-CetaceanBlue to-CadetBlue text-white flex flex-col font-roboto">
+        <div className="min-h-screen bg-gradient-to-br from-CetaceanBlue-dark to-CadetBlue text-white flex flex-col font-roboto">
             <Header />
-            <main className="flex-1 container mx-auto px-6 py-12">
-                <h1 className="text-4xl font-extrabold mb-10 text-center text-Emerald tracking-tight">
+            <main className="flex-1 container mx-auto px-6 py-16">
+                <h1 className="text-5xl font-extrabold mb-12 text-center text-Emerald tracking-tight drop-shadow-md">
                     Lịch Sử Làm Bài
                 </h1>
-                <div className="max-w-3xl mx-auto space-y-6">
+                <div className="max-w-4xl mx-auto space-y-8">
                     {mockAttempts.length === 0 ? (
-                        <div className="text-center text-Grey-light text-lg italic">
+                        <div className="text-center text-Grey-light text-xl italic bg-CetaceanBlue/50 rounded-xl p-6 shadow-md">
                             Chưa có lịch sử làm bài.
                         </div>
                     ) : (
@@ -49,36 +49,43 @@ const History = () => {
                             return (
                                 <div
                                     key={attempt.id}
-                                    className="bg-CetaceanBlue/90 rounded-2xl shadow-lg p-6 flex flex-col gap-3 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:bg-CetaceanBlue animate-fade-in"
+                                    className="bg-CetaceanBlue/95 rounded-2xl shadow-xl p-8 flex flex-col gap-4 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:bg-CetaceanBlue animate-fade-in"
                                 >
                                     <div className="flex justify-between items-center">
-                                        <span className="font-bold text-xl text-white">
-                                            {quiz ? quiz.title : '---'}
-                                        </span>
-                                        <span className="text-sm text-Manatee-light">
+                                        <div className="flex items-center gap-3">
+                                            <i className="fa-solid fa-file-lines text-Emerald text-xl"></i>
+                                            <span className="font-bold text-2xl text-white">
+                                                {quiz ? quiz.title : '---'}
+                                            </span>
+                                        </div>
+                                        <span className="text-sm text-Manatee-light bg-Grey-dark/50 px-3 py-1 rounded-full">
                                             {attempt.completedAt
                                                 ? new Date(attempt.completedAt).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })
                                                 : '---'}
                                         </span>
                                     </div>
-                                    <div className="flex gap-8">
-                                        <span className="text-Grey-light">
+                                    <div className="flex gap-10">
+                                        <span className="text-Grey-light text-lg">
                                             Điểm: <span className="font-bold text-Emerald">{attempt.score ?? '--'}</span>
                                         </span>
-                                        <span className="text-Grey-light">
+                                        <span className="text-Grey-light text-lg flex items-center gap-2">
                                             Kết quả:{' '}
-                                            {attempt.passed ? (
-                                                <span className="text-Emerald-light font-semibold">Đạt</span>
-                                            ) : (
-                                                <span className="text-red-400 font-semibold">Chưa đạt</span>
-                                            )}
+                                            <span
+                                                className={`font-semibold px-3 py-1 rounded-full ${
+                                                    attempt.passed
+                                                        ? 'bg-Emerald/20 text-Emerald-light'
+                                                        : 'bg-red-400/20 text-red-400'
+                                                }`}
+                                            >
+                                                {attempt.passed ? 'Đạt' : 'Chưa đạt'}
+                                            </span>
                                         </span>
                                     </div>
                                     <span
-                                        className="text-Emerald hover:text-Emerald-light font-medium cursor-pointer transition duration-200 hover:underline"
+                                        className="text-Emerald hover:text-Emerald-light font-medium text-lg cursor-pointer transition duration-200 hover:underline"
                                         onClick={() => navigate(`/history/${attempt.id}`)}
                                     >
-                                        Xem chi tiết
+                                        <i className="fa-solid fa-eye mr-2"></i>Xem chi tiết
                                     </span>
                                 </div>
                             );
