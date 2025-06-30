@@ -110,7 +110,7 @@ const QuizTest = () => {
             //     icon: 'success',
             //     confirmButtonColor: '#2E7D32', // Emerald
             // }).then(() => {
-                navigate('/quiz/result', {
+                navigate(`/quiz/${quizId}/result`, {
                     state: { correct, wrong, skipped, questions, quizId, attemptId },
                 })
             // });

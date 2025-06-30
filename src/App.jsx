@@ -42,7 +42,7 @@ function App() {
                         <Route path="/quiz" element={<Quiz />} />
                         <Route path="/quiz/:id" element={<QuizDetails />} />
                         <Route path="/quizzes-questions/:quizId" element={<QuizTest />} />
-                        <Route path="/quiz/result" element={<QuizResult />} /> 
+                        <Route path="/quiz/:quizId/result" element={<QuizResult />} /> 
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/history" element={<History />} /> {/* Route cho lịch sử làm bài */}
                         <Route path="/history/:id" element={<HistoryDetail />} />
