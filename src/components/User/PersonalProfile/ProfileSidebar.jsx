@@ -56,10 +56,16 @@ const ProfileSidebar = () => {
         </div>
         {/* Menu */}
         <nav className="flex flex-col gap-4 text-xl px-4">
-          <button className="flex items-center gap-3 px-4 py-2 text-white hover:bg-CetaceanBlue-dark rounded transition">
+          <button
+            className="flex items-center gap-3 px-4 py-2 text-white hover:bg-CetaceanBlue-dark rounded transition"
+            onClick={() => navigate('/profile')}
+          >
             <FaUser /> Thông tin
           </button>
-          <button className="flex items-center gap-3 px-4 py-2 text-white hover:bg-CetaceanBlue-dark rounded transition">
+          <button
+            className="flex items-center gap-3 px-4 py-2 text-white hover:bg-CetaceanBlue-dark rounded transition"
+            onClick={() => navigate('/history')}
+          >
             <FaHistory /> Lịch sử làm bài
           </button>
           <button className="flex items-center gap-3 px-4 py-2 text-white hover:bg-CetaceanBlue-dark rounded transition">
