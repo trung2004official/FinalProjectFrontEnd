@@ -1,7 +1,7 @@
 import React from 'react'
 import { useUser } from '../../../contexts/UserContext'
 
-const ProfileMain = () => {
+const ProfileMain = ({setShowProfileModal}) => {
     const {user} = useUser();
     return (
         <div className="text-CetaceanBlue-dark grid grid-cols-2 p-6 gap-4">
@@ -41,7 +41,7 @@ const ProfileMain = () => {
                     readOnly
                 />
             </div>
-            <button className='bg-CetaceanBlue hover:bg-CetaceanBlue-dark px-4 py-2 h-15 rounded text-white font-semibold cursor-pointer col-span-2'>Chỉnh sửa tài khoản</button>
+            <button className='bg-CetaceanBlue hover:bg-CetaceanBlue-dark px-4 py-2 h-15 rounded text-white font-semibold cursor-pointer col-span-2' onClick={()=>setShowProfileModal(true)}>Chỉnh sửa tài khoản</button>
         </div>
     )
 }

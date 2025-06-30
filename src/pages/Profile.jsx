@@ -14,6 +14,7 @@ import {
   Legend,
 } from 'chart.js'
 import { Bar } from 'react-chartjs-2';
+import ProfileSetting from '../components/User/PersonalProfile/ProfileSetting.jsx';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
@@ -40,41 +41,7 @@ const options = {
 }
 
 const Profile = () => {
-    // const { username } = useParams();
-    // const navigate = useNavigate();
-
-    // // Khởi tạo state trước khi kiểm tra
-    // const [currentTime, setCurrentTime] = useState('');
-    // const [user, setUser] = useState(null);
-
-    // useEffect(() => {
-    //     // Tìm user từ params
-    //     const foundUser = users.find(u => u.username === username);
-    //     setUser(foundUser || null);
-
-    //     // Lấy thời gian hiện tại
-    //     const getCurrentTime = () => {
-    //         const now = new Date();
-    //         return now.toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', hour12: true });
-    //     };
-    //     setCurrentTime(getCurrentTime());
-
-    //     const timer = setInterval(() => {
-    //         setCurrentTime(getCurrentTime());
-    //     }, 1000);
-    //     return () => clearInterval(timer); // Dọn dẹp khi unmount
-    // }, [username]);
-
-    // // Hàm đăng xuất
-    // const handleLogout = () => {
-    //     localStorage.removeItem('currentUser');
-    //     navigate('/login');
-    // };
-
-    // // Kiểm tra nếu không có user
-    // if (!user) {
-    //     return <div className="min-h-screen bg-CadetBlue text-white p-6 text-center">Không tìm thấy người dùng!</div>;
-    // }
+  const [showProfileModal, setShowProfileModal] = useState(false);
 
     return (
         <div className="bg-CadetBlue">
@@ -86,9 +53,17 @@ const Profile = () => {
                         <Bar data={activityData} options={options} height={80} />
                     </div>
                     <div className='shadow-lg m-2 border border-black '>
-                        <ProfileMain />
+                        <ProfileMain setShowProfileModal={setShowProfileModal}/>
                     </div>
                 </div>
+                {showProfileModal && (
+                  <>
+                    <div className='fixed inset-0 bg-[rgba(0,0,0,0.8)] z-50'></div>
+                    <div className='fixed inset-0 flex items-center justify-center z-60'>
+                      <ProfileSetting setShowProfileModal={setShowProfileModal}/>
+                    </div>
+                  </>
+                )}
             </div>
         </div>
     );
