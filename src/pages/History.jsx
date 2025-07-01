@@ -4,6 +4,7 @@ import Footer from '../components/User/Footer.jsx';
 import { quizzes } from '../data.js';
 import { useNavigate } from 'react-router-dom';
 
+// 4 data giả cho quizAttempt (lịch sử làm bài)
 const mockAttempts = [
     {
         id: 1,
@@ -11,20 +12,43 @@ const mockAttempts = [
         score: 9,
         passed: true,
         completedAt: '2025-06-28T14:00:00',
+        correct: 4,
+        wrong: 5,
+        skipped: 1,
+        total: 10,
     },
     {
         id: 2,
         quizId: 4,
-        score: 4,
+        score: 7,
         passed: false,
         completedAt: '2025-06-25T09:30:00',
+        correct: 3,
+        wrong: 4,
+        skipped: 3,
+        total: 10,
     },
     {
         id: 3,
         quizId: 1,
-        score: 8,
+        score: 10,
         passed: true,
         completedAt: '2025-06-20T19:10:00',
+        correct: 8,
+        wrong: 2,
+        skipped: 0,
+        total: 10,
+    },
+    {
+        id: 4,
+        quizId: 3,
+        score: 6,
+        passed: false,
+        completedAt: '2025-06-18T15:00:00',
+        correct: 2,
+        wrong: 6,
+        skipped: 2,
+        total: 10,
     },
 ];
 
@@ -64,9 +88,21 @@ const History = () => {
                                                 : '---'}
                                         </span>
                                     </div>
-                                    <div className="flex gap-10">
-                                        <span className="text-Grey-light text-lg">
+                                    <div className="flex gap-8 flex-wrap">
+                                        {/* <span className="text-Grey-light text-lg">
                                             Điểm: <span className="font-bold text-Emerald">{attempt.score ?? '--'}</span>
+                                        </span> */}
+                                        <span className="text-Grey-light text-lg">
+                                            Đúng: <span className="font-bold text-Emerald">{attempt.correct}</span>
+                                        </span>
+                                        <span className="text-Grey-light text-lg">
+                                            Sai: <span className="font-bold text-red-400">{attempt.wrong}</span>
+                                        </span>
+                                        <span className="text-Grey-light text-lg">
+                                            Bỏ qua: <span className="font-bold text-Grey">{attempt.skipped}</span>
+                                        </span>
+                                        <span className="text-Grey-light text-lg">
+                                            Tổng: <span className="font-bold">{attempt.total}</span>
                                         </span>
                                         <span className="text-Grey-light text-lg flex items-center gap-2">
                                             Kết quả:{' '}
