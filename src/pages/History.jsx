@@ -89,7 +89,13 @@ const History = () => {
                                     </div>
                                     <span
                                         className="text-Emerald hover:text-Emerald-light font-medium text-lg cursor-pointer transition duration-200 hover:underline"
-                                        onClick={() => navigate(`/history/${attempt.id}`)}
+                                    onClick={() => navigate(`/history/${result.id}`, {
+                                        state: {
+                                            correct: result.correct,
+                                            wrong: result.wrong,
+                                            skipped: result.skipped,
+                                        }
+                                    })}
                                     >
                                         <i className="fa-solid fa-eye mr-2"></i>Xem chi tiết
                                     </span>

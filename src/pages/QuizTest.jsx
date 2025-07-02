@@ -96,7 +96,7 @@ const QuizTest = () => {
             const allAnswers = {};
             questions.forEach((question) => {
                 const questionId = question.id;
-                allAnswers[questionId] = answers[questionId] || null; // Ensure all questions are included
+                allAnswers[questionId] = answers[questionId] || null; 
             });
             const response = await axios.post(
                 `${BASE_URL}/api/answers-attempts/${attemptId}`,
@@ -104,16 +104,9 @@ const QuizTest = () => {
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             const { correct, wrong, skipped } = response.data.data;
-            // Swal.fire({
-            //     title: 'Nộp bài thành công!',
-            //     html: `✅ Đúng: ${correct}<br>❌ Sai: ${wrong}<br>⏭ Bỏ qua: ${skipped}`,
-            //     icon: 'success',
-            //     confirmButtonColor: '#2E7D32', // Emerald
-            // }).then(() => {
                 navigate(`/quiz/${quizId}/result`, {
                     state: { correct, wrong, skipped, questions, quizId, attemptId },
                 })
-            // });
         } catch (error) {
             console.error('Lỗi khi nộp bài:', error);
             Swal.fire({
