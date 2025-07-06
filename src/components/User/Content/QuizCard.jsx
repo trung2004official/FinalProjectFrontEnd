@@ -4,14 +4,14 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../../../../services/api';
 
-const QuizCard = ({ id, title, duration, difficulty, major, rating }) => {
+const QuizCard = ({ id, title, duration, difficulty, major, rating, isFavorite = false }) => {
     const navigate = useNavigate();
-    const [favorite, setFavorite] = useState(false);
+    const [favorite, setFavorite] = useState(isFavorite); 
 
     const handleStartQuiz = async () => {
         const token = localStorage.getItem('token');
 
-        if(!token) {
+        if (!token) {
             navigate('/login');
         }
 
@@ -38,7 +38,6 @@ const QuizCard = ({ id, title, duration, difficulty, major, rating }) => {
 
     return (
         <div className="relative bg-PurpleNavy p-6 rounded-lg shadow-md flex flex-col justify-between h-64 group">
-            {/* Nút yêu thích hình trái tim ở góc trên bên phải */}
             <button
                 className="absolute top-3 right-3 z-10 bg-white/10 rounded-full p-2 hover:bg-white/80 transition"
                 title="Yêu thích"
@@ -51,7 +50,6 @@ const QuizCard = ({ id, title, duration, difficulty, major, rating }) => {
             </div>
             <div className="flex items-center justify-between mt-4">
                 <div className="text-Grey-dark text-sm">{major}</div>
-                {/* Hiển thị rating (giả lập, thay bằng prop nếu có) */}
                 <div className="flex items-center gap-1 ml-2">
                     <i className="fa-solid fa-star text-yellow-400 text-sm"></i>
                     <span className="text-white text-xs font-semibold">
@@ -60,7 +58,6 @@ const QuizCard = ({ id, title, duration, difficulty, major, rating }) => {
                     <span className="text-Grey-light text-xs">/5</span>
                 </div>
             </div>
-            {/* Overlay khi hover */}
             <div className="absolute inset-0 bg-CetaceanBlue bg-opacity-90 p-6 rounded-lg flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <h3 className="text-lg text-white font-bold mb-2">{title}</h3>
                 <p className="text-white text-sm mb-2">Thời gian quy định: {duration} phút</p>

@@ -19,6 +19,7 @@ import QuizManagementDetails from './pages/Admin/Quiz/QuizManagementDetails.jsx'
 import { UserProvider } from './contexts/UserContext.jsx';
 import History from './pages/History.jsx'; // Import History component
 import HistoryDetail from './pages/HistoryDetail.jsx';
+import Favorite from './components/User/PersonalProfile/ProfileFavorite.jsx'; 
 
 function App() {
     return (
@@ -46,6 +47,7 @@ function App() {
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/history" element={<History />} /> {/* Route cho lịch sử làm bài */}
                         <Route path="/history/:id" element={<HistoryDetail />} />
+                        <Route path="/favorites" element={<Favorite />} /> {/* Route cho trang yêu thích */}
                     </Routes>
                 </div>
             </Router>

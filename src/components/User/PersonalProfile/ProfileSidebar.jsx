@@ -71,7 +71,9 @@ const ProfileSidebar = () => {
           <button className="flex items-center gap-3 px-4 py-2 text-white hover:bg-CetaceanBlue-dark rounded transition">
             <FaBell /> Thông báo
           </button>
-          <button className="flex items-center gap-3 px-4 py-2 text-white hover:bg-CetaceanBlue-dark rounded transition">
+          <button className="flex items-center gap-3 px-4 py-2 text-white hover:bg-CetaceanBlue-dark rounded transition"
+            onClick={() => navigate('/favorites')}
+          >
             <FaHeart /> Yêu thích
           </button>
           <button className="flex items-center gap-3 px-4 py-2 text-white hover:bg-red-500 rounded transition">

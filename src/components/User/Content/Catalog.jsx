@@ -61,6 +61,7 @@ const Catalog = () => {
                                 duration={quiz.duration}
                                 difficulty={quiz.difficulty}
                                 category={quiz.category}
+                                isFavorite={true}
                             />
                         ))}
                     </div>
