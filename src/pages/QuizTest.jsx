@@ -92,7 +92,7 @@ const QuizTest = () => {
 
     const handleClickSubmit = () => {
         Swal.fire({
-            title: `Chưa hoàn thành hết câu hỏi! Bạn chắc chắn muốn nộp bài?`,
+            title: `Bạn chắc chắn muốn nộp bài?`,
             showDenyButton: true,
             confirmButtonText: "Xác nhận",
             denyButtonText: `Hủy`

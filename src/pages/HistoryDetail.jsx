@@ -18,6 +18,7 @@ const HistoryDetail = () => {
     const startIdx = (page - 1) * PAGE_SIZE;
     const endIdx = startIdx + PAGE_SIZE;
     const currentData = resultDetails.slice(startIdx, endIdx);
+    const [activeIndex, setActiveIndex] = useState(null);
 
     // Thống kê cho PieChart
     const location = useLocation();
@@ -26,9 +27,13 @@ const HistoryDetail = () => {
 
     const pieData = [
         { name: 'Đúng', value: correct, color: 'var(--color-Emerald)' },
-        { name: 'Sai', value: skipped, color: 'var(--color-red-400)' },
+        { name: 'Sai', value: wrong, color: 'var(--color-red-400)' },
         { name: 'Bỏ qua', value: skipped, color: 'var(--color-Grey)' },
     ].filter(item => item.value > 0);
+
+    const handlePieEnter = (_, index) => {
+        setActiveIndex(index);
+    };
 
     const handleGetAnswerAttempts = async () => {
         try {
@@ -63,6 +68,9 @@ const HistoryDetail = () => {
                                 outerRadius={100}
                                 paddingAngle={0}
                                 labelLine={false}
+                                activeIndex={activeIndex}
+                                activeOuterRadius={110}       
+                                onMouseEnter={handlePieEnter}   
                                 label={({ name, value, fill }) => (
                                     <tspan style={{ fill }}>{`${name}: ${value}`}</tspan>
                                 )}
