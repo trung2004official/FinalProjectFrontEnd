@@ -5,9 +5,13 @@ import Footer from '../components/User/Footer.jsx';
 import axios from 'axios';
 import { BASE_URL } from '../../services/api.jsx';
 import FeedBack from '../components/User/Content/FeedBack.jsx';
+import { jwtDecode } from 'jwt-decode';
+import { useUser } from '../contexts/UserContext.jsx';
+
 
 const QuizDetail = () => {
     const [quiz, setQuiz] = useState({});
+    const {user, setUser} = useUser();
     const [favorite, setFavorite] = useState(false); // Thêm state cho favorite
     const { id } = useParams();
     const navigate = useNavigate();
@@ -21,6 +25,30 @@ const QuizDetail = () => {
         }
     };
 
+    const handleStartQuiz = async () => {
+        const token = localStorage.getItem('token');
+
+        if (!token || !user) {
+            navigate('/login');
+        }
+
+        try {
+            const decoded = jwtDecode(token);
+            const user_id = decoded.id;
+
+            const response = await axios.post(`${BASE_URL}/api/attempts/start`, {
+                user_id: user_id,
+                quiz_id: id,
+            });
+
+            const attemptId = response.data.attempt_id;
+
+            navigate(`/quizzes-questions/${id}?attemptId=${attemptId}`);
+        } catch (error) {
+            console.error('Lỗi khi bắt đầu làm bài: ', error);
+        }
+    };
+
     useEffect(() => {
         getQuizDataById();
     }, [id]);
@@ -30,10 +58,6 @@ const QuizDetail = () => {
     const formattedDate = quiz.createdAt
         ? new Date(quiz.createdAt).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })
         : '';
-
-    const handleStartQuiz = () => {
-        navigate(`/quizzes-questions/${id}`);
-    };
 
     return (
         <div className="min-h-screen bg-CadetBlue text-white flex flex-col font-roboto">

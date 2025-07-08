@@ -90,6 +90,19 @@ const QuizTest = () => {
         }
     };
 
+    const handleClickSubmit = () => {
+        Swal.fire({
+            title: `Chưa hoàn thành hết câu hỏi! Bạn chắc chắn muốn nộp bài?`,
+            showDenyButton: true,
+            confirmButtonText: "Xác nhận",
+            denyButtonText: `Hủy`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                handleSubmit();
+            }
+        })
+    }
+
     const handleSubmit = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -218,7 +231,7 @@ const QuizTest = () => {
                                 Tiếp
                             </button>
                             <button
-                                onClick={handleSubmit}
+                                onClick={handleClickSubmit}
                                 className="px-6 py-3 bg-Emerald hover:bg-Emerald-dark text-white rounded-lg transition-all duration-200 transform hover:scale-105 text-lg"
                             >
                                 Nộp bài
