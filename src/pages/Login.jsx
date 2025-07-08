@@ -12,7 +12,7 @@ import { useUser } from '../contexts/UserContext.jsx';
 
 const Login = () => {
   const navigate = useNavigate();
-  const {setUser} = useUser();
+  const { setUser } = useUser();
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
@@ -27,11 +27,11 @@ const Login = () => {
       const decodedToken = jwtDecode(token);
       if (response.status === 200) {
         Swal.fire(
-            "Đăng nhập thành công",
-            "Bạn đã đăng nhập vào hệ thống",
-            "success"
+          "Đăng nhập thành công",
+          "Bạn đã đăng nhập vào hệ thống",
+          "success"
         );
-        console.log('Người dùng: ',response.data.user.fullname);
+        console.log('Người dùng: ', response.data.user.fullname);
         if (decodedToken.role === 'user') {
           navigate('/home');
         } else if (decodedToken.role === 'admin') {
@@ -41,9 +41,9 @@ const Login = () => {
     } catch (error) {
       console.error('Server Error: ', error);
       Swal.fire(
-          "Đăng nhập thất bại",
-          "Thông tin đăng nhập không đúng",
-          "error"
+        "Đăng nhập thất bại",
+        "Thông tin đăng nhập không đúng",
+        "error"
       );
     } finally {
       setSubmitting(false);

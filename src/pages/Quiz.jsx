@@ -15,7 +15,7 @@ const Quiz = () => {
         'Thiết Kế Web',
         'Mobile',
         'Mạng Máy Tính',
-    ]
+    ];
 
 
     const getQuizData = async () => {
@@ -34,7 +34,7 @@ const Quiz = () => {
         // Giả lập delay
         setTimeout(() => {
             setLoading(false);
-        }, 3000);
+        }, 1000);
     }, []);
 
     useEffect(() => {

@@ -7,45 +7,6 @@ import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 import axios from 'axios';
 import { BASE_URL } from '../../services/api.jsx';
 
-// // Dữ liệu giả cho answerAttempt (mỗi phần tử là 1 câu hỏi đã làm)
-// const mockAnswerAttempts = [
-//     {
-//         id: 1,
-//         question: 'Thủ đô của Việt Nam là gì?',
-//         userAnswer: 'Hà Nội',
-//         correctAnswer: 'Hà Nội',
-//         isCorrect: true,
-//         isSkipped: false,
-//     },
-//     {
-//         id: 2,
-//         question: '2 + 2 = ?',
-//         userAnswer: '5',
-//         correctAnswer: '4',
-//         isCorrect: false,
-//         isSkipped: false,
-//     },
-//     {
-//         id: 3,
-//         question: 'Tác giả Truyện Kiều là ai?',
-//         userAnswer: '',
-//         correctAnswer: 'Nguyễn Du',
-//         isCorrect: false,
-//         isSkipped: true,
-//     },
-//     {
-//         id: 4,
-//         question: 'Biển lớn nhất thế giới là?',
-//         userAnswer: 'Thái Bình Dương',
-//         correctAnswer: 'Thái Bình Dương',
-//         isCorrect: true,
-//         isSkipped: false,
-//     },
-//     // Thêm nhiều dữ liệu nếu muốn test phân trang
-// ];
-
-
-
 const PAGE_SIZE = 4;
 
 const HistoryDetail = () => {

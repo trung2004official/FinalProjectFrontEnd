@@ -3,15 +3,17 @@ import { jwtDecode } from 'jwt-decode';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../../../../services/api';
+import { useUser } from '../../../contexts/UserContext.jsx';
 
 const QuizCard = ({ id, title, duration, difficulty, major, rating, isFavorite = false }) => {
     const navigate = useNavigate();
-    const [favorite, setFavorite] = useState(isFavorite); 
+    const {user, setUser} = useUser();
+    const [favorite, setFavorite] = useState(isFavorite);
 
     const handleStartQuiz = async () => {
         const token = localStorage.getItem('token');
 
-        if (!token) {
+        if (!token || !user) {
             navigate('/login');
         }
 
@@ -32,16 +34,20 @@ const QuizCard = ({ id, title, duration, difficulty, major, rating, isFavorite =
         }
     };
 
-    const handleFavorite = () => {
-        setFavorite(prev => !prev);
-    };
+    // const handleFavorite = async () => {
+    //     try {
+    //         const response = await 
+    //     } catch (error) {
+
+    //     }
+    // };
 
     return (
         <div className="relative bg-PurpleNavy p-6 rounded-lg shadow-md flex flex-col justify-between h-64 group">
             <button
                 className="absolute top-3 right-3 z-10 bg-white/10 rounded-full p-2 hover:bg-white/80 transition"
                 title="Yêu thích"
-                onClick={handleFavorite}
+                // onClick={''}
             >
                 <i className={`fa-solid fa-heart text-lg transition ${favorite ? 'text-red-500' : 'text-white'}`}></i>
             </button>

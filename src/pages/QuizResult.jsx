@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { useParams, Link, useLocation } from 'react-router-dom';
+import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../../services/api';
 import FeedBack from '../components/User/Content/FeedBack.jsx';
 import { Formik, Form, Field } from 'formik';
@@ -12,8 +12,9 @@ const QuizResult = () => {
   const { correct, wrong, skipped, questions, attemptId } = location.state || {};
   const [resultDetails, setResultDetails] = useState(null);
   const [userRating, setUserRating] = useState(0);
-  const {quizId} = useParams();
-  const {user} = useUser();
+  const { quizId } = useParams();
+  const { user } = useUser();
+  const navigate = useNavigate();
 
   const getResultDetails = async () => {
     try {
@@ -45,7 +46,7 @@ const QuizResult = () => {
         'Bạn đã gửi đánh giá.',
         'success'
       )
-    } catch(error) {
+    } catch (error) {
       console.error('Server error: ', error);
       Swal.fire(
         'Server error',
@@ -78,11 +79,26 @@ const QuizResult = () => {
         </div>
 
         <div className="text-center space-y-4">
-          <Link to="/quiz">
-            <button className="bg-CetaceanBlue text-white px-6 py-3 rounded-lg font-medium hover:bg-CetaceanBlue-dark transition duration-300 shadow-md mb-4">
-              Quay lại
+          <div className="flex justify-center gap-2">
+
+            <Link to="/quiz">
+              <button className="bg-CetaceanBlue text-white px-6 py-3 rounded-lg font-medium hover:bg-CetaceanBlue-dark transition duration-300 shadow-md mb-4">
+                Quay lại
+              </button>
+            </Link>
+            <button
+              className="bg-Emerald text-white px-6 py-3 rounded-lg font-medium hover:bg-Emerald-dark transition duration-300 shadow-md mb-4"
+              onClick={() => navigate(`/history/${attemptId}`, {
+                state: {
+                  correct: correct,
+                  wrong: wrong,
+                  skipped: skipped,
+                }
+              })}
+            >
+              Xem chi tiết
             </button>
-          </Link>
+          </div>
           <p className="text-sm text-Manatee">
             Hoàn thành lúc: {resultDetails?.completedAt
               ? new Date(resultDetails.completedAt).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })
@@ -92,40 +108,40 @@ const QuizResult = () => {
 
         {/* Đánh giá và phản hồi */}
         <Formik
-          initialValues={{rating: 0, comment: ''}}
+          initialValues={{ rating: 0, comment: '' }}
           onSubmit={handleSubmitRating}
         >
           {({ values, setFieldValue }) => (
-              <Form className="flex flex-col items-center gap-4 mb-6">
-                <div className="flex items-center gap-2">
-                  <span className="font-medium">Đánh giá:</span>
-                  {[1, 2, 3, 4, 5].map(star => (
-                    <i
-                      key={star}
-                      className={`fa-star ${star <= (values.rating || 0) ? 'fa-solid text-Amber-light' : 'fa-regular text-Grey'} text-xl cursor-pointer transition`}
-                      onClick={() => {
-                        setFieldValue('rating', star);
-                        setUserRating(star);
-                      }}
-                    ></i>
-                  ))}
-                </div>
-                <Field
-                  as="textarea"
-                  name="comment"
-                  className="w-full border border-CadetBlue bg-Grey-dark text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-Emerald transition"
-                  rows={3}
-                  placeholder="Nhập phản hồi của bạn..."
-                />
-                <button
-                  type="submit"
-                  className="bg-Emerald text-white px-5 py-2 rounded-lg shadow-md hover:bg-Emerald-dark transition"
-                  disabled={values.rating === 0}
-                >
-                  Gửi phản hồi
-                </button>
-              </Form>
-            )}
+            <Form className="flex flex-col items-center gap-4 mb-6">
+              <div className="flex items-center gap-2">
+                <span className="font-medium">Đánh giá:</span>
+                {[1, 2, 3, 4, 5].map(star => (
+                  <i
+                    key={star}
+                    className={`fa-star ${star <= (values.rating || 0) ? 'fa-solid text-Amber-light' : 'fa-regular text-Grey'} text-xl cursor-pointer transition`}
+                    onClick={() => {
+                      setFieldValue('rating', star);
+                      setUserRating(star);
+                    }}
+                  ></i>
+                ))}
+              </div>
+              <Field
+                as="textarea"
+                name="comment"
+                className="w-full border border-CadetBlue bg-Grey-dark text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-Emerald transition"
+                rows={3}
+                placeholder="Nhập phản hồi của bạn..."
+              />
+              <button
+                type="submit"
+                className="bg-Emerald text-white px-5 py-2 rounded-lg shadow-md hover:bg-Emerald-dark transition"
+                disabled={values.rating === 0}
+              >
+                Gửi phản hồi
+              </button>
+            </Form>
+          )}
         </Formik>
       </div>
     </div>
