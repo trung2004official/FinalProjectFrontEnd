@@ -34,7 +34,7 @@ const Quiz = () => {
         // Giả lập delay
         setTimeout(() => {
             setLoading(false);
-        }, 1000);
+        }, 500);
     }, []);
 
     useEffect(() => {
