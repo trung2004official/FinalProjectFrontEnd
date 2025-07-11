@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../../../../services/api';
 import { useUser } from '../../../contexts/UserContext.jsx';
+import Swal from 'sweetalert2';
 
 const QuizCard = ({ id, title, duration, difficulty, major, rating, isFavorite = false }) => {
     const navigate = useNavigate();
@@ -36,9 +37,14 @@ const QuizCard = ({ id, title, duration, difficulty, major, rating, isFavorite =
 
     // const handleFavorite = async () => {
     //     try {
-    //         const response = await 
+    //         const response = await axios.post(`${BASE_URL}/api/favorites/add-favorite/${id}/${user.id}`);
     //     } catch (error) {
-
+    //         Swal.fire(
+    //             'Lỗi',
+    //             'Thêm quiz yêu thích thất bại',
+    //             'error',
+    //         );
+    //         console.error('server error: ',error);
     //     }
     // };
 
